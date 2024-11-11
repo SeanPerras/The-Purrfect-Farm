@@ -35,3 +35,6 @@ Thumbs.db
 .plastic/
 *.plastic
 *.workspace
+
+# Ignore Unity log files
+Logs/*.log
