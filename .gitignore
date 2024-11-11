@@ -26,3 +26,7 @@ Thumbs.db
 
 # Package cache should not be tracked
 **/PackageCache/
+
+# Ignore Unity build files
+/Build/
+/Builds/
