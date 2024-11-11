@@ -9,5 +9,5 @@ public class PlantData : ScriptableObject
     public string plantName;
     public GameObject plantPrefab;
     public Sprite[] growthStages;
-    public float[] growthTime;
+    public float growthTime;
 }

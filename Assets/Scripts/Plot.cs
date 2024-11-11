@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Plot : MonoBehaviour
 {
+    public GameObject plant;
     private List<Vector2> positions;
     private GameObject[] adjPlots = new GameObject[4];
     private Collider2D plotCollider;
@@ -45,7 +46,7 @@ public class Plot : MonoBehaviour
     }
 
     public void Plant(PlantData plantData){
-        GameObject plant = Instantiate(plantData.plantPrefab, transform.position, Quaternion.identity);
+        plant = Instantiate(plantData.plantPrefab, transform.position, Quaternion.identity);
         Plant plantScript = plant.GetComponent<Plant>();
         plantScript.SetPlantData(plantData);
         plantScript.SetPlotReference(this);
@@ -53,5 +54,10 @@ public class Plot : MonoBehaviour
 
     public void ReEnablePlot(){
         plotCollider.enabled = true;
+        plant = null;
+    }
+    public GameObject[] GetAdjPlots()
+    {
+        return adjPlots;    //{ TopRight, TopLeft, BottomLeft, BottomRight }
     }
 }

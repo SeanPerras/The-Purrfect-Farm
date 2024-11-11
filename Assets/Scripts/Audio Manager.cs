@@ -27,7 +27,7 @@ public class AudioManager : MonoBehaviour
     {
         switch (sceneIndex)
         {
-            case 1:
+            case 0:
                 // Play main menu music
                 musicSource.clip = main_menu;
                 musicSource.loop = true;
