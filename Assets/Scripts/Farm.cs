@@ -14,13 +14,23 @@ public class Farm : MonoBehaviour
         {"Red", new() { "Red", "Red" } },
         {"Yellow", new() { "Yellow", "Yellow" } }
     };
-public GameObject plotPrefab;
+    public GameObject plotPrefab;
     private GameObject plotSelected;
     public GameObject seedSelectUI;
     public GameObject catsulePrefab;
 
+    
+    public GameObject catSelectUI;
+    public GameObject plotsParent;
+    private bool isSeedSelectUI = false;
+    private bool isCatSelectUI = false;
+    public GameObject catsuleselected;
+    public GameObject seedselected;
+
+
     private Vector3 mousePos;
     private bool plotMode = true;
+
 
     // Start is called before the first frame update
     void Start()
@@ -64,6 +74,8 @@ public GameObject plotPrefab;
                 Vector3 pos = land.transform.position;
                 GameObject newPlot = Instantiate(plotPrefab, pos, plotPrefab.transform.rotation);
                 newPlot.transform.SetParent(GameObject.Find("Plots").transform);
+                plotSelected = newPlot;
+                OpenUI();
                 land.SetActive(false);
                 Debug.Log("Plot placed!");
             }
@@ -79,12 +91,75 @@ public GameObject plotPrefab;
         }
     }
 
-    private void OpenUI(){
-        plotSelected.GetComponent<Collider2D>().enabled = false;
-        seedSelectUI.SetActive(true);
+    public void OpenUI(){
+        seedselectenter();
+        CloseUIcat();
+
+        seedSelectUI.SetActive(true);  
+        isSeedSelectUI = true;
+
+        Collider2D[] plotColliders = plotsParent.GetComponentsInChildren<Collider2D>();
+
+        if (plotColliders.Length == 0)
+        {
+            Debug.LogWarning("No Collider2D components found in child objects of plotsParent.");
+        }
+
+       
+        foreach (Collider2D collider in plotColliders)
+        {
+            if (collider.gameObject.CompareTag("Plot")) 
+            { 
+                collider.enabled = false; 
+
+            }
+        }
+
+        Debug.Log("seedselect open");
+
+
+    }
+    public void CloseUI()
+    {
+        seedselected.SetActive(false);
+        seedselectexit();
+        seedSelectUI.SetActive(false);
+        isSeedSelectUI = false;
+        Debug.Log("zsxdfcgvbhjnkml,;.'xetcfyvgubhnjmk,l");
+
+        Collider2D[] plotColliders = plotsParent.GetComponentsInChildren<Collider2D>();
+
+        if (plotColliders.Length == 0)
+        {
+            Debug.LogWarning("No Collider2D components found in child objects of plotsParent.");
+        }
+
+
+        foreach (Collider2D collider in plotColliders)
+        {
+            if (collider.gameObject.CompareTag("Plot"))
+            {
+                collider.enabled = true;
+
+            }
+        }
+
+
+
+
+    }
+    private bool IsClickOverUI(GameObject uiElement)
+    {
+
+        RectTransform rectTransform = uiElement.GetComponent<RectTransform>();
+        return RectTransformUtility.RectangleContainsScreenPoint(
+            rectTransform,
+            Input.mousePosition,
+            Camera.main);
+
     }
 
-    private void PlantSeed(PlantData plantData){
+    public void PlantSeed(PlantData plantData){
         if(plotSelected != null){
             plotSelected.GetComponent<Plot>().Plant(plantData);
             plotSelected = null;
@@ -107,4 +182,87 @@ public GameObject plotPrefab;
         StartCoroutine(DelayMenu());
         //plotSelected.GetComponent<Collider2D>().enabled = true;
     }
+
+    public void OpenUIcat()
+    {
+
+        CloseUI();
+
+
+        catSelectUI.SetActive(true);
+        isCatSelectUI = true;
+
+
+        Collider2D[] plotColliders = plotsParent.GetComponentsInChildren<Collider2D>();
+
+        if (plotColliders.Length == 0)
+        {
+            Debug.LogWarning("No Collider2D components found in child objects of plotsParent.");
+        }
+
+
+        foreach (Collider2D collider in plotColliders)
+        {
+            if (collider.gameObject.CompareTag("Plot"))
+            {
+                collider.enabled = false;
+
+            }
+        }
+
+        Debug.Log("seedselect open");
+
+
+
+
+
+    }
+    public void CloseUIcat()
+    {
+        catsuleselected.SetActive(false);
+        catSelectUI.SetActive(false);
+        isCatSelectUI = false;
+
+        Debug.Log("zsxdfcgvbhjnkml,;.'xetcfyvgubhnjmk,l");
+        Collider2D[] plotColliders = plotsParent.GetComponentsInChildren<Collider2D>();
+
+        if (plotColliders.Length == 0)
+        {
+            Debug.LogWarning("No Collider2D components found in child objects of plotsParent.");
+        }
+
+        foreach (Collider2D collider in plotColliders)
+        {
+            if (collider.gameObject.CompareTag("Plot"))
+            {
+                collider.enabled = true;
+
+            }
+        }
+
+
+    }
+
+    public void catsuleselectenter()
+    {
+
+        catsuleselected.SetActive(true);
+    }
+    public void seedselectenter()
+    {
+
+        seedselected.SetActive(true);
+    }
+    public void catsuleselectexit()
+    {
+        if (isCatSelectUI) { return; }
+        catsuleselected.SetActive(false);
+    }
+    public void seedselectexit()
+    {
+        if (isSeedSelectUI) { return; }
+        seedselected.SetActive(false);
+       
+    }
+
 }
