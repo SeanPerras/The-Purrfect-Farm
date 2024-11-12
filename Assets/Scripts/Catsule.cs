@@ -8,56 +8,84 @@ public class Catsule : MonoBehaviour
 {
     public GameObject catPrefab;
     public Sprite catsuleSprite;
+    public string color = "White";
 
     private SpriteRenderer sprite;
     private Plot currentPlot;
-    private float timer = 1000f;
+    private float timer = 1500f;
+    private GameObject timerText;
     // Start is called before the first frame update
     void Start()
     {
         sprite = GetComponent<SpriteRenderer>();
         sprite.sprite = catsuleSprite;
-        //List<Collider2D> lc = Physics2D.OverlapCircleAll(transform.position, .1f).ToList();
-        //GameObject pc = lc.Find(x => x.gameObject.CompareTag("Plot")).gameObject;
-        currentPlot = Physics2D.OverlapCircleAll(transform.position, .1f).ToList().Find(x => x.gameObject.CompareTag("Plot")).gameObject.GetComponent<Plot>();
+        timerText = transform.GetChild(0).gameObject;
+        timerText.GetComponent<Renderer>().enabled = false;
     }
 
     // Update is called once per frame
     void Update()
     {
         if (timer >= 0)  CheckTimer();
-        
     }
     private void OnMouseUp()
     {
-        if(timer <= 0) StartCoroutine(TimesUp());
+        Debug.Log("Catsule MouseUp!");
+        if (timer <= 0) StartCoroutine(TimesUp());
+    }
+    private void OnMouseEnter()
+    {
+        if (timerText.GetComponent<TextMeshPro>().text != "Ready!")
+            timerText.GetComponent<Renderer>().enabled = true;
+    }
+    private void OnMouseExit()
+    {
+        if (timerText.GetComponent<TextMeshPro>().text != "Ready!")
+            timerText.GetComponent<Renderer>().enabled = false;
     }
     private void CheckTimer()
     {
-        if (timer == 0) transform.GetChild(0).GetComponent<TextMeshPro>().text = "Ready!";
-        else transform.GetChild(0).GetComponent<TextMeshPro>().text = timer--.ToString();
+        if (timer == 0)
+        {
+            timerText.GetComponent<TextMeshPro>().text = "Ready!";
+            timerText.GetComponent<Renderer>().enabled = true;
+        }
+        else timerText.GetComponent<TextMeshPro>().text = Mathf.RoundToInt(timer-- / 100).ToString();
     }
 
     IEnumerator TimesUp()
     {
         yield return new WaitForSeconds(.25f);
+        Debug.Log("Time's Up!");
         GameObject cat = Instantiate(catPrefab, transform.position, catPrefab.transform.rotation);
         Plot[] plots = currentPlot.GetAdjPlots().Where(g => g != null).Select(go => go.GetComponent<Plot>()).ToArray();
-        List<string> colors = plots.Where(p => p.plant != null).Select(pl => pl.plant.GetComponent<Plant>().color).ToList();
-        string col; //= GameObject.Find("Farm (9x9)").GetComponent<Farm>().Colors.First(kvp => kvp.Value.SequenceEqual(colors) || ContainsAll(colors, kvp.Value)).Key;
+        List<string> colors = plots.Select(p => p.GetColor()).ToList();
+        string col;
         try{
+            List<string> debug = colors;
             col = GameObject.Find("Farm (9x9)").GetComponent<Farm>().Colors.First(kvp => kvp.Value.SequenceEqual(colors) || ContainsAll(colors, kvp.Value)).Key;
         }
         catch{col = "White"; }
         cat.GetComponent<Cat>().SetColor(col);
+        currentPlot.ReEnablePlot();
         Destroy(gameObject);
     }
+    public void SetPlotReference(Plot assignedPlot)
+    {
+        currentPlot = assignedPlot;
+        currentPlot.GetComponent<Collider2D>().enabled = false;
+    }
+    public Plot GetPlotReference() { return currentPlot; }
     private bool ContainsAll(List<string> l1, List<string> l2)
     {
         bool ret = false;
+        List<string> temp = (from item in l1 select item[..]).ToList();
         foreach (string s in l2)
-            if (l1.Contains(s))
+            if (temp.Contains(s))
+            {
                 ret = true;
+                temp.Remove(s);
+            }
             else return false;
         return ret;
     }

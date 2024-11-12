@@ -75,7 +75,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 5
-  m_Sprite: {fileID: 21300000, guid: 6d12bc3a32bc8c149855c39bd2f75b69, type: 3}
+  m_Sprite: {fileID: 21300000, guid: cca0cdefea8414d469d6847bc24f8ce8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -144,3 +144,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   plantData: {fileID: 11400000, guid: 7acb2e0c4c3172b4aa321ed7c9e6f2ff, type: 2}
+  color: 

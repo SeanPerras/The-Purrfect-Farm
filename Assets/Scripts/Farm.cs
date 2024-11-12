@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.U2D;
@@ -29,8 +30,7 @@ public class Farm : MonoBehaviour
 
 
     private Vector3 mousePos;
-    private bool plotMode = true;
-
+    private bool plotMode = true; //This is just until we implement a proper "I want to plow." mechanic.
 
     // Start is called before the first frame update
     void Start()
@@ -62,8 +62,7 @@ public class Farm : MonoBehaviour
         if (seedSelectUI.activeSelf == false)
         {
             Vector3 db = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Debug.DrawLine(db - new Vector3(.1f, 0, 0), db + new Vector3(.1f, 0, 0), Color.red, 10f, false);
-            List<GameObject> collidedGameObjects = Physics2D.OverlapCircleAll(Camera.main.ScreenToWorldPoint(Input.mousePosition), .1f)
+            List<GameObject> collidedGameObjects = Physics2D.OverlapCircleAll(Camera.main.ScreenToWorldPoint(Input.mousePosition), 0)
                     .Select(c => c.gameObject).Where(x => !x.name.Contains("(9x9)")).ToList();
             GameObject land = collidedGameObjects.Find(c => c.name == "Land");
             collidedGameObjects.Remove(land);
@@ -79,13 +78,10 @@ public class Farm : MonoBehaviour
                 land.SetActive(false);
                 Debug.Log("Plot placed!");
             }
-            //if (!(collidedGameObjects.Find(c => c.name.Contains("Plant")) || collidedGameObjects.Find(c => c.name.Contains("Catsule")))
-            if (collidedGameObjects.Count == 0
-                && plot != null)
+            else if (collidedGameObjects.Count == 0 && plot != null)
             {
                 plotSelected = plot;
                 OpenUI();
-
             }
             collidedGameObjects.Clear();
         }
@@ -176,7 +172,8 @@ public class Farm : MonoBehaviour
     public void PlantCatsule(){
         if(plotSelected != null){
             GameObject catsule = Instantiate(catsulePrefab, plotSelected.transform.position, plotSelected.transform.rotation);
-            plotSelected.GetComponent<Collider2D>().enabled = true;
+            plotSelected.GetComponent<Plot>().Plant(catsule.GetComponent<Catsule>());
+            //plotSelected.GetComponent<Collider2D>().enabled = true;
             plotSelected = null;
         }
         StartCoroutine(DelayMenu());
@@ -260,9 +257,8 @@ public class Farm : MonoBehaviour
     }
     public void seedselectexit()
     {
-        if (isSeedSelectUI) { return; }
-        seedselected.SetActive(false);
-       
+        yield return new WaitForSeconds(.25f);
+        seedSelectUI.SetActive(false);
     }
 
 }

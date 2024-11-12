@@ -34,6 +34,11 @@ public class Plant : MonoBehaviour
     public void SetPlotReference(Plot assignedPlot)
     {
         plot = assignedPlot;
+        plot.GetComponent<Collider2D>().enabled = false;
+    }
+    public Plot GetPlotReference()
+    {
+        return plot;
     }
 
     // Update is called once per frame
