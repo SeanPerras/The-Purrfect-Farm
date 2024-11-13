@@ -59,7 +59,7 @@ public class Farm : MonoBehaviour
     private void HandleClick()
     {
         Debug.Log("Mouse Up!");
-        if (seedSelectUI.activeSelf == false)
+        if (!seedSelectUI.activeSelf && !catSelectUI.activeSelf)
         {
             Vector3 db = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             List<GameObject> collidedGameObjects = Physics2D.OverlapCircleAll(Camera.main.ScreenToWorldPoint(Input.mousePosition), 0)
@@ -68,7 +68,7 @@ public class Farm : MonoBehaviour
             collidedGameObjects.Remove(land);
             GameObject plot = collidedGameObjects.Find(c => c.CompareTag("Plot")); //Im thinking do the planting of seeds the same way as this, where I look for the Plot name and then it pops up the UI element to plant a seed.
             collidedGameObjects.Remove(plot);
-            if (land != null && plotMode)
+            if (land && plotMode)
             {
                 Vector3 pos = land.transform.position;
                 GameObject newPlot = Instantiate(plotPrefab, pos, plotPrefab.transform.rotation);
@@ -78,19 +78,48 @@ public class Farm : MonoBehaviour
                 land.SetActive(false);
                 Debug.Log("Plot placed!");
             }
-            else if (collidedGameObjects.Count == 0 && plot != null)
+            else if (collidedGameObjects.Count == 0 && plot)
             {
                 plotSelected = plot;
                 OpenSeedUI();
             }
             collidedGameObjects.Clear();
         }
+        else if (IsClickOverUI(seedselected) && plotSelected)
+            OpenSeedUI();
+        else if (IsClickOverUI(catsuleselected) && plotSelected)
+            OpenCatUI();
+    }
+    public void PlantSeed(PlantData plantData)
+    {
+        if (plotSelected != null)
+        {
+            plotSelected.GetComponent<Plot>().Plant(plantData);
+            plotSelected = null;
+        }
+        //StartCoroutine(DelayMenu(seedSelectUI));
+        CloseSeedUI();
+        //plotSelected.GetComponent<Collider2D>().enabled = true;
+    }
+    public void PlantCatsule()
+    {
+        if (plotSelected != null)
+        {
+            GameObject catsule = Instantiate(catsulePrefab, plotSelected.transform.position, plotSelected.transform.rotation);
+            plotSelected.GetComponent<Plot>().Plant(catsule.GetComponent<Catsule>());
+            //plotSelected.GetComponent<Collider2D>().enabled = true;
+            plotSelected = null;
+        }
+        //StartCoroutine(DelayMenu(catSelectUI));
+        CloseCatUI();
+        //plotSelected.GetComponent<Collider2D>().enabled = true;
     }
 
     public void OpenSeedUI()
     {
+        if (plotSelected == null) return;
+        if (isCatSelectUI) CloseCatUI();
         seedselected.SetActive(true);
-        CloseCatUI();
 
         seedSelectUI.SetActive(true);  
         isSeedSelectUI = true;
@@ -115,8 +144,8 @@ public class Farm : MonoBehaviour
     public void CloseSeedUI()
     {
         seedselected.SetActive(false);
-        StartCoroutine(DelayMenu(seedSelectUI));
         isSeedSelectUI = false;
+        StartCoroutine(DelayMenu(seedSelectUI));
         Debug.Log("zsxdfcgvbhjnkml,;.'xetcfyvgubhnjmk,l");
 
         Collider2D[] plotColliders = plotsParent.GetComponentsInChildren<Collider2D>();
@@ -135,7 +164,10 @@ public class Farm : MonoBehaviour
     }
     public void OpenCatUI()
     {
-        CloseSeedUI();
+        if (!plotSelected) return;
+        if(isSeedSelectUI) CloseSeedUI();
+        catsuleselected.SetActive(true);
+
         catSelectUI.SetActive(true);
         isCatSelectUI = true;
 
@@ -159,8 +191,8 @@ public class Farm : MonoBehaviour
     public void CloseCatUI()
     {
         catsuleselected.SetActive(false);
-        StartCoroutine(DelayMenu(catSelectUI));
         isCatSelectUI = false;
+        StartCoroutine(DelayMenu(catSelectUI));
 
         Debug.Log("zsxdfcgvbhjnkml,;.'xetcfyvgubhnjmk,l");
         Collider2D[] plotColliders = plotsParent.GetComponentsInChildren<Collider2D>();
@@ -189,28 +221,27 @@ public class Farm : MonoBehaviour
 
     }
 
-    public void PlantSeed(PlantData plantData){
-        if(plotSelected != null){
-            plotSelected.GetComponent<Plot>().Plant(plantData);
-            plotSelected = null;
-        }
-        StartCoroutine(DelayMenu(seedSelectUI));
-        //plotSelected.GetComponent<Collider2D>().enabled = true;
+    public void SeedSelectEnter()
+    {
+        seedselected.SetActive(true);
+    }
+    public void CatsuleSelectEnter()
+    {
+        catsuleselected.SetActive(true);
+    }
+    public void SeedSelectExit()
+    {
+        if (isSeedSelectUI) { return; }
+        seedselected.SetActive(false);
+    }
+    public void CatsuleSelectExit()
+    {
+        if (isCatSelectUI) { return; }
+        catsuleselected.SetActive(false);
     }
     IEnumerator DelayMenu(GameObject UI)
     {
         yield return new WaitForSeconds(.25f);
         UI.SetActive(false);
-    }
-
-    public void PlantCatsule(){
-        if(plotSelected != null){
-            GameObject catsule = Instantiate(catsulePrefab, plotSelected.transform.position, plotSelected.transform.rotation);
-            plotSelected.GetComponent<Plot>().Plant(catsule.GetComponent<Catsule>());
-            //plotSelected.GetComponent<Collider2D>().enabled = true;
-            plotSelected = null;
-        }
-        StartCoroutine(DelayMenu(catSelectUI));
-        //plotSelected.GetComponent<Collider2D>().enabled = true;
     }
 }

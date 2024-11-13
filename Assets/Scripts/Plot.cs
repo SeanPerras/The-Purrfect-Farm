@@ -22,14 +22,13 @@ public class Plot : MonoBehaviour
         int index = 0;
         foreach (Vector2 p in positions)
         {
-            GameObject go = Physics2D.OverlapCircleAll(p, 0).Where(g => !g.name.Contains("9x9")).Select(c => c.gameObject).ToList()[0];
+            GameObject go = Physics2D.OverlapCircleAll(p, 0).Select(c => c.gameObject).ToList()[0];
             if (go.CompareTag("Plot") || go.name.Contains("Plant") || go.name.Contains("Catsule"))
             {
                 adjPlots[index] = go.CompareTag("Plot") ? go :
                     go.name.Contains("Plant") ? adjPlots[index] = go.GetComponent<Plant>().GetPlotReference().gameObject :
                     go.name.Contains("Catsule") ? adjPlots[index] = go.GetComponent<Catsule>().GetPlotReference().gameObject :
                     null;
-                //adjPlots[index] = go;
                 if(adjPlots[index]) adjPlots[index].GetComponent<Plot>().AddPlot(gameObject, (index + 2) % 4);
             }
             index++;
