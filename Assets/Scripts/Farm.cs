@@ -73,23 +73,24 @@ public class Farm : MonoBehaviour
                 Vector3 pos = land.transform.position;
                 GameObject newPlot = Instantiate(plotPrefab, pos, plotPrefab.transform.rotation);
                 newPlot.transform.SetParent(GameObject.Find("Plots").transform);
-                plotSelected = newPlot;
-                OpenUI();
+                //plotSelected = newPlot;
+                //OpenUI();
                 land.SetActive(false);
                 Debug.Log("Plot placed!");
             }
             else if (collidedGameObjects.Count == 0 && plot != null)
             {
                 plotSelected = plot;
-                OpenUI();
+                OpenSeedUI();
             }
             collidedGameObjects.Clear();
         }
     }
 
-    public void OpenUI(){
-        seedselectenter();
-        CloseUIcat();
+    public void OpenSeedUI()
+    {
+        seedselected.SetActive(true);
+        CloseCatUI();
 
         seedSelectUI.SetActive(true);  
         isSeedSelectUI = true;
@@ -101,25 +102,20 @@ public class Farm : MonoBehaviour
             Debug.LogWarning("No Collider2D components found in child objects of plotsParent.");
         }
 
-       
-        foreach (Collider2D collider in plotColliders)
-        {
-            if (collider.gameObject.CompareTag("Plot")) 
-            { 
-                collider.enabled = false; 
-
-            }
-        }
+        //foreach (Collider2D collider in plotColliders)
+        //{
+        //    if (collider.gameObject.CompareTag("Plot")) 
+        //    { 
+        //        collider.enabled = false;
+        //    }
+        //}
 
         Debug.Log("seedselect open");
-
-
     }
-    public void CloseUI()
+    public void CloseSeedUI()
     {
         seedselected.SetActive(false);
-        seedselectexit();
-        seedSelectUI.SetActive(false);
+        StartCoroutine(DelayMenu(seedSelectUI));
         isSeedSelectUI = false;
         Debug.Log("zsxdfcgvbhjnkml,;.'xetcfyvgubhnjmk,l");
 
@@ -129,20 +125,58 @@ public class Farm : MonoBehaviour
         {
             Debug.LogWarning("No Collider2D components found in child objects of plotsParent.");
         }
+        //foreach (Collider2D collider in plotColliders)
+        //{
+        //    if (collider.gameObject.CompareTag("Plot"))
+        //    {
+        //        collider.enabled = true;
+        //    }
+        //}
+    }
+    public void OpenCatUI()
+    {
+        CloseSeedUI();
+        catSelectUI.SetActive(true);
+        isCatSelectUI = true;
 
+        Collider2D[] plotColliders = plotsParent.GetComponentsInChildren<Collider2D>();
 
-        foreach (Collider2D collider in plotColliders)
+        if (plotColliders.Length == 0)
         {
-            if (collider.gameObject.CompareTag("Plot"))
-            {
-                collider.enabled = true;
-
-            }
+            Debug.LogWarning("No Collider2D components found in child objects of plotsParent.");
         }
 
+        //foreach (Collider2D collider in plotColliders)
+        //{
+        //    if (collider.gameObject.CompareTag("Plot"))
+        //    {
+        //        collider.enabled = false;
+        //    }
+        //}
 
+        Debug.Log("seedselect open");
+    }
+    public void CloseCatUI()
+    {
+        catsuleselected.SetActive(false);
+        StartCoroutine(DelayMenu(catSelectUI));
+        isCatSelectUI = false;
 
+        Debug.Log("zsxdfcgvbhjnkml,;.'xetcfyvgubhnjmk,l");
+        Collider2D[] plotColliders = plotsParent.GetComponentsInChildren<Collider2D>();
 
+        if (plotColliders.Length == 0)
+        {
+            Debug.LogWarning("No Collider2D components found in child objects of plotsParent.");
+        }
+
+        //foreach (Collider2D collider in plotColliders)
+        //{
+        //    if (collider.gameObject.CompareTag("Plot"))
+        //    {
+        //        collider.enabled = true;
+        //    }
+        //}
     }
     private bool IsClickOverUI(GameObject uiElement)
     {
@@ -160,13 +194,13 @@ public class Farm : MonoBehaviour
             plotSelected.GetComponent<Plot>().Plant(plantData);
             plotSelected = null;
         }
-        StartCoroutine(DelayMenu());
+        StartCoroutine(DelayMenu(seedSelectUI));
         //plotSelected.GetComponent<Collider2D>().enabled = true;
     }
-    IEnumerator DelayMenu()
+    IEnumerator DelayMenu(GameObject UI)
     {
         yield return new WaitForSeconds(.25f);
-        seedSelectUI.SetActive(false);
+        UI.SetActive(false);
     }
 
     public void PlantCatsule(){
@@ -176,89 +210,7 @@ public class Farm : MonoBehaviour
             //plotSelected.GetComponent<Collider2D>().enabled = true;
             plotSelected = null;
         }
-        StartCoroutine(DelayMenu());
+        StartCoroutine(DelayMenu(catSelectUI));
         //plotSelected.GetComponent<Collider2D>().enabled = true;
     }
-
-    public void OpenUIcat()
-    {
-
-        CloseUI();
-
-
-        catSelectUI.SetActive(true);
-        isCatSelectUI = true;
-
-
-        Collider2D[] plotColliders = plotsParent.GetComponentsInChildren<Collider2D>();
-
-        if (plotColliders.Length == 0)
-        {
-            Debug.LogWarning("No Collider2D components found in child objects of plotsParent.");
-        }
-
-
-        foreach (Collider2D collider in plotColliders)
-        {
-            if (collider.gameObject.CompareTag("Plot"))
-            {
-                collider.enabled = false;
-
-            }
-        }
-
-        Debug.Log("seedselect open");
-
-
-
-
-
-    }
-    public void CloseUIcat()
-    {
-        catsuleselected.SetActive(false);
-        catSelectUI.SetActive(false);
-        isCatSelectUI = false;
-
-        Debug.Log("zsxdfcgvbhjnkml,;.'xetcfyvgubhnjmk,l");
-        Collider2D[] plotColliders = plotsParent.GetComponentsInChildren<Collider2D>();
-
-        if (plotColliders.Length == 0)
-        {
-            Debug.LogWarning("No Collider2D components found in child objects of plotsParent.");
-        }
-
-        foreach (Collider2D collider in plotColliders)
-        {
-            if (collider.gameObject.CompareTag("Plot"))
-            {
-                collider.enabled = true;
-
-            }
-        }
-
-
-    }
-
-    public void catsuleselectenter()
-    {
-
-        catsuleselected.SetActive(true);
-    }
-    public void seedselectenter()
-    {
-
-        seedselected.SetActive(true);
-    }
-    public void catsuleselectexit()
-    {
-        if (isCatSelectUI) { return; }
-        catsuleselected.SetActive(false);
-    }
-    public void seedselectexit()
-    {
-        yield return new WaitForSeconds(.25f);
-        seedSelectUI.SetActive(false);
-    }
-
 }
