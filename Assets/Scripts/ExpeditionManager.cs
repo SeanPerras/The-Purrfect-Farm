@@ -11,6 +11,8 @@ public class ExpeditionManager : MonoBehaviour
     private int maxTeamSize = 3;
     public static ExpeditionManager instance;
     private Expedition currentExpedition;
+    public List<Image> catImages;
+    public Sprite defaultSprite;
     // Start is called before the first frame update
     void Awake(){
         if(instance == null)
@@ -28,13 +30,24 @@ public class ExpeditionManager : MonoBehaviour
         foreach (Toggle toggle in toggles) {
         toggle.isOn = false;
         }
+        foreach(Image image in catImages){
+                    if (image.sprite != defaultSprite){
+                        image.sprite = defaultSprite;
+                    }
+                }
         Debug.Log("Team selection UI opened by: " + expedition.name);
     }
 
-    public void CatToggled(bool isOn, GameObject cat){
+    public void CatToggled(bool isOn, GameObject cat, Sprite catSprite){
         if(isOn){
             if(selectedCats.Count < maxTeamSize){
                 selectedCats.Add(cat);
+                foreach(Image image in catImages){
+                    if (image.sprite == defaultSprite){
+                        image.sprite = catSprite;
+                        break;
+                    }
+                }
                 Debug.Log(cat.name + " added to the team.");
             }
             else{
@@ -45,6 +58,12 @@ public class ExpeditionManager : MonoBehaviour
         else{
             if(selectedCats.Contains(cat)){
                 selectedCats.Remove(cat);
+                foreach(Image image in catImages){
+                    if (image.sprite == catSprite){
+                        image.sprite = defaultSprite;
+                        break;
+                    }
+                }
                 Debug.Log(cat.name + " removed from the team");
             }
         }

@@ -6,6 +6,7 @@ public class AudioManager : MonoBehaviour
     public AudioSource musicSource;
 
     public AudioClip main_menu;
+    public AudioClip expedition;
     //public AudioClip virusDeath;
     //public AudioClip bossDeath;
 
@@ -30,6 +31,11 @@ public class AudioManager : MonoBehaviour
             case 0:
                 // Play main menu music
                 musicSource.clip = main_menu;
+                musicSource.loop = true;
+                break;
+
+            case 2:
+                musicSource.clip = expedition;
                 musicSource.loop = true;
                 break;
             default:

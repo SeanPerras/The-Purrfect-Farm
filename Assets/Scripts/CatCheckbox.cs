@@ -8,6 +8,7 @@ public class CatCheckbox : MonoBehaviour
 
     public GameObject cat;
     private Toggle toggle;
+    public Sprite catSprite;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,7 +18,7 @@ public class CatCheckbox : MonoBehaviour
     }
 
     private void OnValueChanged(bool isOn){
-        ExpeditionManager.instance.CatToggled(isOn, cat);
+        ExpeditionManager.instance.CatToggled(isOn, cat, catSprite);
 
     }
 
