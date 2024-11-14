@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ExpeditionManager : MonoBehaviour
 {
@@ -23,10 +24,33 @@ public class ExpeditionManager : MonoBehaviour
         currentExpedition = expedition;
         selectedCats.Clear();
         teamSelectUI.SetActive(true);
+        Toggle[] toggles = teamSelectUI.GetComponentsInChildren<Toggle>();
+        foreach (Toggle toggle in toggles) {
+        toggle.isOn = false;
+        }
         Debug.Log("Team selection UI opened by: " + expedition.name);
     }
 
-    public void CatSelected(GameObject cat){
+    public void CatToggled(bool isOn, GameObject cat){
+        if(isOn){
+            if(selectedCats.Count < maxTeamSize){
+                selectedCats.Add(cat);
+                Debug.Log(cat.name + " added to the team.");
+            }
+            else{
+                Debug.Log("Max team size is 3");
+            }
+        }
+
+        else{
+            if(selectedCats.Contains(cat)){
+                selectedCats.Remove(cat);
+                Debug.Log(cat.name + " removed from the team");
+            }
+        }
+    }
+
+    /*public void CatSelected(GameObject cat){
 
         if(selectedCats.Count >= maxTeamSize){
             Debug.Log("Max team size is 3");
@@ -48,7 +72,7 @@ public class ExpeditionManager : MonoBehaviour
             Debug.Log(removeCat.name + " removed from the team");
 
         }
-    }
+    }*/
 
     public void SendExpeditionManager(){
         if(selectedCats.Count == 0){
