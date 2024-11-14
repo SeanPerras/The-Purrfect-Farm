@@ -115,7 +115,7 @@ public class Plant : MonoBehaviour
             int rand = Mathf.RoundToInt(Random.value * (plantData.growthStages.Length - 4));
             plantData.growthStages[3] = plantData.growthStages[rand + 3];
             plantData.growthStages[rand + 3] = temp;
-            color = plantData.growthStages[3].name.Split(" ")[0];
+            color = plantData.growthStages[3].name.Split("_")[1];
         }
     }
 

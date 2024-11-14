@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -61,6 +62,7 @@ public class Cat : MonoBehaviour
         sprite = Resources.Load<Sprite>(spritePath + c);  // Make sure the sprite is in the Resources folder
         //#endif
         GetComponent<SpriteRenderer>().sprite = sprite;
+        GetComponent<SpriteRenderer>().color = ColorUtility.TryParseHtmlString(color, out Color co) ? co : Color.white;
         //Debug.Log(AssetDatabase.GetAssetPath(sprite));
     }
 }

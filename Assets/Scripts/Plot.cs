@@ -22,7 +22,9 @@ public class Plot : MonoBehaviour
         int index = 0;
         foreach (Vector2 p in positions)
         {
-            GameObject go = Physics2D.OverlapCircleAll(p, 0).Select(c => c.gameObject).ToList()[0];
+            GameObject go;
+            try { go = Physics2D.OverlapCircleAll(p, 0).Select(c => c.gameObject).ToList()[0]; }
+            catch { index++; continue; }
             if (go.CompareTag("Plot") || go.name.Contains("Plant") || go.name.Contains("Catsule"))
             {
                 adjPlots[index] = go.CompareTag("Plot") ? go :

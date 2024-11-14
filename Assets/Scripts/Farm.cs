@@ -81,6 +81,8 @@ public class Farm : MonoBehaviour
             else if (collidedGameObjects.Count == 0 && plot)
             {
                 plotSelected = plot;
+                //seedselected.SetActive(true);
+                //catsuleselected.SetActive(true);
                 OpenSeedUI();
             }
             collidedGameObjects.Clear();
