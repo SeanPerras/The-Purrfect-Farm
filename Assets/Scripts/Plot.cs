@@ -69,6 +69,7 @@ public class Plot : MonoBehaviour
     }
 
     public void ReEnablePlot(){
+        GetComponent<SpriteRenderer>().color /= .9f;
         plotCollider.enabled = true;
         plant = null;
         catsule = null;
@@ -82,5 +83,10 @@ public class Plot : MonoBehaviour
         if (plant) return plant.color;
         else if (catsule) return catsule.color;
         else return "White";
+    }
+    public bool HasPlant() { return  plant != null; }
+    public void WaterPlot()
+    {
+        GetComponent<SpriteRenderer>().color *= .9f;
     }
 }

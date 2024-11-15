@@ -13,6 +13,7 @@ public class Plant : MonoBehaviour
     private Plot plot;
     private bool hasBeenHarvested = false;
     private bool isHarvestable = false;
+    private bool isWatered = false;
     private Collider2D plantCollider;
     // Start is called before the first frame update
     void Start()
@@ -44,43 +45,42 @@ public class Plant : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (currentGrowthStage < 3)
+        if (isWatered)
         {
-            growthTimer += Time.deltaTime;
-        }
-
-        if (growthTimer >= plantData.growthTime)
-        {
-            currentGrowthStage++;
-            currentSprite.sprite = plantData.growthStages[currentGrowthStage];
-            Debug.Log("Growth Stage: " + currentGrowthStage);
-            growthTimer = 0f;
-        }
-        if (currentGrowthStage == 2 && gameObject.name.Contains("Pepper"))
-        {
-            RandomizeColor();
-        }
-        if (currentGrowthStage == 3)
-        {
-            isHarvestable = true;
-            if (plantCollider != null && !plantCollider.enabled)
+            if (currentGrowthStage < 3)
             {
-                plantCollider.enabled = true;  // Enable collider when plant is fully grown
+                growthTimer += Time.deltaTime;
+            }
+
+            if (growthTimer >= plantData.growthTime)
+            {
+                currentGrowthStage++;
+                currentSprite.sprite = plantData.growthStages[currentGrowthStage];
+                Debug.Log("Growth Stage: " + currentGrowthStage);
+                growthTimer = 0f;
+            }
+            if (currentGrowthStage == 2 && gameObject.name.Contains("Pepper"))
+            {
+                RandomizeColor();
+            }
+            else if (currentGrowthStage == 3)
+            {
+                isHarvestable = true;
+                if (plantCollider != null && !plantCollider.enabled)
+                {
+                    plantCollider.enabled = true;  // Enable collider when plant is fully grown
+                }
+            }
+            else
+            {
+                // Disable the collider if the plant is not fully grown
+                if (plantCollider != null && plantCollider.enabled)
+                {
+                    plantCollider.enabled = false;  // Disable collider during growth
+                }
             }
         }
-        else
-        {
-            // Disable the collider if the plant is not fully grown
-            if (plantCollider != null && plantCollider.enabled)
-            {
-                plantCollider.enabled = false;  // Disable collider during growth
-            }
-        }
-
     }
-
-
-
     void OnMouseUp()
     {
         if (isHarvestable && !hasBeenHarvested)
@@ -95,7 +95,7 @@ public class Plant : MonoBehaviour
     }
 
 
-    IEnumerator Harvest()
+    IEnumerator Harvest(int coin = 10)
     {
         yield return new WaitForSeconds(.25f);
         Destroy(gameObject);
@@ -103,6 +103,7 @@ public class Plant : MonoBehaviour
         {
             plot.ReEnablePlot();
         }
+        //GameObject.Find("Farm (9x9)").GetComponent<Farm>().AddCoin(coin);
         //hasBeenHarvested = true;
         Debug.Log(color);
     }
@@ -118,5 +119,9 @@ public class Plant : MonoBehaviour
             color = plantData.growthStages[3].name.Split("_")[1];
         }
     }
-
+    public void Water()
+    {
+        if(!isWatered) plot.WaterPlot();
+        isWatered = true;
+    }
 }

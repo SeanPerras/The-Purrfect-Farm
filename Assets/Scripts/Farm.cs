@@ -25,12 +25,15 @@ public class Farm : MonoBehaviour
     public GameObject plotsParent;
     private bool isSeedSelectUI = false;
     private bool isCatSelectUI = false;
+    private bool isWateringMode = false;
     public GameObject catsuleselected;
     public GameObject seedselected;
+    public GameObject wateringCanSelected;
 
 
     private Vector3 mousePos;
     private bool plotMode = true; //This is just until we implement a proper "I want to plow." mechanic.
+    private int totalWateredPlants = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -63,11 +66,13 @@ public class Farm : MonoBehaviour
         {
             Vector3 db = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             List<GameObject> collidedGameObjects = Physics2D.OverlapCircleAll(Camera.main.ScreenToWorldPoint(Input.mousePosition), 0)
-                    .Select(c => c.gameObject).Where(x => !x.name.Contains("(9x9)")).ToList();
+                    .Select(c => c.gameObject).ToList();
             GameObject land = collidedGameObjects.Find(c => c.name == "Land");
             collidedGameObjects.Remove(land);
             GameObject plot = collidedGameObjects.Find(c => c.CompareTag("Plot")); //Im thinking do the planting of seeds the same way as this, where I look for the Plot name and then it pops up the UI element to plant a seed.
             collidedGameObjects.Remove(plot);
+            GameObject plant = collidedGameObjects.Find(c => c.name.Contains("Plant"));
+            collidedGameObjects.Remove(plant);
             if (land && plotMode)
             {
                 Vector3 pos = land.transform.position;
@@ -78,19 +83,17 @@ public class Farm : MonoBehaviour
                 land.SetActive(false);
                 Debug.Log("Plot placed!");
             }
+            else if ((plant || plot.GetComponent<Plot>().HasPlant()) && isWateringMode)
+                plant.GetComponent<Plant>().Water();
             else if (collidedGameObjects.Count == 0 && plot)
             {
                 plotSelected = plot;
-                //seedselected.SetActive(true);
-                //catsuleselected.SetActive(true);
+                seedselected.transform.GetComponentInParent<Transform>().GetChild(1).gameObject.SetActive(true);
+                catsuleselected.transform.GetComponentInParent<Transform>().GetChild(1).gameObject.SetActive(true);
                 OpenSeedUI();
             }
             collidedGameObjects.Clear();
         }
-        else if (IsClickOverUI(seedselected) && plotSelected)
-            OpenSeedUI();
-        else if (IsClickOverUI(catsuleselected) && plotSelected)
-            OpenCatUI();
     }
     public void PlantSeed(PlantData plantData)
     {
@@ -101,6 +104,7 @@ public class Farm : MonoBehaviour
         }
         //StartCoroutine(DelayMenu(seedSelectUI));
         CloseSeedUI();
+        if (!catSelectUI.activeSelf) HideIcons();
         //plotSelected.GetComponent<Collider2D>().enabled = true;
     }
     public void PlantCatsule()
@@ -114,7 +118,12 @@ public class Farm : MonoBehaviour
         }
         //StartCoroutine(DelayMenu(catSelectUI));
         CloseCatUI();
+        if (!seedSelectUI.activeSelf) HideIcons();
         //plotSelected.GetComponent<Collider2D>().enabled = true;
+    }
+    public void AddCoin(int coin)
+    {
+        //Add coin amount to currency;
     }
 
     public void OpenSeedUI()
@@ -150,12 +159,12 @@ public class Farm : MonoBehaviour
         StartCoroutine(DelayMenu(seedSelectUI));
         Debug.Log("zsxdfcgvbhjnkml,;.'xetcfyvgubhnjmk,l");
 
-        Collider2D[] plotColliders = plotsParent.GetComponentsInChildren<Collider2D>();
+        //Collider2D[] plotColliders = plotsParent.GetComponentsInChildren<Collider2D>();
 
-        if (plotColliders.Length == 0)
-        {
-            Debug.LogWarning("No Collider2D components found in child objects of plotsParent.");
-        }
+        //if (plotColliders.Length == 0)
+        //{
+        //    Debug.LogWarning("No Collider2D components found in child objects of plotsParent.");
+        //}
         //foreach (Collider2D collider in plotColliders)
         //{
         //    if (collider.gameObject.CompareTag("Plot"))
@@ -196,13 +205,13 @@ public class Farm : MonoBehaviour
         isCatSelectUI = false;
         StartCoroutine(DelayMenu(catSelectUI));
 
-        Debug.Log("zsxdfcgvbhjnkml,;.'xetcfyvgubhnjmk,l");
-        Collider2D[] plotColliders = plotsParent.GetComponentsInChildren<Collider2D>();
+        //Debug.Log("zsxdfcgvbhjnkml,;.'xetcfyvgubhnjmk,l");
+        //Collider2D[] plotColliders = plotsParent.GetComponentsInChildren<Collider2D>();
 
-        if (plotColliders.Length == 0)
-        {
-            Debug.LogWarning("No Collider2D components found in child objects of plotsParent.");
-        }
+        //if (plotColliders.Length == 0)
+        //{
+        //    Debug.LogWarning("No Collider2D components found in child objects of plotsParent.");
+        //}
 
         //foreach (Collider2D collider in plotColliders)
         //{
@@ -223,13 +232,9 @@ public class Farm : MonoBehaviour
 
     }
 
-    public void SeedSelectEnter()
+    public void SelectEnter(GameObject UI)
     {
-        seedselected.SetActive(true);
-    }
-    public void CatsuleSelectEnter()
-    {
-        catsuleselected.SetActive(true);
+        UI.SetActive(true);
     }
     public void SeedSelectExit()
     {
@@ -240,6 +245,20 @@ public class Farm : MonoBehaviour
     {
         if (isCatSelectUI) { return; }
         catsuleselected.SetActive(false);
+    }
+    public void WateringCanExit()
+    {
+        if (isWateringMode) { return; }
+        wateringCanSelected.SetActive(false);
+    }
+    public void WateringCanClick()
+    {
+        isWateringMode = !isWateringMode;
+    }
+    public void HideIcons()
+    {
+        seedselected.transform.GetComponentInParent<Transform>().GetChild(1).gameObject.SetActive(false);
+        catsuleselected.transform.GetComponentInParent<Transform>().GetChild(1).gameObject.SetActive(false);
     }
     IEnumerator DelayMenu(GameObject UI)
     {

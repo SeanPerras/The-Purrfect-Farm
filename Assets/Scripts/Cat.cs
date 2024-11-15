@@ -8,7 +8,7 @@ using UnityEngine.VFX;
 public class Cat : MonoBehaviour
 {
     public Sprite sprite;
-    public Vector3 catio;
+    public Vector3 catioPos;
 
     private string color = "White";
     private string spritePath;
@@ -21,6 +21,7 @@ public class Cat : MonoBehaviour
         //spritePath = spritePath[..(spritePath.IndexOf(color))];
         //#endif
         spritePath = "Sprites/Cats/Cat_Sit/";
+        //transform.position = WithinRange(catioPos);//<-This is for spawning the cats at the catio.
         //SetColor(color);
     }
 
@@ -41,17 +42,21 @@ public class Cat : MonoBehaviour
     }
     private void OnMouseDown()
     {
-        mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Debug.Log(mousePos);
+        //mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        //Debug.Log(mousePos);
     }
     private void OnMouseDrag()
     {
-        if (mousePos != Vector3.zero && Camera.main.ScreenToWorldPoint(Input.mousePosition) != mousePos)
+        //if (mousePos != Vector3.zero && Camera.main.ScreenToWorldPoint(Input.mousePosition) != mousePos)
             transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition) + new Vector3(0, 0, 10);
     }
     private void OnMouseUp()
     {
-        mousePos = Vector3.zero;
+        //mousePos = Vector3.zero;
+    }
+    private Vector3 WithinRange(Vector3 loc)
+    {
+        return loc;
     }
     public void SetColor(string c)
     {
