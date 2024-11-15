@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Home.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/Expedition Map.unity
+    guid: a63a716c794008d4e955af8ba5b451b7
   m_configObjects: {}

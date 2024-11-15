@@ -532,6 +532,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   musicSource: {fileID: 1435418668}
   main_menu: {fileID: 8300000, guid: f4958947eae4b0b4bbdf77004cc6dda2, type: 3}
+  farm_day: {fileID: 8300000, guid: 2b4a93cf2d301fc47a7f4a3feb10bb3e, type: 3}
+  expedition: {fileID: 8300000, guid: 30b16a393f1b60b41837ea2cc86ab001, type: 3}
 --- !u!1 &762524316
 GameObject:
   m_ObjectHideFlags: 0
