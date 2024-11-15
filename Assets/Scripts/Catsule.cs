@@ -12,7 +12,7 @@ public class Catsule : MonoBehaviour
 
     private SpriteRenderer sprite;
     private Plot currentPlot;
-    private float timer = 1500f;
+    private float timer = 15f;
     private GameObject timerText;
     // Start is called before the first frame update
     void Start()
@@ -26,12 +26,12 @@ public class Catsule : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (timer >= 0)  CheckTimer();
+        if (timer >= 0.0000f)  CheckTimer();
     }
     private void OnMouseUp()
     {
         Debug.Log("Catsule MouseUp!");
-        if (timer <= 0) StartCoroutine(TimesUp());
+        if (Mathf.Round(timer) <= 0) StartCoroutine(TimesUp());
     }
     private void OnMouseEnter()
     {
@@ -45,12 +45,16 @@ public class Catsule : MonoBehaviour
     }
     private void CheckTimer()
     {
-        if (timer == 0)
+        if (Mathf.Round(timer) <= 0)
         {
             timerText.GetComponent<TextMeshPro>().text = "Ready!";
             timerText.GetComponent<Renderer>().enabled = true;
         }
-        else timerText.GetComponent<TextMeshPro>().text = Mathf.RoundToInt(timer-- / 100).ToString();
+        else
+        {
+            timerText.GetComponent<TextMeshPro>().text = Mathf.Round(timer).ToString();
+            timer -= Time.deltaTime;
+        }
     }
 
     IEnumerator TimesUp()
@@ -65,7 +69,7 @@ public class Catsule : MonoBehaviour
             List<string> debug = colors;
             col = GameObject.Find("Farm (9x9)").GetComponent<Farm>().Colors.First(kvp => kvp.Value.SequenceEqual(colors) || ContainsAll(colors, kvp.Value)).Key;
         }
-        catch{col = "White"; }
+        catch{ col = "White"; }
         cat.GetComponent<Cat>().SetColor(col);
         currentPlot.ReEnablePlot();
         Destroy(gameObject);

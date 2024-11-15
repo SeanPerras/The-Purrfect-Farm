@@ -83,7 +83,7 @@ public class Farm : MonoBehaviour
                 land.SetActive(false);
                 Debug.Log("Plot placed!");
             }
-            else if ((plant || plot.GetComponent<Plot>().HasPlant()) && isWateringMode)
+            else if ((plant || ( plot && plot.GetComponent<Plot>().HasPlant())) && isWateringMode)
                 plant.GetComponent<Plant>().Water();
             else if (collidedGameObjects.Count == 0 && plot)
             {
