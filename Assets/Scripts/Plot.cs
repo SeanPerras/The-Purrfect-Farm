@@ -10,6 +10,7 @@ public class Plot : MonoBehaviour
     private List<Vector2> positions;
     private GameObject[] adjPlots = new GameObject[4];
     private Collider2D plotCollider;
+    //privtate int totalPlants = 0;
     //public GameObject plantPrefab;
     // Start is called before the first frame update
     void Start()
@@ -69,7 +70,8 @@ public class Plot : MonoBehaviour
     }
 
     public void ReEnablePlot(){
-        GetComponent<SpriteRenderer>().color /= .9f;
+        //GetComponent<SpriteRenderer>().color /= .9f;
+        transform.GetChild(0).GetComponent<SpriteRenderer>().color = Color.white;
         plotCollider.enabled = true;
         plant = null;
         catsule = null;
@@ -87,6 +89,8 @@ public class Plot : MonoBehaviour
     public bool HasPlant() { return  plant != null; }
     public void WaterPlot()
     {
-        GetComponent<SpriteRenderer>().color *= .9f;
+        //GetComponent<SpriteRenderer>().color *= .9f;
+        Color parCol = GetComponent<SpriteRenderer>().color;
+        transform.GetChild(0).GetComponent<SpriteRenderer>().color = parCol;
     }
 }

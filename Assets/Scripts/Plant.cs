@@ -20,7 +20,7 @@ public class Plant : MonoBehaviour
     {
         // currentSprite = GetComponent<SpriteRenderer>();
         //currentSprite.sprite = plantData.growthStages[currentGrowthStage];
-        if (color == "") color = gameObject.name.Split(" ")[0];
+        //if (color == "") color = gameObject.name.Split(" ")[0];
     }
 
     public void SetPlantData(PlantData data)
@@ -59,12 +59,13 @@ public class Plant : MonoBehaviour
                 Debug.Log("Growth Stage: " + currentGrowthStage);
                 growthTimer = 0f;
             }
-            if (currentGrowthStage == 2 && gameObject.name.Contains("Pepper"))
+            //if (currentGrowthStage == 2 && gameObject.name.Contains("Pepper"))
+            //{
+            //    RandomizeColor();
+            //}
+            if (currentGrowthStage == 3)
             {
-                RandomizeColor();
-            }
-            else if (currentGrowthStage == 3)
-            {
+                if (gameObject.name.Contains("Pepper") && color == "") RandomizeColor();
                 isHarvestable = true;
                 if (plantCollider != null && !plantCollider.enabled)
                 {
@@ -110,13 +111,14 @@ public class Plant : MonoBehaviour
 
     private void RandomizeColor()
     {
-        if (plantData.growthStages.Length > 4)
+        if (plantData.growthStages.Length > 4)//Meaning a pepper.
         {
-            Sprite temp = plantData.growthStages[3];
+            //Sprite temp = plantData.growthStages[3];
             int rand = Mathf.RoundToInt(Random.value * (plantData.growthStages.Length - 4));
-            plantData.growthStages[3] = plantData.growthStages[rand + 3];
-            plantData.growthStages[rand + 3] = temp;
-            color = plantData.growthStages[3].name.Split("_")[1];
+            //plantData.growthStages[3] = plantData.growthStages[rand + 3];
+            //plantData.growthStages[rand + 3] = temp;
+            currentSprite.sprite = plantData.growthStages[rand + 3];
+            color = plantData.growthStages[rand + 3].name.Split("_")[1];
         }
     }
     public void Water()

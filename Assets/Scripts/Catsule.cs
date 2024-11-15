@@ -71,6 +71,7 @@ public class Catsule : MonoBehaviour
         }
         catch{ col = "White"; }
         cat.GetComponent<Cat>().SetColor(col);
+        Debug.Log(string.Join("|", colors));
         currentPlot.ReEnablePlot();
         Destroy(gameObject);
     }
