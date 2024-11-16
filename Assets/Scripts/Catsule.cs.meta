@@ -5,7 +5,7 @@ MonoImporter:
   serializedVersion: 2
   defaultReferences:
   - catPrefab: {fileID: 7688967657440364138, guid: 73ecb038621a37c4cbb519c3d76764c8, type: 3}
-  - catsuleSprite: {fileID: 21300000, guid: f10d4bcc25b3484458678cf964a1aaf9, type: 3}
+  - catsuleSprite: {fileID: 21300000, guid: 0e0b7f1ae58f38d46ad91c54351df3a9, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

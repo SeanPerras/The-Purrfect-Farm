@@ -184,7 +184,7 @@ GameObject:
   - component: {fileID: -3833115241662989648}
   - component: {fileID: 6563496183124419523}
   m_Layer: 0
-  m_Name: Catsule
+  m_Name: White Catsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -199,7 +199,7 @@ Transform:
   m_GameObject: {fileID: 7483263151919922871}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.25, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -219,7 +219,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   catPrefab: {fileID: 7688967657440364138, guid: 73ecb038621a37c4cbb519c3d76764c8, type: 3}
-  catsuleSprite: {fileID: 21300000, guid: f10d4bcc25b3484458678cf964a1aaf9, type: 3}
+  catsuleSprite: {fileID: 21300000, guid: 0e0b7f1ae58f38d46ad91c54351df3a9, type: 3}
+  color: White
 --- !u!212 &-3833115241662989648
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -261,7 +262,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 5
-  m_Sprite: {fileID: 21300000, guid: f10d4bcc25b3484458678cf964a1aaf9, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0e0b7f1ae58f38d46ad91c54351df3a9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

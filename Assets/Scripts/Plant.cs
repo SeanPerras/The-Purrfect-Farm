@@ -37,10 +37,7 @@ public class Plant : MonoBehaviour
         plot = assignedPlot;
         plot.GetComponent<Collider2D>().enabled = false;
     }
-    public Plot GetPlotReference()
-    {
-        return plot;
-    }
+    public Plot GetPlotReference() { return plot; }
 
     // Update is called once per frame
     void Update()
@@ -59,10 +56,6 @@ public class Plant : MonoBehaviour
                 Debug.Log("Growth Stage: " + currentGrowthStage);
                 growthTimer = 0f;
             }
-            //if (currentGrowthStage == 2 && gameObject.name.Contains("Pepper"))
-            //{
-            //    RandomizeColor();
-            //}
             if (currentGrowthStage == 3)
             {
                 if (gameObject.name.Contains("Pepper") && color == "") RandomizeColor();
@@ -94,8 +87,6 @@ public class Plant : MonoBehaviour
             Debug.Log("Plant is not fully grown yet.");
         }
     }
-
-
     IEnumerator Harvest(int coin = 10)
     {
         yield return new WaitForSeconds(.25f);
@@ -113,12 +104,9 @@ public class Plant : MonoBehaviour
     {
         if (plantData.growthStages.Length > 4)//Meaning a pepper.
         {
-            //Sprite temp = plantData.growthStages[3];
             int rand = Mathf.RoundToInt(Random.value * (plantData.growthStages.Length - 4));
-            //plantData.growthStages[3] = plantData.growthStages[rand + 3];
-            //plantData.growthStages[rand + 3] = temp;
             currentSprite.sprite = plantData.growthStages[rand + 3];
-            color = plantData.growthStages[rand + 3].name.Split("_")[1];
+            color = currentSprite.sprite.name.Split("_")[1];
         }
     }
     public void Water()

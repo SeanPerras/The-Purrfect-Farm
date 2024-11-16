@@ -10,6 +10,7 @@ public class Plot : MonoBehaviour
     private List<Vector2> positions;
     private GameObject[] adjPlots = new GameObject[4];
     private Collider2D plotCollider;
+    private GameObject oldLand;
     //privtate int totalPlants = 0;
     //public GameObject plantPrefab;
     // Start is called before the first frame update
@@ -32,11 +33,10 @@ public class Plot : MonoBehaviour
                     go.name.Contains("Plant") ? adjPlots[index] = go.GetComponent<Plant>().GetPlotReference().gameObject :
                     go.name.Contains("Catsule") ? adjPlots[index] = go.GetComponent<Catsule>().GetPlotReference().gameObject :
                     null;
-                if(adjPlots[index]) adjPlots[index].GetComponent<Plot>().AddPlot(gameObject, (index + 2) % 4);
+                if(adjPlots[index]) adjPlots[index].GetComponent<Plot>().AddPlotRef(gameObject, (index + 2) % 4);
             }
             index++;
         }
-
         plotCollider = GetComponent<Collider2D>();
     }
 
@@ -50,16 +50,10 @@ public class Plot : MonoBehaviour
         Debug.Log("Plot clicked.");
     }
 
-    public void AddPlot(GameObject go, int ind)
+    public void AddPlotRef(GameObject go, int ind) { adjPlots[ind] = go; }
+    public void Plant(PlantData plantData)
     {
-        adjPlots[ind] = go;
-    }
-
-    public void Plant(PlantData plantData){
         plant = Instantiate(plantData.plantPrefab, transform.position, Quaternion.identity).GetComponent<Plant>();
-        //Plant plantScript = plant.GetComponent<Plant>();
-        //plantScript.SetPlantData(plantData);
-        //plantScript.SetPlotReference(this);
         plant.SetPlantData(plantData);
         plant.SetPlotReference(this);
     }
@@ -68,7 +62,6 @@ public class Plot : MonoBehaviour
         catsule = ct;
         catsule.SetPlotReference(this);
     }
-
     public void ReEnablePlot(){
         //GetComponent<SpriteRenderer>().color /= .9f;
         transform.GetChild(0).GetComponent<SpriteRenderer>().color = Color.white;
@@ -76,10 +69,7 @@ public class Plot : MonoBehaviour
         plant = null;
         catsule = null;
     }
-    public GameObject[] GetAdjPlots()
-    {
-        return adjPlots;    //{ TopRight, TopLeft, BottomLeft, BottomRight }
-    }
+    public GameObject[] GetAdjPlots() { return adjPlots; }    //{ TopRight, TopLeft, BottomLeft, BottomRight }
     public string GetColor()
     {
         if (plant) return plant.color;
@@ -92,5 +82,19 @@ public class Plot : MonoBehaviour
         //GetComponent<SpriteRenderer>().color *= .9f;
         Color parCol = GetComponent<SpriteRenderer>().color;
         transform.GetChild(0).GetComponent<SpriteRenderer>().color = parCol;
+    }
+    public void SetLandRef(GameObject land)
+    {
+        oldLand = land;
+        land.SetActive(false);
+    }
+    public void DeletePlot()
+    {
+        if (plant == null)
+        {
+            oldLand.SetActive(true);
+            Destroy(gameObject);
+        }
+        else Debug.Log("Harvest or delete the plant before deleting the plot!");
     }
 }

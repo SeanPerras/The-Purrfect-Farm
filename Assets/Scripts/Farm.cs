@@ -78,14 +78,12 @@ public class Farm : MonoBehaviour
                 Vector3 pos = land.transform.position;
                 GameObject newPlot = Instantiate(plotPrefab, pos, plotPrefab.transform.rotation);
                 newPlot.transform.SetParent(GameObject.Find("Plots").transform);
-                //plotSelected = newPlot;
-                //OpenUI();
-                land.SetActive(false);
+                newPlot.GetComponent<Plot>().SetLandRef(land);
                 Debug.Log("Plot placed!");
             }
             else if ((plant || ( plot && plot.GetComponent<Plot>().HasPlant())) && isWateringMode)
                 plant.GetComponent<Plant>().Water();
-            else if (collidedGameObjects.Count == 0 && plot)
+            else if (collidedGameObjects.Count == 0 && plot && !isWateringMode)
             {
                 plotSelected = plot;
                 seedselected.transform.GetComponentInParent<Transform>().GetChild(1).gameObject.SetActive(true);

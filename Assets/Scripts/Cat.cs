@@ -66,8 +66,11 @@ public class Cat : MonoBehaviour
         //#else 
         sprite = Resources.Load<Sprite>(spritePath + c);  // Make sure the sprite is in the Resources folder
         //#endif
-        GetComponent<SpriteRenderer>().sprite = sprite;
-        GetComponent<SpriteRenderer>().color = ColorUtility.TryParseHtmlString(color, out Color co) ? co : Color.white;
+        SpriteRenderer curr_Sprite = GetComponent<SpriteRenderer>();
+        curr_Sprite.sprite = sprite;
+        curr_Sprite.color = ColorUtility.TryParseHtmlString(color, out Color co) ? co : Color.white;
+        curr_Sprite.color += new Color(40, 40, 40);
+
         //Debug.Log(AssetDatabase.GetAssetPath(sprite));
     }
 }
