@@ -29,6 +29,8 @@ public class Farm : MonoBehaviour
     public GameObject catsuleselected;
     public GameObject seedselected;
     public GameObject wateringCanSelected;
+    public GameObject pauseMenu;
+    public GameObject optionsMenu;
 
 
     private Vector3 mousePos;
@@ -43,7 +45,16 @@ public class Farm : MonoBehaviour
     }
     // Update is called once per frame
     void Update()
+
+    
     {
+
+        if(pauseMenu.activeSelf){
+            return;
+        }
+        if(optionsMenu.activeSelf){
+            return;
+        }
         if (Input.GetMouseButtonUp(0))
         {
             if (Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero))

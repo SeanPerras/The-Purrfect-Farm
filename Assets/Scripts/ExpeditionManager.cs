@@ -113,5 +113,9 @@ public class ExpeditionManager : MonoBehaviour
     }
     }
 
+    public void CloseExpeditionMenu(){
+        teamSelectUI.SetActive(false);
+    }
+
 
 }

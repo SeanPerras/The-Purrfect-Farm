@@ -12,9 +12,16 @@ public class Expedition : MonoBehaviour
     private bool inProgress = false;
     private bool isCompleted = false;
     private float expeditionTimer = 0f;
-
+    public GameObject pauseMenu;
+    public GameObject optionsMenu;
 
     void OnMouseUp(){
+        if(pauseMenu.activeSelf){
+            return;
+        }
+        if(optionsMenu.activeSelf){
+            return;
+        }
         if(!inProgress){
             timerText.text = "";
         ExpeditionManager.instance.OpenTeamSelectUI(this);
