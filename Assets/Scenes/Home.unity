@@ -1707,6 +1707,11 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &526497993 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6804631877862291104, guid: 51f4f5db5429aa94281d6c3fc8f9ebd5, type: 3}
+  m_PrefabInstance: {fileID: 5257236564552140851}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &559812350
 GameObject:
   m_ObjectHideFlags: 0
@@ -8395,6 +8400,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 185078709096678649, guid: 32e44af3e8f90d74e9fba80c42d29703, type: 3}
+      propertyPath: shovel
+      value: 
+      objectReference: {fileID: 526497993}
+    - target: {fileID: 185078709096678649, guid: 32e44af3e8f90d74e9fba80c42d29703, type: 3}
       propertyPath: catSelectUI
       value: 
       objectReference: {fileID: 707796865}
@@ -8653,6 +8662,10 @@ PrefabInstance:
     - target: {fileID: 6804631877862291104, guid: 51f4f5db5429aa94281d6c3fc8f9ebd5, type: 3}
       propertyPath: m_Name
       value: Shovel
+      objectReference: {fileID: 0}
+    - target: {fileID: 6804631877862291104, guid: 51f4f5db5429aa94281d6c3fc8f9ebd5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

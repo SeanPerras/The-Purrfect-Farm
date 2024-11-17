@@ -34,6 +34,7 @@ public class Farm : MonoBehaviour
     private Vector3 mousePos;
     private bool plotMode = true; //This is just until we implement a proper "I want to plow." mechanic.
     private int totalWateredPlants = 0;
+    public GameObject shovel;
 
     // Start is called before the first frame update
     void Start()
@@ -76,6 +77,9 @@ public class Farm : MonoBehaviour
             if (land && plotMode)
             {
                 Vector3 pos = land.transform.position;
+                //shovel.SetActive(true);
+                //shovel.transform.position = pos;
+                //shovel.GetComponent<Animator>().Play("Dig Animation");
                 GameObject newPlot = Instantiate(plotPrefab, pos, plotPrefab.transform.rotation);
                 newPlot.transform.SetParent(GameObject.Find("Plots").transform);
                 newPlot.GetComponent<Plot>().SetLandRef(land);
