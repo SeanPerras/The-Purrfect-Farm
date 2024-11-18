@@ -9,9 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1633518381882958605}
-  - component: {fileID: 185078709096678649}
   - component: {fileID: 4734497811534462435}
-  - component: {fileID: 6380471187537303548}
   m_Layer: 0
   m_Name: Expansion (9x9)
   m_TagString: Untagged
@@ -115,26 +113,6 @@ Transform:
   - {fileID: 256227441804428097}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &185078709096678649
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5759379733158765927}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bbd68d4c0eb5e734b95d987e49b753f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  plotPrefab: {fileID: 705071896973154106, guid: 9496d78198c123643a69cddb4c1d0318, type: 3}
-  seedSelectUI: {fileID: 0}
-  catsulePrefab: {fileID: 0}
-  catSelectUI: {fileID: 0}
-  plotsParent: {fileID: 0}
-  catsuleselected: {fileID: 0}
-  seedselected: {fileID: 0}
-  wateringCanSelected: {fileID: 0}
 --- !u!212 &4734497811534462435
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -187,55 +165,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!60 &6380471187537303548
-PolygonCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5759379733158765927}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0.049999997, y: 0.049999997, z: 0.049999997, w: 0.049999997}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.16, y: 0.16}
-    newSize: {x: 0.16, y: 0.16}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 2
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: -45, y: 0}
-      - {x: 0, y: 22.5}
-      - {x: 45, y: 0}
-      - {x: 0, y: -22.5}
-  m_UseDelaunayMesh: 0
 --- !u!1001 &12786057238897975
 PrefabInstance:
   m_ObjectHideFlags: 0

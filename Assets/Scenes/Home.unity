@@ -1429,7 +1429,7 @@ RectTransform:
   m_Children:
   - {fileID: 778250333}
   - {fileID: 1688479999}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 2085339979}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -2032,7 +2032,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3805106466367312462}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Farm, Assembly-CSharp
         m_MethodName: PlantSeed
         m_Mode: 2
@@ -2118,7 +2118,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.11879805, g: 0.3207547, b: 0, a: 1}
+  m_BackGroundColor: {r: 0.32137772, g: 0.4339623, b: 0.35354474, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -2607,7 +2607,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 3805106466367312462}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Farm, Assembly-CSharp
           m_MethodName: CloseCatUI
           m_Mode: 1
@@ -2619,7 +2619,7 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-        - m_Target: {fileID: 3805106466367312462}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Farm, Assembly-CSharp
           m_MethodName: HideIcons
           m_Mode: 1
@@ -3157,7 +3157,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3805106466367312462}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Farm, Assembly-CSharp
         m_MethodName: PlantSeed
         m_Mode: 2
@@ -3617,7 +3617,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 3805106466367312462}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Farm, Assembly-CSharp
           m_MethodName: CloseSeedUI
           m_Mode: 1
@@ -3629,7 +3629,7 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-        - m_Target: {fileID: 3805106466367312462}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Farm, Assembly-CSharp
           m_MethodName: HideIcons
           m_Mode: 1
@@ -4135,6 +4135,81 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1932164318171668423, guid: 9496d78198c123643a69cddb4c1d0318, type: 3}
   m_PrefabInstance: {fileID: 992995483}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &920723127
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 920723128}
+  - component: {fileID: 920723130}
+  - component: {fileID: 920723129}
+  m_Layer: 5
+  m_Name: Panel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &920723128
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 920723127}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 958262547}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: -55}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &920723129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 920723127}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 508fec5ee68ba2a4ea3b28f8dcc2ad36, type: 3}
+  m_Type: 2
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 3.95
+--- !u!222 &920723130
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 920723127}
+  m_CullTransparentMesh: 1
 --- !u!1 &934563718
 GameObject:
   m_ObjectHideFlags: 0
@@ -4456,7 +4531,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 3805106466367312462}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Farm, Assembly-CSharp
           m_MethodName: OpenSeedUI
           m_Mode: 1
@@ -4472,7 +4547,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 3805106466367312462}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Farm, Assembly-CSharp
           m_MethodName: SelectExit
           m_Mode: 2
@@ -4488,7 +4563,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 3805106466367312462}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Farm, Assembly-CSharp
           m_MethodName: SelectEnter
           m_Mode: 2
@@ -4575,6 +4650,108 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 953677501}
   m_CullTransparentMesh: 1
+--- !u!1 &958262546
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 958262547}
+  - component: {fileID: 958262550}
+  - component: {fileID: 958262549}
+  - component: {fileID: 958262548}
+  m_Layer: 5
+  m_Name: Canvas
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &958262547
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 958262546}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 920723128}
+  m_Father: {fileID: 2085339979}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0, y: 0}
+--- !u!114 &958262548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 958262546}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+--- !u!114 &958262549
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 958262546}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_UiScaleMode: 0
+  m_ReferencePixelsPerUnit: 100
+  m_ScaleFactor: 1
+  m_ReferenceResolution: {x: 800, y: 600}
+  m_ScreenMatchMode: 0
+  m_MatchWidthOrHeight: 0
+  m_PhysicalUnit: 3
+  m_FallbackScreenDPI: 96
+  m_DefaultSpriteDPI: 96
+  m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 0
+--- !u!223 &958262550
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 958262546}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 1
+  m_Camera: {fileID: 519420031}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 0
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
+  m_AdditionalShaderChannelsFlag: 0
+  m_UpdateRectTransformForStandalone: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_TargetDisplay: 0
 --- !u!1 &959967933
 GameObject:
   m_ObjectHideFlags: 0
@@ -4783,7 +4960,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3805106466367312462}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Farm, Assembly-CSharp
         m_MethodName: PlantSeed
         m_Mode: 2
@@ -5186,126 +5363,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!1 &1026714681
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1026714682}
-  - component: {fileID: 1026714684}
-  - component: {fileID: 1026714683}
-  m_Layer: 0
-  m_Name: Tilemap
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1026714682
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1026714681}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1489721867}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!483693784 &1026714683
-TilemapRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1026714681}
-  m_Enabled: 1
-  m_CastShadows: 0
-  m_ReceiveShadows: 0
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 0
-  m_ReflectionProbeUsage: 0
-  m_RayTracingMode: 0
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 0
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_ChunkSize: {x: 32, y: 32, z: 32}
-  m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
-  m_MaxChunkCount: 16
-  m_MaxFrameAge: 16
-  m_SortOrder: 3
-  m_Mode: 0
-  m_DetectChunkCullingBounds: 0
-  m_MaskInteraction: 0
---- !u!1839735485 &1026714684
-Tilemap:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1026714681}
-  m_Enabled: 1
-  m_Tiles: {}
-  m_AnimatedTiles: {}
-  m_TileAssetArray: []
-  m_TileSpriteArray: []
-  m_TileMatrixArray: []
-  m_TileColorArray: []
-  m_TileObjectToInstantiateArray: []
-  m_AnimationFrameRate: 1
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Origin: {x: 0, y: 0, z: 0}
-  m_Size: {x: 0, y: 0, z: 1}
-  m_TileAnchor: {x: 0.5, y: 0.5, z: 0}
-  m_TileOrientation: 0
-  m_TileOrientationMatrix:
-    e00: 1
-    e01: 0
-    e02: 0
-    e03: 0
-    e10: 0
-    e11: 1
-    e12: 0
-    e13: 0
-    e20: 0
-    e21: 0
-    e22: 1
-    e23: 0
-    e30: 0
-    e31: 0
-    e32: 0
-    e33: 1
 --- !u!1 &1060986761
 GameObject:
   m_ObjectHideFlags: 0
@@ -6500,7 +6557,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3805106466367312462}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Farm, Assembly-CSharp
         m_MethodName: PlantSeed
         m_Mode: 2
@@ -6737,51 +6794,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &1489721865
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1489721867}
-  - component: {fileID: 1489721866}
-  m_Layer: 0
-  m_Name: Grid
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!156049354 &1489721866
-Grid:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1489721865}
-  m_Enabled: 1
-  m_CellSize: {x: 1, y: 0.5, z: 1}
-  m_CellGap: {x: 0, y: 0, z: 0}
-  m_CellLayout: 2
-  m_CellSwizzle: 0
---- !u!4 &1489721867
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1489721865}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1026714682}
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1525026247
 GameObject:
   m_ObjectHideFlags: 0
@@ -8657,7 +8669,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3805106466367312462}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Farm, Assembly-CSharp
         m_MethodName: PlantCatsule
         m_Mode: 1
@@ -9003,7 +9015,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3805106466367312462}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Farm, Assembly-CSharp
         m_MethodName: PlantSeed
         m_Mode: 2
@@ -9178,7 +9190,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 3805106466367312462}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Farm, Assembly-CSharp
           m_MethodName: OpenCatUI
           m_Mode: 1
@@ -9194,7 +9206,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 3805106466367312462}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Farm, Assembly-CSharp
           m_MethodName: SelectEnter
           m_Mode: 2
@@ -9210,7 +9222,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 3805106466367312462}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Farm, Assembly-CSharp
           m_MethodName: SelectExit
           m_Mode: 2
@@ -9305,7 +9317,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3805106466367312462}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Farm, Assembly-CSharp
         m_MethodName: PlantSeed
         m_Mode: 2
@@ -10047,7 +10059,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 3805106466367312462}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Farm, Assembly-CSharp
           m_MethodName: WateringCanClick
           m_Mode: 1
@@ -10063,7 +10075,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 3805106466367312462}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Farm, Assembly-CSharp
           m_MethodName: SelectEnter
           m_Mode: 2
@@ -10079,7 +10091,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 3805106466367312462}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Farm, Assembly-CSharp
           m_MethodName: SelectExit
           m_Mode: 2
@@ -10125,6 +10137,8 @@ Transform:
   - {fileID: 1844394417}
   - {fileID: 707796869}
   - {fileID: 934563722}
+  - {fileID: 244694818}
+  - {fileID: 958262547}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2105559183
@@ -10348,59 +10362,59 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 185078709096678649, guid: 32e44af3e8f90d74e9fba80c42d29703, type: 3}
+    - target: {fileID: 0}
       propertyPath: pDrag
       value: 
       objectReference: {fileID: 2800000, guid: c27376f831a77be4b80620c5ef08baf6, type: 3}
-    - target: {fileID: 185078709096678649, guid: 32e44af3e8f90d74e9fba80c42d29703, type: 3}
+    - target: {fileID: 0}
       propertyPath: shovel
       value: 
       objectReference: {fileID: 526497993}
-    - target: {fileID: 185078709096678649, guid: 32e44af3e8f90d74e9fba80c42d29703, type: 3}
+    - target: {fileID: 0}
       propertyPath: pPointer
       value: 
       objectReference: {fileID: 2800000, guid: 4082ec1442df588429edc73fc9b94134, type: 3}
-    - target: {fileID: 185078709096678649, guid: 32e44af3e8f90d74e9fba80c42d29703, type: 3}
+    - target: {fileID: 0}
       propertyPath: pauseMenu
       value: 
       objectReference: {fileID: 778250330}
-    - target: {fileID: 185078709096678649, guid: 32e44af3e8f90d74e9fba80c42d29703, type: 3}
+    - target: {fileID: 0}
       propertyPath: catSelectUI
       value: 
       objectReference: {fileID: 707796865}
-    - target: {fileID: 185078709096678649, guid: 32e44af3e8f90d74e9fba80c42d29703, type: 3}
+    - target: {fileID: 0}
       propertyPath: optionsMenu
       value: 
       objectReference: {fileID: 1688479998}
-    - target: {fileID: 185078709096678649, guid: 32e44af3e8f90d74e9fba80c42d29703, type: 3}
+    - target: {fileID: 0}
       propertyPath: plotsParent
       value: 
       objectReference: {fileID: 636059671}
-    - target: {fileID: 185078709096678649, guid: 32e44af3e8f90d74e9fba80c42d29703, type: 3}
+    - target: {fileID: 0}
       propertyPath: seedSelectUI
       value: 
       objectReference: {fileID: 1844394413}
-    - target: {fileID: 185078709096678649, guid: 32e44af3e8f90d74e9fba80c42d29703, type: 3}
+    - target: {fileID: 0}
       propertyPath: seedselected
       value: 
       objectReference: {fileID: 1909839588}
-    - target: {fileID: 185078709096678649, guid: 32e44af3e8f90d74e9fba80c42d29703, type: 3}
+    - target: {fileID: 0}
       propertyPath: catsulePrefab
       value: 
       objectReference: {fileID: 7483263151919922871, guid: c604577fffdf06b47961672f95159400, type: 3}
-    - target: {fileID: 185078709096678649, guid: 32e44af3e8f90d74e9fba80c42d29703, type: 3}
+    - target: {fileID: 0}
       propertyPath: catsuleselected
       value: 
       objectReference: {fileID: 1909839589}
-    - target: {fileID: 185078709096678649, guid: 32e44af3e8f90d74e9fba80c42d29703, type: 3}
+    - target: {fileID: 0}
       propertyPath: plotLayer.m_Bits
       value: 64
       objectReference: {fileID: 0}
-    - target: {fileID: 185078709096678649, guid: 32e44af3e8f90d74e9fba80c42d29703, type: 3}
+    - target: {fileID: 0}
       propertyPath: plantLayer.m_Bits
       value: 128
       objectReference: {fileID: 0}
-    - target: {fileID: 185078709096678649, guid: 32e44af3e8f90d74e9fba80c42d29703, type: 3}
+    - target: {fileID: 0}
       propertyPath: wateringCanSelected
       value: 
       objectReference: {fileID: 1641965011}
@@ -10480,7 +10494,7 @@ PrefabInstance:
       propertyPath: m_Name
       value: Farm (9x9)
       objectReference: {fileID: 0}
-    - target: {fileID: 6380471187537303548, guid: 32e44af3e8f90d74e9fba80c42d29703, type: 3}
+    - target: {fileID: 0}
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
@@ -10507,6 +10521,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5759379733158765927, guid: 32e44af3e8f90d74e9fba80c42d29703, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3805106466367312460}
+    - targetCorrespondingSourceObject: {fileID: 5759379733158765927, guid: 32e44af3e8f90d74e9fba80c42d29703, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3805106466367312465}
   m_SourcePrefab: {fileID: 100100000, guid: 32e44af3e8f90d74e9fba80c42d29703, type: 3}
 --- !u!1 &3805106466367312459 stripped
 GameObject:
@@ -10565,10 +10582,11 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &3805106466367312462 stripped
+--- !u!114 &3805106466367312465
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 185078709096678649, guid: 32e44af3e8f90d74e9fba80c42d29703, type: 3}
-  m_PrefabInstance: {fileID: 3805106466367312458}
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3805106466367312459}
   m_Enabled: 1
@@ -10576,6 +10594,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbd68d4c0eb5e734b95d987e49b753f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  plotPrefab: {fileID: 705071896973154106, guid: 9496d78198c123643a69cddb4c1d0318, type: 3}
+  seedSelectUI: {fileID: 1844394413}
+  catsulePrefab: {fileID: 7483263151919922871, guid: c604577fffdf06b47961672f95159400, type: 3}
+  catSelectUI: {fileID: 707796865}
+  plotsParent: {fileID: 636059671}
+  catsuleselected: {fileID: 1909839589}
+  seedselected: {fileID: 1909839588}
+  wateringCanSelected: {fileID: 1641965011}
+  pauseMenu: {fileID: 778250330}
+  optionsMenu: {fileID: 1688479998}
+  shovel: {fileID: 526497993}
+  pPointer: {fileID: 2800000, guid: 4082ec1442df588429edc73fc9b94134, type: 3}
+  pDrag: {fileID: 2800000, guid: c27376f831a77be4b80620c5ef08baf6, type: 3}
 --- !u!1001 &5257236564552140851
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10642,7 +10673,6 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 519420032}
-  - {fileID: 1489721867}
   - {fileID: 636059673}
   - {fileID: 3805106466367312458}
   - {fileID: 1944249242}
@@ -10653,4 +10683,3 @@ SceneRoots:
   - {fileID: 170325139}
   - {fileID: 1303217350}
   - {fileID: 5257236564552140851}
-  - {fileID: 244694818}

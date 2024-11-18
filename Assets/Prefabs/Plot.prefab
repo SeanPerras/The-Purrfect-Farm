@@ -96,6 +96,7 @@ GameObject:
   - component: {fileID: 1626298895519881237}
   - component: {fileID: 95119514117042253}
   - component: {fileID: -4743256947222041125}
+  - component: {fileID: 3632816213919561813}
   m_Layer: 6
   m_Name: Plot
   m_TagString: Plot
@@ -232,3 +233,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3a0f975ff6a08f43a1d1fd7a450e0da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3632816213919561813
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 705071896973154106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5726b297a0059145ab16ea46a1f74d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
