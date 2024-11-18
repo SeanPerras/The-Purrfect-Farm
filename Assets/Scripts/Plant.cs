@@ -31,7 +31,6 @@ public class Plant : MonoBehaviour
         currentSprite.sortingOrder = 4;
         plantCollider = GetComponent<Collider2D>();
     }
-
     public void SetPlotReference(Plot assignedPlot)
     {
         plot = assignedPlot;
@@ -114,4 +113,5 @@ public class Plant : MonoBehaviour
         if(!isWatered) plot.WaterPlot();
         isWatered = true;
     }
+    public bool IsWatered() { return isWatered; }
 }

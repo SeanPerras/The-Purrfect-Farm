@@ -3,7 +3,19 @@ guid: bbd68d4c0eb5e734b95d987e49b753f6
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - plotPrefab: {instanceID: 0}
+  - seedSelectUI: {instanceID: 0}
+  - catsulePrefab: {instanceID: 0}
+  - catSelectUI: {instanceID: 0}
+  - plotsParent: {instanceID: 0}
+  - catsuleselected: {instanceID: 0}
+  - seedselected: {instanceID: 0}
+  - wateringCanSelected: {instanceID: 0}
+  - pauseMenu: {instanceID: 0}
+  - optionsMenu: {instanceID: 0}
+  - shovel: {instanceID: 0}
+  - pPointer: {fileID: 2800000, guid: 4082ec1442df588429edc73fc9b94134, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

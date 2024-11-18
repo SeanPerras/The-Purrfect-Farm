@@ -11,7 +11,7 @@ public class Plot : MonoBehaviour
     private GameObject[] adjPlots = new GameObject[4];
     private Collider2D plotCollider;
     private GameObject oldLand;
-    //privtate int totalPlants = 0;
+    //private int totalPlants = 0;
     //public GameObject plantPrefab;
     // Start is called before the first frame update
     void Start()
@@ -83,6 +83,7 @@ public class Plot : MonoBehaviour
         Color parCol = GetComponent<SpriteRenderer>().color;
         transform.GetChild(0).GetComponent<SpriteRenderer>().color = parCol;
     }
+    public bool IsPlantWatered() { return HasPlant() ? plant.IsWatered() : false; }
     public void SetLandRef(GameObject land)
     {
         oldLand = land;

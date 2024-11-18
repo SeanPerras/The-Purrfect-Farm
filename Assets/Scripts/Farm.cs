@@ -5,6 +5,7 @@ using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.U2D;
+using UnityEngine.UI;
 
 public class Farm : MonoBehaviour
 {
@@ -35,20 +36,18 @@ public class Farm : MonoBehaviour
 
     private Vector3 mousePos;
     private bool plotMode = true; //This is just until we implement a proper "I want to plow." mechanic.
-    private int totalWateredPlants = 0;
+    //private int totalWateredPlants = 0;
     public GameObject shovel;
+    public Texture2D pPointer, pDrag;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        Cursor.SetCursor(pPointer, new Vector2(0, pPointer.Size().y*.07f), CursorMode.Auto);
     }
     // Update is called once per frame
     void Update()
-
-    
     {
-
         if(pauseMenu.activeSelf){
             return;
         }
@@ -65,11 +64,27 @@ public class Farm : MonoBehaviour
         else if (Input.GetMouseButton(1))
         {
             if (mousePos != Vector3.zero && Camera.main.ScreenToWorldPoint(Input.mousePosition) != mousePos)
+            {
+                Cursor.SetCursor(pDrag, Vector2.zero, CursorMode.Auto);
                 Camera.main.transform.position -= Camera.main.ScreenToWorldPoint(Input.mousePosition) - mousePos;
+            }
         }
         else if (Input.GetMouseButtonUp(1))
-            mousePos = Vector3.zero;
-
+            Cursor.SetCursor(pPointer, new Vector2(0, pPointer.Size().y * .07f), CursorMode.Auto);
+        else if (Input.GetAxis("Mouse ScrollWheel") != 0)
+            Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize - Input.GetAxis("Mouse ScrollWheel") * 5, 10, 25);
+        else if (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl))
+        {
+            if (Input.GetKeyDown(KeyCode.KeypadPlus))
+                Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize - 5, 10, 25);
+            else if (Input.GetKeyDown(KeyCode.KeypadMinus))
+                Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize + 5, 10, 25);
+        }
+        if (isWateringMode && GameObject.Find("Plots").transform.GetComponentsInChildren<Plot>().All(x => x.IsPlantWatered()))
+        {
+            isWateringMode = false;
+            wateringCanSelected.SetActive(false);
+        }
     }
     private void HandleClick()
     {
@@ -115,7 +130,6 @@ public class Farm : MonoBehaviour
             plotSelected.GetComponent<Plot>().Plant(plantData);
             plotSelected = null;
         }
-        //StartCoroutine(DelayMenu(seedSelectUI));
         CloseSeedUI();
         if (!catSelectUI.activeSelf) HideIcons();
         //plotSelected.GetComponent<Collider2D>().enabled = true;
@@ -129,7 +143,6 @@ public class Farm : MonoBehaviour
             //plotSelected.GetComponent<Collider2D>().enabled = true;
             plotSelected = null;
         }
-        //StartCoroutine(DelayMenu(catSelectUI));
         CloseCatUI();
         if (!seedSelectUI.activeSelf) HideIcons();
         //plotSelected.GetComponent<Collider2D>().enabled = true;
@@ -142,26 +155,17 @@ public class Farm : MonoBehaviour
     public void OpenSeedUI()
     {
         if (plotSelected == null) return;
-        if (isCatSelectUI) CloseCatUI();
+        if (isCatSelectUI)
+        {
+            catsuleselected.SetActive(false);
+            isCatSelectUI = false;
+            StartCoroutine(DelayMenu(catSelectUI));
+        }
         seedselected.SetActive(true);
+        seedselected.GetComponent<Image>().color = Color.white;
 
         seedSelectUI.SetActive(true);  
         isSeedSelectUI = true;
-
-        Collider2D[] plotColliders = plotsParent.GetComponentsInChildren<Collider2D>();
-
-        if (plotColliders.Length == 0)
-        {
-            Debug.LogWarning("No Collider2D components found in child objects of plotsParent.");
-        }
-
-        //foreach (Collider2D collider in plotColliders)
-        //{
-        //    if (collider.gameObject.CompareTag("Plot")) 
-        //    { 
-        //        collider.enabled = false;
-        //    }
-        //}
 
         Debug.Log("seedselect open");
     }
@@ -170,45 +174,16 @@ public class Farm : MonoBehaviour
         seedselected.SetActive(false);
         isSeedSelectUI = false;
         StartCoroutine(DelayMenu(seedSelectUI));
-        Debug.Log("zsxdfcgvbhjnkml,;.'xetcfyvgubhnjmk,l");
-
-        //Collider2D[] plotColliders = plotsParent.GetComponentsInChildren<Collider2D>();
-
-        //if (plotColliders.Length == 0)
-        //{
-        //    Debug.LogWarning("No Collider2D components found in child objects of plotsParent.");
-        //}
-        //foreach (Collider2D collider in plotColliders)
-        //{
-        //    if (collider.gameObject.CompareTag("Plot"))
-        //    {
-        //        collider.enabled = true;
-        //    }
-        //}
     }
     public void OpenCatUI()
     {
         if (!plotSelected) return;
         if(isSeedSelectUI) CloseSeedUI();
         catsuleselected.SetActive(true);
+        catsuleselected.GetComponent<Image>().color = Color.white;
 
         catSelectUI.SetActive(true);
         isCatSelectUI = true;
-
-        Collider2D[] plotColliders = plotsParent.GetComponentsInChildren<Collider2D>();
-
-        if (plotColliders.Length == 0)
-        {
-            Debug.LogWarning("No Collider2D components found in child objects of plotsParent.");
-        }
-
-        //foreach (Collider2D collider in plotColliders)
-        //{
-        //    if (collider.gameObject.CompareTag("Plot"))
-        //    {
-        //        collider.enabled = false;
-        //    }
-        //}
 
         Debug.Log("seedselect open");
     }
@@ -217,22 +192,6 @@ public class Farm : MonoBehaviour
         catsuleselected.SetActive(false);
         isCatSelectUI = false;
         StartCoroutine(DelayMenu(catSelectUI));
-
-        //Debug.Log("zsxdfcgvbhjnkml,;.'xetcfyvgubhnjmk,l");
-        //Collider2D[] plotColliders = plotsParent.GetComponentsInChildren<Collider2D>();
-
-        //if (plotColliders.Length == 0)
-        //{
-        //    Debug.LogWarning("No Collider2D components found in child objects of plotsParent.");
-        //}
-
-        //foreach (Collider2D collider in plotColliders)
-        //{
-        //    if (collider.gameObject.CompareTag("Plot"))
-        //    {
-        //        collider.enabled = true;
-        //    }
-        //}
     }
     private bool IsClickOverUI(GameObject uiElement)
     {
@@ -248,30 +207,31 @@ public class Farm : MonoBehaviour
     public void SelectEnter(GameObject UI)
     {
         UI.SetActive(true);
+        if (!IsUIOpen(UI))
+            UI.GetComponent<Image>().color *= .5f;
     }
-    public void SeedSelectExit()
+    public void SelectExit(GameObject UI)
     {
-        if (isSeedSelectUI) { return; }
-        seedselected.SetActive(false);
-    }
-    public void CatsuleSelectExit()
-    {
-        if (isCatSelectUI) { return; }
-        catsuleselected.SetActive(false);
-    }
-    public void WateringCanExit()
-    {
-        if (isWateringMode) { return; }
-        wateringCanSelected.SetActive(false);
+        if (IsUIOpen(UI)) return;
+        UI.GetComponent<Image>().color *= 2f;
+        UI.SetActive(false);
     }
     public void WateringCanClick()
     {
         isWateringMode = !isWateringMode;
+        if (isWateringMode) wateringCanSelected.GetComponent<Image>().color = Color.white;
+        else wateringCanSelected.GetComponent<Image>().color *= .5f;
     }
     public void HideIcons()
     {
         seedselected.transform.GetComponentInParent<Transform>().GetChild(1).gameObject.SetActive(false);
         catsuleselected.transform.GetComponentInParent<Transform>().GetChild(1).gameObject.SetActive(false);
+    }
+    private bool IsUIOpen(GameObject UI)
+    {
+        return UI.transform.parent.transform.parent.gameObject.name.Contains("atsule") && isCatSelectUI ||
+            UI.transform.parent.transform.parent.gameObject.name.Contains("lant") && isSeedSelectUI ||
+            UI.transform.parent.transform.parent.gameObject.name.Contains("ater") && isWateringMode;
     }
     IEnumerator DelayMenu(GameObject UI)
     {
