@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: BlueHouseData
   m_EditorClassIdentifier: 
   expeditionName: Blue House
-  expeditionTime: 30
+  expeditionTime: 5

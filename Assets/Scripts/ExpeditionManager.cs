@@ -38,10 +38,11 @@ public class ExpeditionManager : MonoBehaviour
         Debug.Log("Team selection UI opened by: " + expedition.name);
     }
 
-    public void CatToggled(bool isOn, GameObject cat, Sprite catSprite){
+    public void CatToggled(bool isOn, GameObject cat, Sprite catSprite, Sprite catFace){
         if(isOn){
             if(selectedCats.Count < maxTeamSize){
                 selectedCats.Add(cat);
+                currentExpedition.CatFaces(isOn, catFace);
                 foreach(Image image in catImages){
                     if (image.sprite == defaultSprite){
                         image.sprite = catSprite;
@@ -57,6 +58,7 @@ public class ExpeditionManager : MonoBehaviour
 
         else{
             if(selectedCats.Contains(cat)){
+                currentExpedition.CatFaces(isOn, catFace);
                 selectedCats.Remove(cat);
                 foreach(Image image in catImages){
                     if (image.sprite == catSprite){

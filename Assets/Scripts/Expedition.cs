@@ -14,6 +14,8 @@ public class Expedition : MonoBehaviour
     private float expeditionTimer = 0f;
     public GameObject pauseMenu;
     public GameObject optionsMenu;
+    public List<Image> catImages;
+    public Sprite defaultSprite;
 
     void OnMouseUp(){
         if(pauseMenu.activeSelf){
@@ -22,12 +24,12 @@ public class Expedition : MonoBehaviour
         if(optionsMenu.activeSelf){
             return;
         }
-        if(!inProgress){
+        if(isCompleted){
+            ClaimRewards();
+        }
+        else if(!inProgress){
             timerText.text = "";
         ExpeditionManager.instance.OpenTeamSelectUI(this);
-        }
-        else if(isCompleted){
-            ClaimRewards();
         }
     }
 
@@ -52,10 +54,33 @@ public class Expedition : MonoBehaviour
 
         //expeditionTeam.Clear();
         timerText.text = "";
-        StartCoroutine(StartExpeditionTimer());
+        isCompleted = false;
         inProgress = true;
+        StartCoroutine(StartExpeditionTimer());
         return true;
     }
+
+    public void CatFaces(bool isOn, Sprite catFace){
+        if(isOn){
+                foreach(Image image in catImages){
+                    if (image.sprite == defaultSprite){
+                        image.sprite = catFace;
+                        break;
+                    }
+                }
+            
+        }
+
+        else{
+                foreach(Image image in catImages){
+                    if (image.sprite == catFace){
+                        image.sprite = defaultSprite;
+                        break;
+                    }
+                }
+            }
+        }
+
 
 
     private IEnumerator StartExpeditionTimer(){
@@ -68,9 +93,9 @@ public class Expedition : MonoBehaviour
         }
 
         Debug.Log("Expedition complete! Ready to claim.");
-        inProgress = false;
         //UpdateVisualTimer();
         isCompleted = true;
+        inProgress = false;
         UpdateVisualTimer();
     }
 
@@ -91,9 +116,13 @@ public class Expedition : MonoBehaviour
         }
         timerText.text = "";
         expeditionTeam.Clear();
+        foreach (Image image in catImages)
+        {
+            Debug.Log("Clearing cat images");
+        image.sprite = defaultSprite;
+        }
         isCompleted = false;
         Debug.Log("Expedition finished, team returned!");
     }
-
 
 }
