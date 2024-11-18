@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
@@ -32,32 +33,18 @@ public class Cat : MonoBehaviour
         //if(transform.position)
         //if (Input.GetMouseButtonDown(0))
         //    mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        //else if (Input.GetMouseButton(0))
-        //{
-        //    if (mousePos != Vector3.zero && Camera.main.ScreenToWorldPoint(Input.mousePosition) != mousePos)
-        //        transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition) + new Vector3(0,0,10);
-        //}
+        if (Input.GetMouseButton(0) && Vector2.Distance(Camera.main.ScreenToWorldPoint(Input.mousePosition),transform.position) <= 4)
+        {
+            //if (mousePos != Vector3.zero && Camera.main.ScreenToWorldPoint(Input.mousePosition) != mousePos)
+                transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition) + new Vector3(0, 0, 10);
+        }
         //else if (Input.GetMouseButtonUp(0))
         //    mousePos = Vector3.zero;
 
     }
-    private void OnMouseDown()
-    {
-        //mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        //Debug.Log(mousePos);
-    }
-    private void OnMouseDrag()
-    {
-        //if (mousePos != Vector3.zero && Camera.main.ScreenToWorldPoint(Input.mousePosition) != mousePos)
-            transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition) + new Vector3(0, 0, 10);
-    }
-    private void OnMouseUp()
-    {
-        //mousePos = Vector3.zero;
-    }
     private Vector3 WithinRange(Vector3 loc)
     {
-        return loc;
+        return loc; //For now.
     }
     public void SetColor(string c)
     {
@@ -70,7 +57,8 @@ public class Cat : MonoBehaviour
         SpriteRenderer curr_Sprite = GetComponent<SpriteRenderer>();
         curr_Sprite.sprite = sprite;
         curr_Sprite.color = UnityEngine.ColorUtility.TryParseHtmlString(c, out Color co) ? co : Color.white;
-        curr_Sprite.color = new Color(co.r * 40 + 40, co.g * 40 + 40, co.b * 40 + 40);
+        float r = Mathf.Clamp(co.r + 40f/255f, 0, 1), g = Mathf.Clamp(co.g + 40f / 255f, 0, 1), b = Mathf.Clamp(co.b + 40f / 255f, 0, 1);
+        curr_Sprite.color = new Color(r, g, b);
         name = c + " Cat";
 
         //Debug.Log(AssetDatabase.GetAssetPath(sprite));

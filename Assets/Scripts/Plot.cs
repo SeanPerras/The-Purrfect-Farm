@@ -84,7 +84,8 @@ public class Plot : MonoBehaviour
         Color parCol = GetComponent<SpriteRenderer>().color;
         transform.GetChild(0).GetComponent<SpriteRenderer>().color = parCol;
     }
-    public bool IsPlantWatered() { return HasPlant() ? plant.IsWatered() : HasCatsule(); }
+    public bool IsPlantWatered() { return HasPlant() ? plant.IsWatered() : false; }
+    public bool IsWaterable() { return HasPlant() ? !plant.IsWatered() : false; }
     public void SetLandRef(GameObject land)
     {
         oldLand = land;

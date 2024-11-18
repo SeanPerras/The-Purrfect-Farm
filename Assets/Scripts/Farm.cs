@@ -80,7 +80,7 @@ public class Farm : MonoBehaviour
             else if (Input.GetKeyDown(KeyCode.KeypadMinus))
                 Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize + 5, 10, 25);
         }
-        if (isWateringMode && GameObject.Find("Plots").transform.GetComponentsInChildren<Plot>().All(x => x.IsPlantWatered()))
+        if (isWateringMode && GameObject.Find("Plots").transform.GetComponentsInChildren<Plot>().All(x => !x.IsWaterable()))
         {
             isWateringMode = false;
             plotMode = true;
@@ -95,18 +95,19 @@ public class Farm : MonoBehaviour
             Vector3 db = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             List<GameObject> collidedGameObjects = Physics2D.OverlapCircleAll(Camera.main.ScreenToWorldPoint(Input.mousePosition), 0)
                     .Select(c => c.gameObject).ToList();
-            GameObject cat = collidedGameObjects.Find(c => c.name.Contains(" Cat"));
+            GameObject cat = collidedGameObjects.Find(c => c.CompareTag("Cat"));
             collidedGameObjects.Remove(cat);
-            GameObject land = collidedGameObjects.Find(c => c.name == "Land");
+            GameObject land = collidedGameObjects.Find(c => c.CompareTag("Land"));
             collidedGameObjects.Remove(land);
             GameObject plot = collidedGameObjects.Find(c => c.CompareTag("Plot"));
             collidedGameObjects.Remove(plot);
-            GameObject plant = collidedGameObjects.Find(c => c.name.Contains("Plant"));
+            GameObject plant = collidedGameObjects.Find(c => c.CompareTag("Plant"));
             collidedGameObjects.Remove(plant);
-            if (cat) { }
+            if (cat)
+            { }
             else if ((plant || (plot && plot.GetComponent<Plot>().HasPlant())) && isWateringMode)
                 plant.GetComponent<Plant>().Water();
-            else if (land && plotMode)
+            else if (land && plotMode && !isWateringMode)
             {
                 Vector3 pos = land.transform.position;
                 //shovel.SetActive(true);
