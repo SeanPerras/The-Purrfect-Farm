@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.VFX;
@@ -68,8 +69,9 @@ public class Cat : MonoBehaviour
         //#endif
         SpriteRenderer curr_Sprite = GetComponent<SpriteRenderer>();
         curr_Sprite.sprite = sprite;
-        curr_Sprite.color = ColorUtility.TryParseHtmlString(color, out Color co) ? co : Color.white;
-        curr_Sprite.color += new Color(40, 40, 40);
+        curr_Sprite.color = UnityEngine.ColorUtility.TryParseHtmlString(c, out Color co) ? co : Color.white;
+        curr_Sprite.color = new Color(co.r * 40 + 40, co.g * 40 + 40, co.b * 40 + 40);
+        name = c + " Cat";
 
         //Debug.Log(AssetDatabase.GetAssetPath(sprite));
     }

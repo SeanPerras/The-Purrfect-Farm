@@ -83,6 +83,7 @@ public class Farm : MonoBehaviour
         if (isWateringMode && GameObject.Find("Plots").transform.GetComponentsInChildren<Plot>().All(x => x.IsPlantWatered()))
         {
             isWateringMode = false;
+            plotMode = true;
             wateringCanSelected.SetActive(false);
         }
     }
@@ -94,13 +95,18 @@ public class Farm : MonoBehaviour
             Vector3 db = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             List<GameObject> collidedGameObjects = Physics2D.OverlapCircleAll(Camera.main.ScreenToWorldPoint(Input.mousePosition), 0)
                     .Select(c => c.gameObject).ToList();
+            GameObject cat = collidedGameObjects.Find(c => c.name.Contains(" Cat"));
+            collidedGameObjects.Remove(cat);
             GameObject land = collidedGameObjects.Find(c => c.name == "Land");
             collidedGameObjects.Remove(land);
-            GameObject plot = collidedGameObjects.Find(c => c.CompareTag("Plot")); //Im thinking do the planting of seeds the same way as this, where I look for the Plot name and then it pops up the UI element to plant a seed.
+            GameObject plot = collidedGameObjects.Find(c => c.CompareTag("Plot"));
             collidedGameObjects.Remove(plot);
             GameObject plant = collidedGameObjects.Find(c => c.name.Contains("Plant"));
             collidedGameObjects.Remove(plant);
-            if (land && plotMode)
+            if (cat) { }
+            else if ((plant || (plot && plot.GetComponent<Plot>().HasPlant())) && isWateringMode)
+                plant.GetComponent<Plant>().Water();
+            else if (land && plotMode)
             {
                 Vector3 pos = land.transform.position;
                 //shovel.SetActive(true);
@@ -111,8 +117,6 @@ public class Farm : MonoBehaviour
                 newPlot.GetComponent<Plot>().SetLandRef(land);
                 Debug.Log("Plot placed!");
             }
-            else if ((plant || ( plot && plot.GetComponent<Plot>().HasPlant())) && isWateringMode)
-                plant.GetComponent<Plant>().Water();
             else if (collidedGameObjects.Count == 0 && plot && !isWateringMode)
             {
                 plotSelected = plot;
@@ -155,12 +159,7 @@ public class Farm : MonoBehaviour
     public void OpenSeedUI()
     {
         if (plotSelected == null) return;
-        if (isCatSelectUI)
-        {
-            catsuleselected.SetActive(false);
-            isCatSelectUI = false;
-            StartCoroutine(DelayMenu(catSelectUI));
-        }
+        if (isCatSelectUI) CloseCatUI();
         seedselected.SetActive(true);
         seedselected.GetComponent<Image>().color = Color.white;
 
@@ -219,6 +218,7 @@ public class Farm : MonoBehaviour
     public void WateringCanClick()
     {
         isWateringMode = !isWateringMode;
+        plotMode = isWateringMode;
         if (isWateringMode) wateringCanSelected.GetComponent<Image>().color = Color.white;
         else wateringCanSelected.GetComponent<Image>().color *= .5f;
     }

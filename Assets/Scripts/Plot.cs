@@ -77,13 +77,14 @@ public class Plot : MonoBehaviour
         else return "White";
     }
     public bool HasPlant() { return  plant != null; }
+    public bool HasCatsule() { return catsule != null; }
     public void WaterPlot()
     {
         //GetComponent<SpriteRenderer>().color *= .9f;
         Color parCol = GetComponent<SpriteRenderer>().color;
         transform.GetChild(0).GetComponent<SpriteRenderer>().color = parCol;
     }
-    public bool IsPlantWatered() { return HasPlant() ? plant.IsWatered() : false; }
+    public bool IsPlantWatered() { return HasPlant() ? plant.IsWatered() : HasCatsule(); }
     public void SetLandRef(GameObject land)
     {
         oldLand = land;
