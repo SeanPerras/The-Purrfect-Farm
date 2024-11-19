@@ -98,4 +98,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: 02dbeddc150293a479c07504e7519147, type: 3}
-  catio: {x: 0, y: 0, z: 0}
+  catioPos: {x: 0, y: 0, z: 0}
+  stats: {fileID: 11400000, guid: 008305645b631fa45b1a40bc060b8116, type: 2}

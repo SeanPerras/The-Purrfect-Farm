@@ -15,6 +15,7 @@ public class Cat : MonoBehaviour
     private string color = "White";
     private string spritePath;
     private Vector3 mousePos;
+    public CatStats stats;
     // Start is called before the first frame update
     void Awake()
     {
