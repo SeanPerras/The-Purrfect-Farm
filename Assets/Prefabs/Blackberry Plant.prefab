@@ -145,3 +145,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   plantData: {fileID: 11400000, guid: f56141ad2e2c10e45b554ac98152ba88, type: 2}
   color: Black
+  value: 10
