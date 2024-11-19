@@ -108,12 +108,64 @@ public class Expedition : MonoBehaviour
         }
     }
 
+    private void CatsVSExpeditionStats(){
+
+        int totalStrength = 0;
+        int totalSpeed = 0;
+        int totalDefense = 0;
+
+        foreach(GameObject cat in expeditionTeam){
+            Cat catComponent = cat.GetComponent<Cat>();
+            totalStrength += catComponent.stats.strength;
+            totalSpeed += catComponent.stats.speed;
+            totalDefense += catComponent.stats.defense;
+        }
+
+        int checksPassed = 0;
+        Debug.Log($"Total Stats - Strength: {totalStrength}, Speed: {totalSpeed}, Defense: {totalDefense}");
+        Debug.Log($"Expedition Requirements - Strength: {expeditionData.recommendedStrength}, Speed: {expeditionData.recommendedSpeed}, Defense: {expeditionData.recommendedDefense}");
+        if(PassStatCheck(totalStrength, expeditionData.recommendedStrength)) checksPassed++;
+        if(PassStatCheck(totalSpeed, expeditionData.recommendedSpeed)) checksPassed++;
+        if(PassStatCheck(totalDefense, expeditionData.recommendedDefense)) checksPassed++;
+
+        switch(checksPassed){
+
+            case 0:
+            Debug.Log("Failure! No rewards!");
+            break;
+
+            case 1:
+                Debug.Log("Minimal Rewards");
+                break;
+
+            case 2:
+                Debug.Log("All rewards!");
+                break;
+
+            case 3:
+                Debug.Log("All rewards + bonus!");
+                break;
+        }
+
+
+
+        
+    }
+
+    private bool PassStatCheck(int totalStats, int recommendedStat){
+        float successChance = Mathf.Clamp01((float)totalStats / recommendedStat);
+        float roll = Random.Range(0f,1f);
+        return roll <= successChance;
+    }
+
 
     private void ClaimRewards(){
         if(!isCompleted){
             Debug.Log("Expedition not done!");
             return;
         }
+
+        CatsVSExpeditionStats();
         timerText.text = "";
         expeditionTeam.Clear();
         foreach (Image image in catImages)
@@ -124,5 +176,7 @@ public class Expedition : MonoBehaviour
         isCompleted = false;
         Debug.Log("Expedition finished, team returned!");
     }
+
+    
 
 }
