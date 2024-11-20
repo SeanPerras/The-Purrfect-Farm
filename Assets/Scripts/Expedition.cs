@@ -16,6 +16,11 @@ public class Expedition : MonoBehaviour
     public GameObject optionsMenu;
     public List<Image> catImages;
     public Sprite defaultSprite;
+    private AudioManager audioManager;
+
+    private void Start(){
+        audioManager = FindObjectOfType<AudioManager>();
+    }
 
     void OnMouseUp(){
         if(pauseMenu.activeSelf){
@@ -46,6 +51,11 @@ public class Expedition : MonoBehaviour
             return false;
         }
 
+        if(!EligibleCatStats()){
+            Debug.Log("The cats on your team have too low stats to go on the expedition!");
+            return false;
+        }
+
         Debug.Log("Sending the following cats on an expedition:");
         foreach (GameObject cat in expeditionTeam)
         {
@@ -58,6 +68,27 @@ public class Expedition : MonoBehaviour
         inProgress = true;
         StartCoroutine(StartExpeditionTimer());
         return true;
+    }
+
+    private bool EligibleCatStats(){
+        int totalStrength = 0;
+        int totalSpeed = 0;
+        int totalDefense = 0;
+
+        foreach(GameObject cat in expeditionTeam){
+            Cat catComponent = cat.GetComponent<Cat>();
+            totalStrength += catComponent.stats.strength;
+            totalSpeed += catComponent.stats.speed;
+            totalDefense += catComponent.stats.defense;
+        }
+
+        if (totalStrength < expeditionData.recommendedStrength * 0.5f ||
+        totalSpeed < expeditionData.recommendedSpeed * 0.5f ||
+        totalDefense < expeditionData.recommendedDefense * 0.5f)
+    {
+        return false; 
+    }
+    return true;
     }
 
     public void CatFaces(bool isOn, Sprite catFace){
@@ -132,18 +163,22 @@ public class Expedition : MonoBehaviour
 
             case 0:
             Debug.Log("Failure! No rewards!");
+            audioManager.playFailSound();
             break;
 
             case 1:
                 Debug.Log("Minimal Rewards");
+                audioManager.playVictorySound();
                 break;
 
             case 2:
                 Debug.Log("All rewards!");
+                audioManager.playVictorySound();
                 break;
 
             case 3:
                 Debug.Log("All rewards + bonus!");
+                audioManager.playVictorySound();
                 break;
         }
 

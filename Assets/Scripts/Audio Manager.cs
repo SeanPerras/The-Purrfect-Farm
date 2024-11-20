@@ -4,10 +4,13 @@ using UnityEngine.SceneManagement;
 public class AudioManager : MonoBehaviour
 {
     public AudioSource musicSource;
+    public AudioSource sfxSource;
 
     public AudioClip main_menu;
     public AudioClip farm_day;
     public AudioClip expedition;
+    public AudioClip expeditionVictory;
+    public AudioClip expeditionFailure;
     //public AudioClip virusDeath;
     //public AudioClip bossDeath;
 
@@ -61,6 +64,16 @@ public class AudioManager : MonoBehaviour
         }
 
         musicSource.Play();
+    }
+
+    public void playVictorySound(){
+            sfxSource.clip = expeditionVictory;
+            sfxSource.Play();
+    }
+
+    public void playFailSound(){
+            sfxSource.clip = expeditionFailure;
+            sfxSource.Play();
     }
 
     
