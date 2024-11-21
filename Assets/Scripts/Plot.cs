@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
+using static SaveData;
 
-public class Plot : MonoBehaviour
+public class Plot : MonoBehaviour//, ISaveable
 {
     private Plant plant;
     private Catsule catsule;
@@ -56,6 +58,7 @@ public class Plot : MonoBehaviour
         plant = Instantiate(plantData.plantPrefab, transform.position, Quaternion.identity).GetComponent<Plant>();
         plant.SetPlantData(plantData);
         plant.SetPlotReference(this);
+        plant.gameObject.name = plantData.plantPrefab.name;
     }
     public void Plant(Catsule ct)
     {
@@ -84,8 +87,8 @@ public class Plot : MonoBehaviour
         Color parCol = GetComponent<SpriteRenderer>().color;
         transform.GetChild(0).GetComponent<SpriteRenderer>().color = parCol;
     }
-    public bool IsPlantWatered() { return HasPlant() ? plant.IsWatered() : false; }
-    public bool IsWaterable() { return HasPlant() ? !plant.IsWatered() : false; }
+    public bool IsPlantWatered() { return HasPlant() && plant.IsWatered(); }
+    public bool IsWaterable() { return HasPlant() && !plant.IsWatered(); }
     public void SetLandRef(GameObject land)
     {
         oldLand = land;
@@ -100,4 +103,9 @@ public class Plot : MonoBehaviour
         }
         else Debug.Log("Harvest or delete the plant before deleting the plot!");
     }
+
+
+
+    public Plant GetPlant() { return plant; }
+    public Catsule GetCatsule() { return catsule; }
 }

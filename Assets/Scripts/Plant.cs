@@ -7,6 +7,7 @@ public class Plant : MonoBehaviour
 
     public PlantData plantData;
     public string color;
+    public int value;
     private SpriteRenderer currentSprite;
     private int currentGrowthStage = 0;
     private float growthTimer = 0f;
@@ -55,31 +56,33 @@ public class Plant : MonoBehaviour
                 Debug.Log("Growth Stage: " + currentGrowthStage);
                 growthTimer = 0f;
             }
-            if (currentGrowthStage == 3)
+            if (currentGrowthStage >= 3)
             {
                 if (gameObject.name.Contains("Pepper") && color == "") RandomizeColor();
-                isHarvestable = true;
-                if (plantCollider != null && !plantCollider.enabled)
-                {
-                    plantCollider.enabled = true;  // Enable collider when plant is fully grown
-                }
+                Finished();
             }
             else
             {
                 // Disable the collider if the plant is not fully grown
-                if (plantCollider != null && plantCollider.enabled)
+                if (plantCollider && plantCollider.enabled)
                 {
                     plantCollider.enabled = false;  // Disable collider during growth
                 }
             }
         }
     }
+    public void Finished()
+    {
+        isHarvestable = true;
+        if (plantCollider && !plantCollider.enabled)
+            plantCollider.enabled = true;  // Enable collider when plant is fully grown
+    }
     void OnMouseUp()
     {
         if (isHarvestable && !hasBeenHarvested)
         {
             Debug.Log("Plant Harvested!");
-            StartCoroutine(Harvest());
+            StartCoroutine(Harvest(value));
         }
         else if (!isHarvestable)
         {
@@ -95,6 +98,7 @@ public class Plant : MonoBehaviour
             plot.ReEnablePlot();
         }
         //GameObject.Find("Farm (9x9)").GetComponent<Farm>().AddCoin(coin);
+        GameManager.instance.AddCoin(coin);
         //hasBeenHarvested = true;
         Debug.Log(color);
     }
@@ -104,7 +108,8 @@ public class Plant : MonoBehaviour
         if (plantData.growthStages.Length > 4)//Meaning a pepper.
         {
             int rand = Mathf.RoundToInt(Random.value * (plantData.growthStages.Length - 4));
-            currentSprite.sprite = plantData.growthStages[rand + 3];
+            GrowthStage = rand + 3;
+            currentSprite.sprite = plantData.growthStages[GrowthStage];
             color = currentSprite.sprite.name.Split("_")[1];
         }
     }
@@ -114,4 +119,17 @@ public class Plant : MonoBehaviour
         isWatered = true;
     }
     public bool IsWatered() { return isWatered; }
+
+
+
+    public int GrowthStage
+    {
+        get { return currentGrowthStage; }
+        set { currentGrowthStage = value; }
+    }
+    public float Timer
+    {
+        get { return growthTimer; }
+        set { growthTimer = value; }
+    }
 }

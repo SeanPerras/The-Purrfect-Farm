@@ -6,7 +6,6 @@ using UnityEngine;
 
 public class Catsule : MonoBehaviour
 {
-    public GameObject catPrefab;
     public Sprite catsuleSprite;
     public string color = "White";
 
@@ -21,6 +20,7 @@ public class Catsule : MonoBehaviour
         sprite.sprite = catsuleSprite;
         timerText = transform.GetChild(0).gameObject;
         timerText.GetComponent<Renderer>().enabled = false;
+        name = name[..name.IndexOf("(Clone)")];
     }
 
     // Update is called once per frame
@@ -60,8 +60,8 @@ public class Catsule : MonoBehaviour
     IEnumerator TimesUp()
     {
         yield return new WaitForSeconds(.25f);
+        GameObject cat = Instantiate(GameManager.instance.catPrefab, transform.position, GameManager.instance.catPrefab.transform.rotation);
         Debug.Log("Time's Up!");
-        GameObject cat = Instantiate(catPrefab, transform.position, catPrefab.transform.rotation);
         Plot[] plots = currentPlot.GetAdjPlots().Where(g => g != null).Select(go => go.GetComponent<Plot>()).ToArray();
         List<string> colors = plots.Select(p => p.GetColor()).ToList();
         string col;
@@ -93,5 +93,18 @@ public class Catsule : MonoBehaviour
             }
             else return false;
         return ret;
+    }
+
+
+
+    public float Timer
+    {
+        get { return timer; }
+        set { timer = value; }
+    }
+    public float GrowthStage
+    {
+        get { return 0; }
+        set { }
     }
 }

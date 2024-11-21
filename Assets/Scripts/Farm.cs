@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+//using System.Drawing;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.U2D;
 using UnityEngine.UI;
+using UnityEngine.XR;
 
 public class Farm : MonoBehaviour
 {
@@ -19,13 +21,10 @@ public class Farm : MonoBehaviour
     public GameObject plotPrefab;
     private GameObject plotSelected;
     public GameObject seedSelectUI;
-    public GameObject catsulePrefab;
 
     
     public GameObject catSelectUI;
     public GameObject plotsParent;
-    private bool isSeedSelectUI = false;
-    private bool isCatSelectUI = false;
     private bool isWateringMode = false;
     public GameObject catsuleselected;
     public GameObject seedselected;
@@ -44,6 +43,8 @@ public class Farm : MonoBehaviour
     void Start()
     {
         Cursor.SetCursor(pPointer, new Vector2(0, pPointer.Size().y*.07f), CursorMode.Auto);
+        GameObject Cats = new(){ name = "Cats" };
+        //Instantiate(Cats, Vector3.zero, Quaternion.identity);
     }
     // Update is called once per frame
     void Update()
@@ -65,7 +66,7 @@ public class Farm : MonoBehaviour
         {
             if (mousePos != Vector3.zero && Camera.main.ScreenToWorldPoint(Input.mousePosition) != mousePos)
             {
-                Cursor.SetCursor(pDrag, Vector2.zero, CursorMode.Auto);
+                Cursor.SetCursor(pDrag, new Vector2(pDrag.Size().x * .5f, pDrag.Size().y * .5f), CursorMode.Auto);
                 Camera.main.transform.position -= Camera.main.ScreenToWorldPoint(Input.mousePosition) - mousePos;
             }
         }
@@ -80,17 +81,19 @@ public class Farm : MonoBehaviour
             else if (Input.GetKeyDown(KeyCode.KeypadMinus))
                 Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize + 5, 10, 25);
         }
-        if (isWateringMode && GameObject.Find("Plots").transform.GetComponentsInChildren<Plot>().All(x => !x.IsWaterable()))
+        if (isWateringMode && plotsParent.transform.GetComponentsInChildren<Plot>().All(x => !x.IsWaterable()))
         {
             isWateringMode = false;
             plotMode = true;
+            wateringCanSelected.GetComponent<Image>().color = Color.white * .5f;
             wateringCanSelected.SetActive(false);
         }
     }
+
     private void HandleClick()
     {
         Debug.Log("Mouse Up!");
-        if (!seedSelectUI.activeSelf && !catSelectUI.activeSelf)
+        if (!IsAnyUIOpen())
         {
             Vector3 db = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             List<GameObject> collidedGameObjects = Physics2D.OverlapCircleAll(Camera.main.ScreenToWorldPoint(Input.mousePosition), 0)
@@ -109,14 +112,10 @@ public class Farm : MonoBehaviour
                 plant.GetComponent<Plant>().Water();
             else if (land && plotMode && !isWateringMode)
             {
-                Vector3 pos = land.transform.position;
                 //shovel.SetActive(true);
-                //shovel.transform.position = pos;
+                //shovel.transform.position = land.transform.position;
                 //shovel.GetComponent<Animator>().Play("Dig Animation");
-                GameObject newPlot = Instantiate(plotPrefab, pos, plotPrefab.transform.rotation);
-                newPlot.transform.SetParent(GameObject.Find("Plots").transform);
-                newPlot.GetComponent<Plot>().SetLandRef(land);
-                Debug.Log("Plot placed!");
+                Plow(land);
             }
             else if (collidedGameObjects.Count == 0 && plot && !isWateringMode)
             {
@@ -128,9 +127,18 @@ public class Farm : MonoBehaviour
             collidedGameObjects.Clear();
         }
     }
+    public GameObject Plow(GameObject landRef)
+    {
+        Vector3 pos = landRef.transform.position;
+        GameObject newPlot = Instantiate(plotPrefab, pos, plotPrefab.transform.rotation, plotsParent.transform);
+        //newPlot.transform.SetParent(plotsParent.transform);
+        newPlot.GetComponent<Plot>().SetLandRef(landRef);
+        Debug.Log("Plot placed!");
+        return newPlot;
+    }
     public void PlantSeed(PlantData plantData)
     {
-        if (plotSelected != null)
+        if (plotSelected)
         {
             plotSelected.GetComponent<Plot>().Plant(plantData);
             plotSelected = null;
@@ -139,11 +147,12 @@ public class Farm : MonoBehaviour
         if (!catSelectUI.activeSelf) HideIcons();
         //plotSelected.GetComponent<Collider2D>().enabled = true;
     }
-    public void PlantCatsule()
+    public void PlantCatsule(string color = "White")
     {
-        if (plotSelected != null)
+        if (plotSelected)
         {
-            GameObject catsule = Instantiate(catsulePrefab, plotSelected.transform.position, plotSelected.transform.rotation);
+            GameObject prefab = GameManager.instance.catsulePrefabs.Find(c => c.GetComponent<Catsule>().color == color);
+            GameObject catsule = Instantiate(prefab, plotSelected.transform.position, plotSelected.transform.rotation);
             plotSelected.GetComponent<Plot>().Plant(catsule.GetComponent<Catsule>());
             //plotSelected.GetComponent<Collider2D>().enabled = true;
             plotSelected = null;
@@ -152,45 +161,38 @@ public class Farm : MonoBehaviour
         if (!seedSelectUI.activeSelf) HideIcons();
         //plotSelected.GetComponent<Collider2D>().enabled = true;
     }
-    public void AddCoin(int coin)
-    {
-        //Add coin amount to currency;
-    }
+    public void SetSelectedPlot(GameObject plot) { plotSelected = plot; }
 
     public void OpenSeedUI()
     {
         if (plotSelected == null) return;
-        if (isCatSelectUI) CloseCatUI();
+        if (catSelectUI.activeSelf) CloseCatUI();
         seedselected.SetActive(true);
         seedselected.GetComponent<Image>().color = Color.white;
 
-        seedSelectUI.SetActive(true);  
-        isSeedSelectUI = true;
+        seedSelectUI.SetActive(true);
 
         Debug.Log("seedselect open");
     }
     public void CloseSeedUI()
     {
         seedselected.SetActive(false);
-        isSeedSelectUI = false;
         StartCoroutine(DelayMenu(seedSelectUI));
     }
     public void OpenCatUI()
     {
         if (!plotSelected) return;
-        if(isSeedSelectUI) CloseSeedUI();
+        if(seedSelectUI.activeSelf) CloseSeedUI();
         catsuleselected.SetActive(true);
         catsuleselected.GetComponent<Image>().color = Color.white;
 
         catSelectUI.SetActive(true);
-        isCatSelectUI = true;
 
         Debug.Log("seedselect open");
     }
     public void CloseCatUI()
     {
         catsuleselected.SetActive(false);
-        isCatSelectUI = false;
         StartCoroutine(DelayMenu(catSelectUI));
     }
     private bool IsClickOverUI(GameObject uiElement)
@@ -230,11 +232,15 @@ public class Farm : MonoBehaviour
     }
     private bool IsUIOpen(GameObject UI)
     {
-        return UI.transform.parent.transform.parent.gameObject.name.Contains("atsule") && isCatSelectUI ||
-            UI.transform.parent.transform.parent.gameObject.name.Contains("lant") && isSeedSelectUI ||
+        return UI.transform.parent.transform.parent.gameObject.name.Contains("atsule") && catSelectUI.activeSelf ||
+            UI.transform.parent.transform.parent.gameObject.name.Contains("lant") && seedSelectUI.activeSelf ||
             UI.transform.parent.transform.parent.gameObject.name.Contains("ater") && isWateringMode;
     }
-    IEnumerator DelayMenu(GameObject UI)
+    private bool IsAnyUIOpen()
+    {
+        return seedSelectUI.activeSelf || catSelectUI.activeSelf || pauseMenu.activeSelf || optionsMenu.activeSelf;
+    }
+    public static IEnumerator DelayMenu(GameObject UI)
     {
         yield return new WaitForSeconds(.25f);
         UI.SetActive(false);
