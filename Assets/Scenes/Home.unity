@@ -902,7 +902,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 748954590f94ef944887858fa49705c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  farm: {fileID: 0}
+  farm: {fileID: 3805106466367312465}
+  catsulePrefabs:
+  - {fileID: 7483263151919922871, guid: c604577fffdf06b47961672f95159400, type: 3}
+  catPrefab: {fileID: 7688967657440364138, guid: 73ecb038621a37c4cbb519c3d76764c8, type: 3}
   catCoinsDisplay: {fileID: 514116873}
 --- !u!1 &174803656
 GameObject:
@@ -1015,7 +1018,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 217129639}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Tools
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1706,7 +1709,7 @@ GameObject:
   m_Component:
   - component: {fileID: 291895023}
   - component: {fileID: 291895024}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Flower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2052,7 +2055,7 @@ MonoBehaviour:
         m_MethodName: PlantSeed
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 11400000, guid: 2e1222810c6258c429100d7651516518, type: 2}
+          m_ObjectArgument: {fileID: 11400000, guid: dc0bcc796f491384cb28c19cda1ab40b, type: 2}
           m_ObjectArgumentAssemblyTypeName: PlantData, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -2827,7 +2830,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 613961442}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Greenery
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3311,7 +3314,7 @@ MonoBehaviour:
         m_MethodName: PlantSeed
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 11400000, guid: f56141ad2e2c10e45b554ac98152ba88, type: 2}
+          m_ObjectArgument: {fileID: 11400000, guid: 19d65309285b94544a81f0bb097bd28b, type: 2}
           m_ObjectArgumentAssemblyTypeName: PlantData, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -5116,7 +5119,7 @@ MonoBehaviour:
         m_MethodName: PlantSeed
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 11400000, guid: 8fc4e2a1dae83d04188266d94c81a402, type: 2}
+          m_ObjectArgument: {fileID: 11400000, guid: 00c218bd6b6fc6e4b9876f4c1c47652b, type: 2}
           m_ObjectArgumentAssemblyTypeName: PlantData, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -5393,6 +5396,10 @@ PrefabInstance:
     - target: {fileID: 705071896973154106, guid: 9496d78198c123643a69cddb4c1d0318, type: 3}
       propertyPath: m_Name
       value: Plot
+      objectReference: {fileID: 0}
+    - target: {fileID: 705071896973154106, guid: 9496d78198c123643a69cddb4c1d0318, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1932164318171668423, guid: 9496d78198c123643a69cddb4c1d0318, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6219,9 +6226,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   musicSource: {fileID: 1775403874}
+  sfxSource: {fileID: 0}
   main_menu: {fileID: 8300000, guid: f4958947eae4b0b4bbdf77004cc6dda2, type: 3}
   farm_day: {fileID: 8300000, guid: 2b4a93cf2d301fc47a7f4a3feb10bb3e, type: 3}
   expedition: {fileID: 8300000, guid: 30b16a393f1b60b41837ea2cc86ab001, type: 3}
+  expeditionVictory: {fileID: 0}
+  expeditionFailure: {fileID: 0}
 --- !u!1 &1287617671
 GameObject:
   m_ObjectHideFlags: 0
@@ -6232,7 +6242,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1287617672}
   - component: {fileID: 1287617673}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Bush
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6551,7 +6561,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1410652341}
   - component: {fileID: 1410652342}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Pickaxe
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6613,7 +6623,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: fb8eb55ba403f104e9167de8835aab4b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
@@ -6713,7 +6723,7 @@ MonoBehaviour:
         m_MethodName: PlantSeed
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 11400000, guid: 4fb54f094f7abcd4384ec00c0e296581, type: 2}
+          m_ObjectArgument: {fileID: 11400000, guid: a97faa54f54c3694fb41fdff4af6a610, type: 2}
           m_ObjectArgumentAssemblyTypeName: PlantData, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -7034,7 +7044,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1528878331}
   - component: {fileID: 1528878332}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Grass
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7467,7 +7477,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1645935186}
   - component: {fileID: 1645935187}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Flower_with_Grass
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7551,7 +7561,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1677253385}
   - component: {fileID: 1677253386}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Shovel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7613,7 +7623,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 1cc33d6833181e44aa79e3a4820d365c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
@@ -8442,7 +8452,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1794672223}
   - component: {fileID: 1794672224}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wheel Barrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8504,7 +8514,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 0c604fa7f42340d47931158ae30c7c67, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
@@ -8561,7 +8571,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1830114893}
   - component: {fileID: 1830114894}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Plush
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8823,13 +8833,13 @@ MonoBehaviour:
       - m_Target: {fileID: 3805106466367312465}
         m_TargetAssemblyTypeName: Farm, Assembly-CSharp
         m_MethodName: PlantCatsule
-        m_Mode: 1
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: White
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1844908881
@@ -9171,7 +9181,7 @@ MonoBehaviour:
         m_MethodName: PlantSeed
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 11400000, guid: e837980fe7bbb4b48871d3bfd885a053, type: 2}
+          m_ObjectArgument: {fileID: 11400000, guid: dcc59f1fef1bab64f9ba437d6db81281, type: 2}
           m_ObjectArgumentAssemblyTypeName: PlantData, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -9473,7 +9483,7 @@ MonoBehaviour:
         m_MethodName: PlantSeed
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 11400000, guid: 815c9fafd2c7f834bb51dda38a294b71, type: 2}
+          m_ObjectArgument: {fileID: 11400000, guid: b08c7a9e50efdd144bd0fd17f9ff261a, type: 2}
           m_ObjectArgumentAssemblyTypeName: PlantData, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -10654,7 +10664,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3883505952417083411, guid: 32e44af3e8f90d74e9fba80c42d29703, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4353785014257021881, guid: 32e44af3e8f90d74e9fba80c42d29703, type: 3}
       propertyPath: m_IsActive
@@ -10663,6 +10673,10 @@ PrefabInstance:
     - target: {fileID: 5759379733158765927, guid: 32e44af3e8f90d74e9fba80c42d29703, type: 3}
       propertyPath: m_Name
       value: Farm (9x9)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5759379733158765927, guid: 32e44af3e8f90d74e9fba80c42d29703, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7104236187333158916, guid: 32e44af3e8f90d74e9fba80c42d29703, type: 3}
       propertyPath: m_IsActive
@@ -10762,7 +10776,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   plotPrefab: {fileID: 705071896973154106, guid: 9496d78198c123643a69cddb4c1d0318, type: 3}
   seedSelectUI: {fileID: 1844394413}
-  catsulePrefab: {fileID: 7483263151919922871, guid: c604577fffdf06b47961672f95159400, type: 3}
   catSelectUI: {fileID: 707796865}
   plotsParent: {fileID: 636059671}
   catsuleselected: {fileID: 1909839589}
