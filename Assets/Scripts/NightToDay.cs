@@ -18,14 +18,17 @@ public class NightToDay : MonoBehaviour
     }
 
     public void BackToFarm(){
+        if(GameManager.instance != null)
         SceneManager.LoadScene("Home");
 
     }
 
 
     public void ToExpeditions(){
+        if(GameManager.instance != null){
         GameManager.SaveJsonData(GameManager.instance);
         SceneManager.LoadScene("Expedition Map");
+        }
 
     }
 }

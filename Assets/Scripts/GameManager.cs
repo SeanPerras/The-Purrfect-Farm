@@ -8,6 +8,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour, ISaveable
 {
@@ -55,11 +56,43 @@ public class GameManager : MonoBehaviour, ISaveable
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         if (!string.Equals(scene.path, "Assets/Scenes/Home.unity")) return;
-
+        
+    
         farm = GameObject.Find("Farm (9x9)").GetComponent<Farm>();
         catCoinsDisplay = GameObject.Find("Currency").GetComponent<TextMeshProUGUI>();
         LoadJsonData(instance);
+
+        if (scene.name == "Home")
+    {
+        var expeditionsButton = GameObject.Find("Click for Expeditions").GetComponent<Button>();
+        if (expeditionsButton != null)
+        {
+            
+            var nightToDay = GetComponent<NightToDay>();
+            if (nightToDay != null)
+            {
+                expeditionsButton.onClick.RemoveAllListeners();
+                expeditionsButton.onClick.AddListener(nightToDay.ToExpeditions);
+            }
+        }
     }
+
+        else if (scene.name == "Expedition Map")
+        {
+        NightToDay nightToDay = GetComponent<NightToDay>();
+        if (nightToDay != null)
+        {
+            var homeButton = GameObject.Find("Return to Farm").GetComponent<Button>();
+            if (homeButton != null)
+            {
+                homeButton.onClick.RemoveAllListeners();
+                homeButton.onClick.AddListener(nightToDay.BackToFarm); 
+            }
+        }
+    }
+    }
+
+    
     public void AddCoin(int coin)
     {
         catCoins += coin;
@@ -205,4 +238,5 @@ public class GameManager : MonoBehaviour, ISaveable
             return false;
         }
     }
+    
 }
