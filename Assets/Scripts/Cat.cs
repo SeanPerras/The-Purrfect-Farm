@@ -26,6 +26,7 @@ public class Cat : MonoBehaviour
         spritePath = "Sprites/Cats/Cat_Sit/";
         //transform.position = WithinRange(catioPos);//<-This is for spawning the cats at the catio.
         //SetColor(color);
+        transform.SetParent(GameObject.Find("Cats").transform);
     }
 
     // Update is called once per frame
@@ -54,6 +55,7 @@ public class Cat : MonoBehaviour
         //sprite = AssetDatabase.LoadAssetAtPath<Sprite>(spritePath + c + ".png");
         //#else 
         sprite = Resources.Load<Sprite>(spritePath + c);  // Make sure the sprite is in the Resources folder
+        stats = Resources.Load<CatStats>("CatData/" + c + "CatData");
         //#endif
         SpriteRenderer curr_Sprite = GetComponent<SpriteRenderer>();
         curr_Sprite.sprite = sprite;

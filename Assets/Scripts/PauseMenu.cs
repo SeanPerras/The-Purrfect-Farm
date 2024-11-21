@@ -43,7 +43,8 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 1;
     }
     public void Resume(){
-        pauseMenu.SetActive(false);
+        StartCoroutine(Farm.DelayMenu(pauseMenu));//To prevent creating plots while clicking menu.
+        //pauseMenu.SetActive(false);
         //pauseButton.SetActive(true);
         Time.timeScale = 1;
         GameIsPaused = false;

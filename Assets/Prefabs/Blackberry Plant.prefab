@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: -6245637039356080348}
   - component: {fileID: 1564952625755947319}
   - component: {fileID: -1360985990118690407}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: Blackberry Plant
   m_TagString: Plant
   m_Icon: {fileID: 0}
@@ -143,6 +143,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2260254fc49fd374a8689e631ceb3815, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  plantData: {fileID: 11400000, guid: f56141ad2e2c10e45b554ac98152ba88, type: 2}
+  plantData: {fileID: 11400000, guid: 19d65309285b94544a81f0bb097bd28b, type: 2}
   color: Black
   value: 10

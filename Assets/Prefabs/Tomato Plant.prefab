@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: -6245637039356080348}
   - component: {fileID: 1564952625755947319}
   - component: {fileID: -1360985990118690407}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: Tomato Plant
   m_TagString: Plant
   m_Icon: {fileID: 0}
@@ -143,6 +143,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2260254fc49fd374a8689e631ceb3815, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  plantData: {fileID: 11400000, guid: 815c9fafd2c7f834bb51dda38a294b71, type: 2}
+  plantData: {fileID: 11400000, guid: b08c7a9e50efdd144bd0fd17f9ff261a, type: 2}
   color: Red
   value: 10

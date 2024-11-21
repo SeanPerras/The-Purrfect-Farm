@@ -24,6 +24,7 @@ public class NightToDay : MonoBehaviour
 
 
     public void ToExpeditions(){
+        GameManager.SaveJsonData(GameManager.instance);
         SceneManager.LoadScene("Expedition Map");
 
     }
