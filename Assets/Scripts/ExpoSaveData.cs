@@ -34,6 +34,6 @@ public class ExpoSaveData
 
 public interface IExpoSaveable
 {
-    void PopulateExpoSaveData(ExpoSaveData jData, Expedition expedition);
+    void PopulateExpoSaveData(ExpoSaveData jData, List<Expedition> expeditions);
     void LoadFromExpoSaveData(ExpoSaveData jData);
 }

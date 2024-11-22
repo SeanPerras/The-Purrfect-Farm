@@ -1557,6 +1557,56 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 312588363}
   m_CullTransparentMesh: 1
+--- !u!1 &317902189
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 317902191}
+  - component: {fileID: 317902190}
+  m_Layer: 0
+  m_Name: CatManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &317902190
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 317902189}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 369360fb7a3b3ba45a141d8164c1ba4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  allAvailableCats:
+  - {fileID: -54483113409573658, guid: c2a94a412afe2544bbd64d8ef0b96175, type: 3}
+  - {fileID: -54483113409573658, guid: 24ed8d705fe7a024db1d27ad478b1a10, type: 3}
+  - {fileID: -54483113409573658, guid: e5efcc1058c480a45b53dcc4580a1d7a, type: 3}
+  - {fileID: -54483113409573658, guid: f466ab20321484e45a2fa3de7b6b6b8c, type: 3}
+  - {fileID: -54483113409573658, guid: 73ecb038621a37c4cbb519c3d76764c8, type: 3}
+--- !u!4 &317902191
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 317902189}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 4.7413073, y: -3.932226, z: 1.1197973}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &321255701
 GameObject:
   m_ObjectHideFlags: 0
@@ -2274,34 +2324,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f7a60f7f23efd94c81d26a9207c57af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  expeditionUIs:
-  - catFaces:
-    - {fileID: 1418865635}
-    - {fileID: 1332879934}
-    - {fileID: 866627953}
-    blackCatFace: {fileID: 21300000, guid: 7b7cc858ed5de8949a0d1c738ba87b48, type: 3}
-    blueCatFace: {fileID: 21300000, guid: 359ed8d73e6b0c14f9f78aab6a56317c, type: 3}
-    redCatFace: {fileID: 21300000, guid: 6140841a2957a1742986ebbdea2972d1, type: 3}
-    whiteCatFace: {fileID: 21300000, guid: dbffc7a137e243b4aab3bd97b6730c2a, type: 3}
-    yelCatFace: {fileID: 21300000, guid: 2c026617c0fdce6488e4546f72ff6f6f, type: 3}
-  - catFaces:
-    - {fileID: 1569598313}
-    - {fileID: 1283785208}
-    - {fileID: 1400477748}
-    blackCatFace: {fileID: 21300000, guid: 7b7cc858ed5de8949a0d1c738ba87b48, type: 3}
-    blueCatFace: {fileID: 21300000, guid: 359ed8d73e6b0c14f9f78aab6a56317c, type: 3}
-    redCatFace: {fileID: 21300000, guid: 6140841a2957a1742986ebbdea2972d1, type: 3}
-    whiteCatFace: {fileID: 21300000, guid: dbffc7a137e243b4aab3bd97b6730c2a, type: 3}
-    yelCatFace: {fileID: 21300000, guid: 2c026617c0fdce6488e4546f72ff6f6f, type: 3}
-  - catFaces:
-    - {fileID: 710375866}
-    - {fileID: 312588365}
-    - {fileID: 1252205077}
-    blackCatFace: {fileID: 21300000, guid: 7b7cc858ed5de8949a0d1c738ba87b48, type: 3}
-    blueCatFace: {fileID: 21300000, guid: 359ed8d73e6b0c14f9f78aab6a56317c, type: 3}
-    redCatFace: {fileID: 21300000, guid: 6140841a2957a1742986ebbdea2972d1, type: 3}
-    whiteCatFace: {fileID: 21300000, guid: dbffc7a137e243b4aab3bd97b6730c2a, type: 3}
-    yelCatFace: {fileID: 21300000, guid: 2c026617c0fdce6488e4546f72ff6f6f, type: 3}
 --- !u!4 &461262568
 Transform:
   m_ObjectHideFlags: 0
@@ -9356,3 +9378,4 @@ SceneRoots:
   - {fileID: 849414100}
   - {fileID: 191114118}
   - {fileID: 461262568}
+  - {fileID: 317902191}

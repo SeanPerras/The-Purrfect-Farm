@@ -43,8 +43,13 @@ public class Expedition : MonoBehaviour
 
 
     public void SetSelectedTeam(List<GameObject> team){
+        if(expeditionTeam.Count > 0) return;
         expeditionTeam = new List<GameObject>(team);
         teamMemberNames = team.Select(cat => cat.name).ToList();
+        foreach (GameObject cat in team)
+    {
+        CatFaces(true, cat.GetComponent<SpriteRenderer>().sprite);
+    }
     }
 
     public bool SendCatsonExpedition()
@@ -70,6 +75,7 @@ public class Expedition : MonoBehaviour
         timerText.text = "";
         isCompleted = false;
         inProgress = true;
+        expeditionTimer = expeditionData.expeditionTime;
         StartCoroutine(StartExpeditionTimer());
         return true;
     }
@@ -120,7 +126,7 @@ public class Expedition : MonoBehaviour
 
     private IEnumerator StartExpeditionTimer(){
 
-        expeditionTimer = expeditionData.expeditionTime;
+        //expeditionTimer = expeditionData.expeditionTime;
         //expedition = this;
         while(expeditionTimer > 0){
             yield return new WaitForSeconds(1f);
@@ -138,7 +144,7 @@ public class Expedition : MonoBehaviour
         UpdateVisualTimer();
     }
 
-    private void UpdateVisualTimer(){
+    public void UpdateVisualTimer(){
         if(isCompleted){
             timerText.text = "Expedition Complete!";
         }
@@ -220,6 +226,21 @@ public class Expedition : MonoBehaviour
         Debug.Log("Expedition finished, team returned!");
     }
 
+
+    public void LoadTimer(float savedTimer, bool completed){
+        isCompleted = completed;
+        if (isCompleted) {
+        timerText.text = "Expedition Complete!";
+        return;
+    }
+        expeditionTimer = savedTimer;
+
+        if(expeditionTimer > 0) StartCoroutine(StartExpeditionTimer());
+        //if(isCompleted == true) UpdateVisualTimer();
+        else{
+            UpdateVisualTimer();
+        }
+    }
     
 
 }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Linq;
 
 public class NightToDay : MonoBehaviour
 {
@@ -18,9 +19,9 @@ public class NightToDay : MonoBehaviour
     }
 
     public void BackToFarm(){
-        Expedition currentExpedition = FindObjectOfType<Expedition>();
+        Expedition[] allExpeditions = FindObjectsOfType<Expedition>();
         if(ExpeditionSLManager.instance != null)
-        ExpeditionSLManager.SaveExpoJsonData(ExpeditionSLManager.instance, currentExpedition);
+        ExpeditionSLManager.SaveExpoJsonData(ExpeditionSLManager.instance, allExpeditions.ToList());
         SceneManager.LoadScene("Home");
 
     }

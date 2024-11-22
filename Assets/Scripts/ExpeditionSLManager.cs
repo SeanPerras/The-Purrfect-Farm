@@ -34,8 +34,9 @@ public class ExpeditionSLManager : MonoBehaviour, IExpoSaveable
 
     private void OnApplicationQuit()
     {
-        Expedition currentExpedition = FindObjectOfType<Expedition>();
-        SaveExpoJsonData(instance, currentExpedition);
+        List<Expedition> allExpeditions = new List<Expedition>(FindObjectsOfType<Expedition>());
+        SaveExpoJsonData(ExpeditionSLManager.instance, allExpeditions);
+        //SaveExpoJsonData(instance, currentExpedition);
     }
     private void OnDestroy()
     {
@@ -44,14 +45,17 @@ public class ExpeditionSLManager : MonoBehaviour, IExpoSaveable
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (!string.Equals(scene.path, "Assets/Scenes/Home.unity")) return;
+        if (!string.Equals(scene.path, "Assets/Scenes/Expedition Map.unity")) return;
         
     
         LoadExpoJsonData(instance);
     }
 
 
-    public void PopulateExpoSaveData(ExpoSaveData jData, Expedition expedition)
+    public void PopulateExpoSaveData(ExpoSaveData jData, List<Expedition> expeditions)
+    {
+
+        foreach (Expedition expedition in expeditions)
     {
         ExpoSaveData.ImportantExpoData expo = new();
            
@@ -61,15 +65,47 @@ public class ExpeditionSLManager : MonoBehaviour, IExpoSaveable
         expo.team = expedition.teamMemberNames;
             
         jData.expeditions.Add(expo);
+    }
         
     }
     public void LoadFromExpoSaveData(ExpoSaveData jData)
     {
+        //ExpoSaveData.ImportantExpoData expo = jData.expeditions[0];
+        //Expedition currentExpedition = FindObjectOfType<Expedition>();
+        //currentExpedition.LoadTimer(expo.timeLeft);
+
+        Expedition[] expeditions = FindObjectsOfType<Expedition>(); 
+        int expeditionCount = Mathf.Min(jData.expeditions.Count, expeditions.Length);
+
+        List<GameObject> restoredTeam = new List<GameObject>();
+        for(int i = 0; i<expeditionCount; i++){
+            ExpoSaveData.ImportantExpoData expo = jData.expeditions[i];
+            Expedition currentExpedition = expeditions[i];
+            if(expo.timeLeft>0 || expo.isCompleted){
+            currentExpedition.LoadTimer(expo.timeLeft, expo.isCompleted);
+            restoredTeam.Clear();
+         foreach (string name in expo.team)
+    {
+        Cat cat = CatManager.instance.GetCatByName(name);
+        if (cat != null)
+        {
+            restoredTeam.Add(cat.gameObject);
+        }
+        else
+        {
+            Debug.LogWarning($"Cat with name {name} not found!");
+        }
+    }
+
+    currentExpedition.SetSelectedTeam(restoredTeam);
+
+    }
+        }
     
     }
 
     
-    public static void SaveExpoJsonData(ExpeditionSLManager jManager, Expedition currentExpedition)
+    public static void SaveExpoJsonData(ExpeditionSLManager jManager, List<Expedition> expeditions)
     {
         if (jManager == null)
     {
@@ -77,7 +113,7 @@ public class ExpeditionSLManager : MonoBehaviour, IExpoSaveable
         return;
     }
         ExpoSaveData saveData = new();
-        jManager.PopulateExpoSaveData(saveData, currentExpedition);
+        jManager.PopulateExpoSaveData(saveData, expeditions);
         if (WriteToFile("ExpoSaveData.dat", saveData.ToJson()))
             Debug.Log("Save successful!");
     }
