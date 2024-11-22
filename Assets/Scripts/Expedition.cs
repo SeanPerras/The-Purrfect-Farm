@@ -1,22 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 using UnityEngine.UI;
 
 public class Expedition : MonoBehaviour
 {
 
-    private List<GameObject> expeditionTeam = new List<GameObject>();
+    public List<GameObject> expeditionTeam = new List<GameObject>();
+    public List<string> teamMemberNames = new List<string>();
     [SerializeField] private Text timerText;
     public ExpeditionData expeditionData;
-    private bool inProgress = false;
-    private bool isCompleted = false;
-    private float expeditionTimer = 0f;
+    public bool inProgress = false;
+    public bool isCompleted = false;
+    public float expeditionTimer = 0f;
     public GameObject pauseMenu;
     public GameObject optionsMenu;
     public List<Image> catImages;
     public Sprite defaultSprite;
     private AudioManager audioManager;
+    private Expedition expedition;
 
     private void Start(){
         audioManager = FindObjectOfType<AudioManager>();
@@ -41,6 +44,7 @@ public class Expedition : MonoBehaviour
 
     public void SetSelectedTeam(List<GameObject> team){
         expeditionTeam = new List<GameObject>(team);
+        teamMemberNames = team.Select(cat => cat.name).ToList();
     }
 
     public bool SendCatsonExpedition()
@@ -115,12 +119,16 @@ public class Expedition : MonoBehaviour
 
 
     private IEnumerator StartExpeditionTimer(){
+
         expeditionTimer = expeditionData.expeditionTime;
+        //expedition = this;
         while(expeditionTimer > 0){
             yield return new WaitForSeconds(1f);
             expeditionTimer -= 1f;
             UpdateVisualTimer();
             Debug.Log("Time remaining: " + expeditionTimer + " seconds");
+            //expedition = this;
+            
         }
 
         Debug.Log("Expedition complete! Ready to claim.");

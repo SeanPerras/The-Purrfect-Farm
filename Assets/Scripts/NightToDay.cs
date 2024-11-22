@@ -18,7 +18,9 @@ public class NightToDay : MonoBehaviour
     }
 
     public void BackToFarm(){
-        if(GameManager.instance != null)
+        Expedition currentExpedition = FindObjectOfType<Expedition>();
+        if(ExpeditionSLManager.instance != null)
+        ExpeditionSLManager.SaveExpoJsonData(ExpeditionSLManager.instance, currentExpedition);
         SceneManager.LoadScene("Home");
 
     }

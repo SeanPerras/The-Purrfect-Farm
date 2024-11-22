@@ -2245,6 +2245,78 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 449376000}
   m_CullTransparentMesh: 1
+--- !u!1 &461262566
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 461262568}
+  - component: {fileID: 461262567}
+  m_Layer: 0
+  m_Name: ExpeditionSLManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &461262567
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 461262566}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f7a60f7f23efd94c81d26a9207c57af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  expeditionUIs:
+  - catFaces:
+    - {fileID: 1418865635}
+    - {fileID: 1332879934}
+    - {fileID: 866627953}
+    blackCatFace: {fileID: 21300000, guid: 7b7cc858ed5de8949a0d1c738ba87b48, type: 3}
+    blueCatFace: {fileID: 21300000, guid: 359ed8d73e6b0c14f9f78aab6a56317c, type: 3}
+    redCatFace: {fileID: 21300000, guid: 6140841a2957a1742986ebbdea2972d1, type: 3}
+    whiteCatFace: {fileID: 21300000, guid: dbffc7a137e243b4aab3bd97b6730c2a, type: 3}
+    yelCatFace: {fileID: 21300000, guid: 2c026617c0fdce6488e4546f72ff6f6f, type: 3}
+  - catFaces:
+    - {fileID: 1569598313}
+    - {fileID: 1283785208}
+    - {fileID: 1400477748}
+    blackCatFace: {fileID: 21300000, guid: 7b7cc858ed5de8949a0d1c738ba87b48, type: 3}
+    blueCatFace: {fileID: 21300000, guid: 359ed8d73e6b0c14f9f78aab6a56317c, type: 3}
+    redCatFace: {fileID: 21300000, guid: 6140841a2957a1742986ebbdea2972d1, type: 3}
+    whiteCatFace: {fileID: 21300000, guid: dbffc7a137e243b4aab3bd97b6730c2a, type: 3}
+    yelCatFace: {fileID: 21300000, guid: 2c026617c0fdce6488e4546f72ff6f6f, type: 3}
+  - catFaces:
+    - {fileID: 710375866}
+    - {fileID: 312588365}
+    - {fileID: 1252205077}
+    blackCatFace: {fileID: 21300000, guid: 7b7cc858ed5de8949a0d1c738ba87b48, type: 3}
+    blueCatFace: {fileID: 21300000, guid: 359ed8d73e6b0c14f9f78aab6a56317c, type: 3}
+    redCatFace: {fileID: 21300000, guid: 6140841a2957a1742986ebbdea2972d1, type: 3}
+    whiteCatFace: {fileID: 21300000, guid: dbffc7a137e243b4aab3bd97b6730c2a, type: 3}
+    yelCatFace: {fileID: 21300000, guid: 2c026617c0fdce6488e4546f72ff6f6f, type: 3}
+--- !u!4 &461262568
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 461262566}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.90053105, y: -4.1983666, z: 1.1753687}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &474372180
 GameObject:
   m_ObjectHideFlags: 0
@@ -5265,8 +5337,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca8a46126e4b69848a6468a9b95f5771, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  expeditionTeam: []
+  teamMemberNames: []
   timerText: {fileID: 321255705}
   expeditionData: {fileID: 11400000, guid: 6fa989ab224462a4cb1b9a0d4d4a3f6f, type: 2}
+  inProgress: 0
+  isCompleted: 0
+  expeditionTimer: 0
   pauseMenu: {fileID: 1368827124}
   optionsMenu: {fileID: 654480629}
   catImages:
@@ -8019,8 +8096,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca8a46126e4b69848a6468a9b95f5771, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  expeditionTeam: []
+  teamMemberNames: []
   timerText: {fileID: 383858956}
   expeditionData: {fileID: 11400000, guid: 570347c9fd858ae429c0c7f25c1d99d7, type: 2}
+  inProgress: 0
+  isCompleted: 0
+  expeditionTimer: 0
   pauseMenu: {fileID: 1368827124}
   optionsMenu: {fileID: 654480629}
   catImages:
@@ -8892,8 +8974,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca8a46126e4b69848a6468a9b95f5771, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  expeditionTeam: []
+  teamMemberNames: []
   timerText: {fileID: 1121387646}
   expeditionData: {fileID: 11400000, guid: 631716265e6b59c4e87d17334bba4c3e, type: 2}
+  inProgress: 0
+  isCompleted: 0
+  expeditionTimer: 0
   pauseMenu: {fileID: 1368827124}
   optionsMenu: {fileID: 654480629}
   catImages:
@@ -9268,3 +9355,4 @@ SceneRoots:
   - {fileID: 1594456409}
   - {fileID: 849414100}
   - {fileID: 191114118}
+  - {fileID: 461262568}
