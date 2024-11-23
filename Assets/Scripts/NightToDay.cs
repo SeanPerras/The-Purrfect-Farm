@@ -18,19 +18,23 @@ public class NightToDay : MonoBehaviour
         
     }
 
-    public void BackToFarm(){
+    public void BackToFarm()
+    {
         Expedition[] allExpeditions = FindObjectsOfType<Expedition>();
-        if(ExpeditionSLManager.instance != null)
-        ExpeditionSLManager.SaveExpoJsonData(ExpeditionSLManager.instance, allExpeditions.ToList());
+        if (ExpeditionSLManager.instance != null)
+            ExpeditionSLManager.SaveExpoJsonData(ExpeditionSLManager.instance, allExpeditions.ToList());
         SceneManager.LoadScene("Home");
 
     }
 
 
-    public void ToExpeditions(){
-        if(GameManager.instance != null){
-        GameManager.SaveJsonData(GameManager.instance);
-        SceneManager.LoadScene("Expedition Map");
+    public void ToExpeditions()
+    {
+        if (GameManager.instance != null)
+        {
+            GameManager.SaveJsonData(GameManager.instance);
+            //ExpeditionSLManager.LoadExpoJsonData(ExpeditionSLManager.instance);
+            SceneManager.LoadScene("Expedition Map");
         }
 
     }

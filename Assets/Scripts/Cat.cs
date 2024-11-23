@@ -27,6 +27,7 @@ public class Cat : MonoBehaviour
         //transform.position = WithinRange(catioPos);//<-This is for spawning the cats at the catio.
         //SetColor(color);
         transform.SetParent(GameObject.Find("Cats").transform);
+        transform.position = WithinRange(catioPos);
     }
 
     // Update is called once per frame
@@ -44,9 +45,15 @@ public class Cat : MonoBehaviour
         //    mousePos = Vector3.zero;
 
     }
-    private Vector3 WithinRange(Vector3 loc)
+    public Vector3 WithinRange(Vector3 loc)
     {
-        return loc; //For now.
+        //6.5 is the xoffset, 2.25 is yoffset, 1.5 is xunit, .75 is yunit
+        float count = transform.parent.childCount,
+        minx = loc.x - 6.5f, miny = loc.y - 2.25f,
+        xpos = minx + 1.5f * (((count - 1) % 5) + Mathf.Floor(count / 5)),
+        ypos = miny + .75f * (((count + 2) % 5) - Mathf.Floor(count / 5));
+        return new Vector3(xpos, ypos, 0);
+        //return loc; //For now.
     }
     public void SetColor(string c)
     {

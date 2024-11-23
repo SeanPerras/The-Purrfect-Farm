@@ -34,9 +34,13 @@ public class ExpeditionSLManager : MonoBehaviour, IExpoSaveable
 
     private void OnApplicationQuit()
     {
-        List<Expedition> allExpeditions = new List<Expedition>(FindObjectsOfType<Expedition>());
-        SaveExpoJsonData(ExpeditionSLManager.instance, allExpeditions);
-        //SaveExpoJsonData(instance, currentExpedition);
+        if (SceneManager.GetActiveScene().name == "Expedition Map")
+        {
+            List<Expedition> allExpeditions = new(FindObjectsOfType<Expedition>());
+            SaveExpoJsonData(instance, allExpeditions);
+            //GameManager.SaveExpoJsonData(GameManager.instance);
+            //SaveExpoJsonData(instance, currentExpedition);
+        }
     }
     private void OnDestroy()
     {
@@ -45,7 +49,7 @@ public class ExpeditionSLManager : MonoBehaviour, IExpoSaveable
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (!string.Equals(scene.path, "Assets/Scenes/Expedition Map.unity")) return;
+        if (scene.path != "Assets/Scenes/Expedition Map.unity") return;
         
     
         LoadExpoJsonData(instance);

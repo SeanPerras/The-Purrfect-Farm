@@ -19,15 +19,8 @@ public class SaveData
     public struct ImportantPlotInfo
     {
         public float[] position;
-        //public ImportantPlantInfo plantInfo;
-        //public ImportantPlantInfo catsuleInfo;
         public ImportantPlantInfo plantOrcatsuleInfo;
     }
-    //[Serializable]
-    //public struct ImportantCatInfo
-    //{
-    //    public string nameData;
-    //}
     public int currency;
     public List<string> cats = new();
     public List<ImportantPlotInfo> plots = new();

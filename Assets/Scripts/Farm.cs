@@ -43,8 +43,6 @@ public class Farm : MonoBehaviour
     void Start()
     {
         Cursor.SetCursor(pPointer, new Vector2(0, pPointer.Size().y*.07f), CursorMode.Auto);
-        GameObject Cats = new(){ name = "Cats" };
-        //Instantiate(Cats, Vector3.zero, Quaternion.identity);
     }
     // Update is called once per frame
     void Update()
@@ -227,8 +225,8 @@ public class Farm : MonoBehaviour
     }
     public void HideIcons()
     {
-        seedselected.transform.GetComponentInParent<Transform>().GetChild(1).gameObject.SetActive(false);
-        catsuleselected.transform.GetComponentInParent<Transform>().GetChild(1).gameObject.SetActive(false);
+        seedselected.transform.parent.GetChild(1).gameObject.SetActive(false);
+        catsuleselected.transform.parent.GetChild(1).gameObject.SetActive(false);
     }
     private bool IsUIOpen(GameObject UI)
     {
