@@ -13,6 +13,12 @@ public class ExpeditionManager : MonoBehaviour
     private Expedition currentExpedition;
     public List<Image> catImages;
     public Sprite defaultSprite;
+    public int totalStrength = 0;
+    public int totalSpeed = 0;
+    public int totalDefense = 0;
+    public Text strengthText;
+    public Text speedText;
+    public Text defenseText;
     // Start is called before the first frame update
     void Awake(){
         if(instance == null)
@@ -24,6 +30,12 @@ public class ExpeditionManager : MonoBehaviour
 
     public void OpenTeamSelectUI(Expedition expedition){
         currentExpedition = expedition;
+        totalStrength = 0;
+        totalSpeed = 0;
+        totalDefense = 0;
+        strengthText.text = "Team Strength: " + totalStrength;
+        speedText.text = "Team Speed: " + totalSpeed;
+        defenseText.text = "Team Strength: " + totalDefense;
         selectedCats.Clear();
         teamSelectUI.SetActive(true);
         Toggle[] toggles = teamSelectUI.GetComponentsInChildren<Toggle>();
@@ -50,6 +62,15 @@ public class ExpeditionManager : MonoBehaviour
                     }
                 }
                 Debug.Log(cat.name + " added to the team.");
+                
+            Cat catComponent = cat.GetComponent<Cat>();
+            totalStrength += catComponent.stats.strength;
+            totalSpeed += catComponent.stats.speed;
+            totalDefense += catComponent.stats.defense;
+        
+        strengthText.text = "Team Strength: " + totalStrength;
+        speedText.text = "Team Speed: " + totalSpeed;
+        defenseText.text = "Team Strength: " + totalDefense;
             }
             else{
                 Debug.Log("Max team size is 3");
@@ -67,6 +88,14 @@ public class ExpeditionManager : MonoBehaviour
                     }
                 }
                 Debug.Log(cat.name + " removed from the team");
+                Cat catComponent = cat.GetComponent<Cat>();
+            totalStrength -= catComponent.stats.strength;
+            totalSpeed -= catComponent.stats.speed;
+            totalDefense -= catComponent.stats.defense;
+        
+        strengthText.text = "Team Strength: " + totalStrength;
+        speedText.text = "Team Speed: " + totalSpeed;
+        defenseText.text = "Team Strength: " + totalDefense;
             }
         }
     }
