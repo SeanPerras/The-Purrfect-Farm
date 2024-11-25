@@ -9,11 +9,12 @@ TagManager:
   - Cat
   - Catsule
   - Plant
+  - shopitem
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - shop
   - Water
   - UI
   - plotLayer
