@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba2f011f962db384d83b937b6ac23397, type: 3}
   m_Name: WhiteCatData
   m_EditorClassIdentifier: 
-  strength: 0
-  speed: 0
-  defense: 0
+  strength: 5
+  speed: 5
+  defense: 5
