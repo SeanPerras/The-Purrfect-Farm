@@ -23,6 +23,7 @@ public class Expedition : MonoBehaviour
 
     private void Start(){
         audioManager = FindObjectOfType<AudioManager>();
+        
     }
 
     void OnMouseUp(){
@@ -76,6 +77,7 @@ public class Expedition : MonoBehaviour
         isCompleted = false;
         inProgress = true;
         expeditionTimer = expeditionData.expeditionTime;
+        //GameManager.instance.ExpeditionCoins = 0;
         StartCoroutine(StartExpeditionTimer());
         return true;
     }
@@ -183,16 +185,19 @@ public class Expedition : MonoBehaviour
             case 1:
                 Debug.Log("Minimal Rewards");
                 audioManager.playVictorySound();
+                GameManager.instance.ExpeditionAddCoin(20);
                 break;
 
             case 2:
                 Debug.Log("All rewards!");
                 audioManager.playVictorySound();
+                GameManager.instance.ExpeditionAddCoin(40);
                 break;
 
             case 3:
                 Debug.Log("All rewards + bonus!");
                 audioManager.playVictorySound();
+                GameManager.instance.ExpeditionAddCoin(80);
                 break;
         }
 

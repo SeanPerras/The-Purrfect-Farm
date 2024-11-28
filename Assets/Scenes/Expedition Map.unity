@@ -877,6 +877,7 @@ MonoBehaviour:
   - {fileID: 7483263151919922871, guid: c604577fffdf06b47961672f95159400, type: 3}
   catPrefab: {fileID: 7688967657440364138, guid: 73ecb038621a37c4cbb519c3d76764c8, type: 3}
   catCoinsDisplay: {fileID: 0}
+  ExpeditionCoins: 0
 --- !u!114 &191114117
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1577,7 +1578,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 013a1bb565bcfe5459cd0e89fb4c101f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 09c97b1f0d660c54aa4eae2ecaf0c693, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3207,7 +3208,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 013a1bb565bcfe5459cd0e89fb4c101f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 09c97b1f0d660c54aa4eae2ecaf0c693, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4173,7 +4174,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 013a1bb565bcfe5459cd0e89fb4c101f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 09c97b1f0d660c54aa4eae2ecaf0c693, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -5474,7 +5475,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 013a1bb565bcfe5459cd0e89fb4c101f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 09c97b1f0d660c54aa4eae2ecaf0c693, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -5733,7 +5734,7 @@ MonoBehaviour:
   - {fileID: 1418865635}
   - {fileID: 1332879934}
   - {fileID: 866627953}
-  defaultSprite: {fileID: 21300000, guid: 013a1bb565bcfe5459cd0e89fb4c101f, type: 3}
+  defaultSprite: {fileID: 21300000, guid: 09c97b1f0d660c54aa4eae2ecaf0c693, type: 3}
 --- !u!1 &1283785206
 GameObject:
   m_ObjectHideFlags: 0
@@ -5791,7 +5792,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 013a1bb565bcfe5459cd0e89fb4c101f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 09c97b1f0d660c54aa4eae2ecaf0c693, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -6217,7 +6218,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 013a1bb565bcfe5459cd0e89fb4c101f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 09c97b1f0d660c54aa4eae2ecaf0c693, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -6588,7 +6589,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 013a1bb565bcfe5459cd0e89fb4c101f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 09c97b1f0d660c54aa4eae2ecaf0c693, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -6742,7 +6743,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 013a1bb565bcfe5459cd0e89fb4c101f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 09c97b1f0d660c54aa4eae2ecaf0c693, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -7579,7 +7580,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 013a1bb565bcfe5459cd0e89fb4c101f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 09c97b1f0d660c54aa4eae2ecaf0c693, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -8651,7 +8652,7 @@ MonoBehaviour:
   - {fileID: 710375866}
   - {fileID: 312588365}
   - {fileID: 1252205077}
-  defaultSprite: {fileID: 21300000, guid: 013a1bb565bcfe5459cd0e89fb4c101f, type: 3}
+  defaultSprite: {fileID: 21300000, guid: 09c97b1f0d660c54aa4eae2ecaf0c693, type: 3}
 --- !u!61 &1769335738
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -9530,7 +9531,7 @@ MonoBehaviour:
   - {fileID: 1569598313}
   - {fileID: 1283785208}
   - {fileID: 1400477748}
-  defaultSprite: {fileID: 21300000, guid: 013a1bb565bcfe5459cd0e89fb4c101f, type: 3}
+  defaultSprite: {fileID: 21300000, guid: 09c97b1f0d660c54aa4eae2ecaf0c693, type: 3}
 --- !u!61 &1959513230
 BoxCollider2D:
   m_ObjectHideFlags: 0

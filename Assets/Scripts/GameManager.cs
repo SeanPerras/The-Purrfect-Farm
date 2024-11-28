@@ -18,6 +18,8 @@ public class GameManager : MonoBehaviour, ISaveable
     public TextMeshProUGUI catCoinsDisplay;
     private Scene scene;
     private int catCoins;
+    public int ExpeditionCoins = 0;
+    private bool coinsAdded = false;
     // Start is called before the first frame update
     void Awake()
     {
@@ -59,7 +61,6 @@ public class GameManager : MonoBehaviour, ISaveable
             farm = GameObject.Find("Farm (9x9)").GetComponent<Farm>();
             catCoinsDisplay = GameObject.Find("Currency").GetComponent<TextMeshProUGUI>();
             LoadJsonData(instance);
-
             if (GameObject.Find("Click for Expeditions").TryGetComponent(out Button expeditionsButton))
                 if (TryGetComponent<NightToDay>(out var nightToDay))
                 {
@@ -110,6 +111,10 @@ public class GameManager : MonoBehaviour, ISaveable
         catCoins = coins;
     }
 
+    public void ExpeditionAddCoin(int coin){
+        ExpeditionCoins = coin;
+    }
+
 
 
 
@@ -146,7 +151,27 @@ public class GameManager : MonoBehaviour, ISaveable
     }
     public void LoadFromSaveData(SaveData jData)
     {
-        SetCurrency(jData.currency);
+        //Debug.Log("Loading Save Data...");
+        //Debug.Log($"ExpeditionCoins: {ExpeditionCoins}, CoinsAdded: {coinsAdded}");
+        if(ExpeditionCoins > 0){
+            if(!coinsAdded){
+                catCoins += ExpeditionCoins;
+                //ExpeditionCoins = 0;
+                catCoinsDisplay.text = catCoins.ToString();
+                jData.currency = catCoins;
+                SetCurrency(jData.currency);
+                coinsAdded = true;
+                ExpeditionCoins = 0;
+            }
+            coinsAdded = false;
+            }
+
+        else if (coinsAdded){
+            //Debug.Log("Setting currency from saved data: " + jData.currency);
+            SetCurrency(jData.currency);
+        }
+        
+        //SetCurrency(jData.currency);
         foreach (SaveData.ImportantPlotInfo plot in jData.plots)
         {
             Vector2 pos = new(plot.position[0], plot.position[1]);

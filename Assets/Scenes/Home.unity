@@ -885,7 +885,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 170325138}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6141e75725ce40641bcd26990b69595c, type: 3}
   m_Name: 
@@ -907,6 +907,7 @@ MonoBehaviour:
   - {fileID: 7483263151919922871, guid: c604577fffdf06b47961672f95159400, type: 3}
   catPrefab: {fileID: 7688967657440364138, guid: 73ecb038621a37c4cbb519c3d76764c8, type: 3}
   catCoinsDisplay: {fileID: 514116873}
+  ExpeditionCoins: 0
 --- !u!1 &174803656
 GameObject:
   m_ObjectHideFlags: 0
