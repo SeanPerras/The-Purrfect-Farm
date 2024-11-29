@@ -34,7 +34,8 @@ public class shopselect : MonoBehaviour
     }
     public void exit() {
         shopmenu.SetActive(false);
-       
+        StartCoroutine(ExecuteWithDelay());
+
         int landLayer = LayerMask.NameToLayer("landLayer");
         SetLayerRecursively(farm, landLayer);
         farm.layer = LayerMask.NameToLayer("Default");
@@ -51,5 +52,14 @@ public class shopselect : MonoBehaviour
         {
             SetLayerRecursively(child.gameObject, layer);
         }
+    }
+    IEnumerator ExecuteWithDelay()
+    {
+        Debug.Log("exit button pressed");
+
+
+        yield return new WaitForSeconds(3f);
+
+        Debug.Log("restoring og layers");
     }
 }
