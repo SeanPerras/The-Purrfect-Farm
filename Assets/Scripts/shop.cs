@@ -7,7 +7,7 @@ using TMPro;
 
 public class shop : MonoBehaviour
 {
-    public GameObject shopmenu;
+   // public GameObject shopmenu;
     public LayerMask shopLayer;
     private int allLayerMask;
     
@@ -184,18 +184,6 @@ public class shop : MonoBehaviour
 
 
     }
-    
-    
-
    
    
-    public void exit() {
-
-
-        shopmenu.SetActive(false);
-        Camera.main.cullingMask = allLayerMask;
-
-
-
-    }
 }
