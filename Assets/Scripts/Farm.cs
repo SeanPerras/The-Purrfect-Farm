@@ -110,9 +110,9 @@ public class Farm : MonoBehaviour
                 plant.GetComponent<Plant>().Water();
             else if (land && plotMode && !isWateringMode)
             {
-                //shovel.SetActive(true);
-                //shovel.transform.position = land.transform.position;
-                //shovel.GetComponent<Animator>().Play("Dig Animation");
+                shovel.SetActive(true);
+                shovel.transform.position = land.transform.position;
+                shovel.GetComponent<Animator>().Play("Dig Animation");
                 Plow(land);
             }
             else if (collidedGameObjects.Count == 0 && plot && !isWateringMode)
