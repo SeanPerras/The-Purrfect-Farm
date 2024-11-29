@@ -187,22 +187,7 @@ public class shop : MonoBehaviour
     
     
 
-    public void openshop()
-    {
-        Debug.Log("shop clicked!"); 
-        
-        shopmenu.SetActive(true);
-        Camera.main.cullingMask = shopLayer;
-
-    }
-    public void openbarn()
-    {
-        Debug.Log("barn clicked!");
-
-        inventory.SetActive(true);
-        
-
-    }
+   
     public void closebarn()
     {
         Debug.Log("barn clicked!");
