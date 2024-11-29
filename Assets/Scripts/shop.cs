@@ -10,7 +10,7 @@ public class shop : MonoBehaviour
     public GameObject shopmenu;
     public LayerMask shopLayer;
     private int allLayerMask;
-    public GameObject inventory;
+    
     //public Text catsulecount='';
     public TMP_Text balanceText; 
     private int playerBalance = 1000; // starting balance
@@ -36,7 +36,7 @@ public class shop : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        //UpdateBalanceUI();
     }
     private void UpdateBalanceUI()
     {
@@ -188,14 +188,7 @@ public class shop : MonoBehaviour
     
 
    
-    public void closebarn()
-    {
-        Debug.Log("barn clicked!");
-
-        inventory.SetActive(false);
-
-
-    }
+   
     public void exit() {
 
 
