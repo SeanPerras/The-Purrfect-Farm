@@ -129,7 +129,7 @@ public class Farm : MonoBehaviour
     {
         Vector3 pos = landRef.transform.position;
         GameObject newPlot = Instantiate(plotPrefab, pos, plotPrefab.transform.rotation, plotsParent.transform);
-        //newPlot.transform.SetParent(plotsParent.transform);
+        newPlot.GetComponent<SpriteRenderer>().sortingOrder = landRef.GetComponent<SpriteRenderer>().sortingOrder;
         newPlot.GetComponent<Plot>().SetLandRef(landRef);
         Debug.Log("Plot placed!");
         return newPlot;
@@ -152,6 +152,7 @@ public class Farm : MonoBehaviour
             GameObject prefab = GameManager.instance.catsulePrefabs.Find(c => c.GetComponent<Catsule>().color == color);
             GameObject catsule = Instantiate(prefab, plotSelected.transform.position, plotSelected.transform.rotation);
             plotSelected.GetComponent<Plot>().Plant(catsule.GetComponent<Catsule>());
+            catsule.GetComponent<SpriteRenderer>().sortingOrder = plotSelected.GetComponent<SpriteRenderer>().sortingOrder;
             //plotSelected.GetComponent<Collider2D>().enabled = true;
             plotSelected = null;
         }
