@@ -59,7 +59,7 @@ public class Plot : MonoBehaviour//, ISaveable
         plant.SetPlantData(plantData);
         plant.SetPlotReference(this);
         plant.gameObject.name = plantData.plantPrefab.name;
-        plant.GetComponent<SpriteRenderer>().sortingOrder = gameObject.GetComponent<SpriteRenderer>().sortingOrder + 1;
+        plant.GetComponent<SpriteRenderer>().sortingOrder = GetComponent<SpriteRenderer>().sortingOrder + 1;
         return plant;
     }
     public Catsule Plant(string color = "White")
@@ -69,7 +69,7 @@ public class Plot : MonoBehaviour//, ISaveable
         catsule = ct;
         catsule.SetPlotReference(this);
         catsule.gameObject.GetComponent<SpriteRenderer>().sortingOrder = gameObject.GetComponent<SpriteRenderer>().sortingOrder + 1;
-        catsule.gameObject.transform.GetChild(0).GetComponent<SpriteRenderer>().sortingOrder = gameObject.GetComponent<SpriteRenderer>().sortingOrder + 1;
+        catsule.transform.GetChild(0).GetComponent<MeshRenderer>().sortingOrder = GetComponent<SpriteRenderer>().sortingOrder + 1;
         return catsule;
     }
     public void ReEnablePlot(){

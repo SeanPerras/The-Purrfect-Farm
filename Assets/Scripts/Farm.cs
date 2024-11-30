@@ -95,10 +95,12 @@ public class Farm : MonoBehaviour
                 plant.GetComponent<Plant>().Water();
             else if (land && plotMode && !isWateringMode)
             {
-                shovel.SetActive(true);
-                shovel.transform.position = land.transform.position;
-                shovel.GetComponent<Animator>().Play("Dig Animation");
+                //shovel.SetActive(true);
+                //shovel.transform.position = land.transform.position;
+                //Animator anim = shovel.GetComponent<Animator>();
+                //anim.Play("Dig Animation");
                 Plow(land);
+                //StartCoroutine(Wait(anim));
             }
             else if (collidedGameObjects.Count == 0 && plot && !isWateringMode)
             {
@@ -230,5 +232,10 @@ public class Farm : MonoBehaviour
     {
         yield return new WaitForSeconds(.25f);
         UI.SetActive(false);
+    }
+    private IEnumerator Wait(Animator animator)
+    {
+        yield return new WaitForSeconds(1f);
+        animator.StopPlayback();
     }
 }

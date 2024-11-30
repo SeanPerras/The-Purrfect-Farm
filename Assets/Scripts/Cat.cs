@@ -51,7 +51,7 @@ public class Cat : MonoBehaviour
         float count = transform.parent.childCount,
         minx = loc.x - 6.5f, miny = loc.y - 2.25f,
         xpos = minx + 1.5f * (((count - 1) % 5) + Mathf.Floor(count / 5)),
-        ypos = miny + .75f * (((count + 2) % 5) - Mathf.Floor(count / 5));
+        ypos = miny + .75f * (((count + 2) % 7) - Mathf.Floor(count / 5));
         return new Vector3(xpos, ypos, 0);
         //return loc; //For now.
     }
