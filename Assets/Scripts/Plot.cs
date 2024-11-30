@@ -60,8 +60,10 @@ public class Plot : MonoBehaviour//, ISaveable
         plant.SetPlotReference(this);
         plant.gameObject.name = plantData.plantPrefab.name;
     }
-    public void Plant(Catsule ct)
+    public void Plant(string color = "White")
     {
+        GameObject prefab = GameManager.instance.catsulePrefabs.Find(c => c.GetComponent<Catsule>().color == color);
+        Catsule ct = Instantiate(prefab, transform.position, transform.rotation).GetComponent<Catsule>();
         catsule = ct;
         catsule.SetPlotReference(this);
     }

@@ -18,26 +18,17 @@ public class Farm : MonoBehaviour
         {"Red", new() { "Red", "Red" } },
         {"Yellow", new() { "Yellow", "Yellow" } }
     };
-    public GameObject plotPrefab;
+    public GameObject
+        plotPrefab, plotsParent, shovel,
+        seedSelectUI, catSelectUI, catsuleselected, seedselected, wateringCanSelected,
+        pauseMenu, optionsMenu, shopMenu, inventoryMenu;
+    public Texture2D pPointer, pDrag;
+
     private GameObject plotSelected;
-    public GameObject seedSelectUI;
-
-    
-    public GameObject catSelectUI;
-    public GameObject plotsParent;
     private bool isWateringMode = false;
-    public GameObject catsuleselected;
-    public GameObject seedselected;
-    public GameObject wateringCanSelected;
-    public GameObject pauseMenu;
-    public GameObject optionsMenu;
-
-
     private Vector3 mousePos;
     private bool plotMode = true; //This is just until we implement a proper "I want to plow." mechanic.
     //private int totalWateredPlants = 0;
-    public GameObject shovel;
-    public Texture2D pPointer, pDrag;
 
     // Start is called before the first frame update
     void Start()
@@ -47,12 +38,6 @@ public class Farm : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(pauseMenu.activeSelf){
-            return;
-        }
-        if(optionsMenu.activeSelf){
-            return;
-        }
         if (Input.GetMouseButtonUp(0))
         {
             if (Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero))
@@ -130,6 +115,7 @@ public class Farm : MonoBehaviour
         Vector3 pos = landRef.transform.position;
         GameObject newPlot = Instantiate(plotPrefab, pos, plotPrefab.transform.rotation, plotsParent.transform);
         newPlot.GetComponent<SpriteRenderer>().sortingOrder = landRef.GetComponent<SpriteRenderer>().sortingOrder;
+        newPlot.transform.GetChild(0).GetComponent<SpriteRenderer>().sortingOrder = landRef.GetComponent<SpriteRenderer>().sortingOrder;
         newPlot.GetComponent<Plot>().SetLandRef(landRef);
         Debug.Log("Plot placed!");
         return newPlot;
@@ -139,6 +125,7 @@ public class Farm : MonoBehaviour
         if (plotSelected)
         {
             plotSelected.GetComponent<Plot>().Plant(plantData);
+            plotSelected.GetComponent<Plot>().GetPlant().GetComponent<SpriteRenderer>().sortingOrder = plotSelected.GetComponent<SpriteRenderer>().sortingOrder + 1;
             plotSelected = null;
         }
         CloseSeedUI();
@@ -149,10 +136,11 @@ public class Farm : MonoBehaviour
     {
         if (plotSelected)
         {
-            GameObject prefab = GameManager.instance.catsulePrefabs.Find(c => c.GetComponent<Catsule>().color == color);
-            GameObject catsule = Instantiate(prefab, plotSelected.transform.position, plotSelected.transform.rotation);
-            plotSelected.GetComponent<Plot>().Plant(catsule.GetComponent<Catsule>());
-            catsule.GetComponent<SpriteRenderer>().sortingOrder = plotSelected.GetComponent<SpriteRenderer>().sortingOrder;
+            //GameObject prefab = GameManager.instance.catsulePrefabs.Find(c => c.GetComponent<Catsule>().color == color);
+            //GameObject catsule = Instantiate(prefab, plotSelected.transform.position, plotSelected.transform.rotation);
+            //plotSelected.GetComponent<Plot>().Plant(catsule.GetComponent<Catsule>());
+            plotSelected.GetComponent<Plot>().Plant(color);
+            plotSelected.GetComponent<Plot>().GetCatsule().GetComponent<SpriteRenderer>().sortingOrder = plotSelected.GetComponent<SpriteRenderer>().sortingOrder + 1;
             //plotSelected.GetComponent<Collider2D>().enabled = true;
             plotSelected = null;
         }
@@ -235,9 +223,10 @@ public class Farm : MonoBehaviour
             UI.transform.parent.transform.parent.gameObject.name.Contains("lant") && seedSelectUI.activeSelf ||
             UI.transform.parent.transform.parent.gameObject.name.Contains("ater") && isWateringMode;
     }
-    private bool IsAnyUIOpen()
+    public bool IsAnyUIOpen()
     {
-        return seedSelectUI.activeSelf || catSelectUI.activeSelf || pauseMenu.activeSelf || optionsMenu.activeSelf;
+        return seedSelectUI.activeSelf || catSelectUI.activeSelf || pauseMenu.activeSelf ||
+               optionsMenu.activeSelf || shopMenu.activeSelf || inventoryMenu.activeSelf;
     }
     public static IEnumerator DelayMenu(GameObject UI)
     {

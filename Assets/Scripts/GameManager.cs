@@ -16,7 +16,6 @@ public class GameManager : MonoBehaviour, ISaveable
     public List<GameObject> catsulePrefabs;
     public GameObject catPrefab;
     public TextMeshProUGUI catCoinsDisplay;
-    private Scene scene;
     private int catCoins;
     public int ExpeditionCoins = 0;
     private bool coinsAdded = false;
@@ -200,7 +199,7 @@ public class GameManager : MonoBehaviour, ISaveable
                 string color = plot.plantOrcatsuleInfo.nameData.Split(" ")[0];
                 GameObject catsule = Instantiate(catsulePrefabs.Find(c => c.GetComponent<Catsule>().color == color),
                     newPlot.transform.position, newPlot.transform.rotation);
-                newPlot.GetComponent<Plot>().Plant(catsule.GetComponent<Catsule>());
+                newPlot.GetComponent<Plot>().Plant(color);
                 newPlot.GetCatsule().GetComponent<Catsule>().Timer = plot.plantOrcatsuleInfo.timeLeft;
             }
         }
