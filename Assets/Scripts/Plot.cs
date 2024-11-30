@@ -59,7 +59,8 @@ public class Plot : MonoBehaviour//, ISaveable
         plant.SetPlantData(plantData);
         plant.SetPlotReference(this);
         plant.gameObject.name = plantData.plantPrefab.name;
-        plant.GetComponent<SpriteRenderer>().sortingOrder = GetComponent<SpriteRenderer>().sortingOrder + 1;
+        //plant.GetComponent<SpriteRenderer>().sortingOrder = GetComponent<SpriteRenderer>().sortingOrder + 1;
+        plant.GetComponent<SpriteRenderer>().sortingOrder = 20;//temp fix
         return plant;
     }
     public Catsule Plant(string color = "White")
@@ -68,8 +69,10 @@ public class Plot : MonoBehaviour//, ISaveable
         Catsule ct = Instantiate(prefab, transform.position, transform.rotation).GetComponent<Catsule>();
         catsule = ct;
         catsule.SetPlotReference(this);
-        catsule.gameObject.GetComponent<SpriteRenderer>().sortingOrder = gameObject.GetComponent<SpriteRenderer>().sortingOrder + 1;
-        catsule.transform.GetChild(0).GetComponent<MeshRenderer>().sortingOrder = GetComponent<SpriteRenderer>().sortingOrder + 1;
+        //catsule.gameObject.GetComponent<SpriteRenderer>().sortingOrder = gameObject.GetComponent<SpriteRenderer>().sortingOrder + 1;
+        //catsule.transform.GetChild(0).GetComponent<MeshRenderer>().sortingOrder = GetComponent<SpriteRenderer>().sortingOrder + 1;
+        catsule.gameObject.GetComponent<SpriteRenderer>().sortingOrder = 20;
+        catsule.transform.GetChild(0).GetComponent<MeshRenderer>().sortingOrder = 20;//temp fix
         return catsule;
     }
     public void ReEnablePlot(){
