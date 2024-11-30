@@ -53,19 +53,24 @@ public class Plot : MonoBehaviour//, ISaveable
     }
 
     public void AddPlotRef(GameObject go, int ind) { adjPlots[ind] = go; }
-    public void Plant(PlantData plantData)
+    public Plant Plant(PlantData plantData)
     {
         plant = Instantiate(plantData.plantPrefab, transform.position, Quaternion.identity).GetComponent<Plant>();
         plant.SetPlantData(plantData);
         plant.SetPlotReference(this);
         plant.gameObject.name = plantData.plantPrefab.name;
+        plant.GetComponent<SpriteRenderer>().sortingOrder = gameObject.GetComponent<SpriteRenderer>().sortingOrder + 1;
+        return plant;
     }
-    public void Plant(string color = "White")
+    public Catsule Plant(string color = "White")
     {
         GameObject prefab = GameManager.instance.catsulePrefabs.Find(c => c.GetComponent<Catsule>().color == color);
         Catsule ct = Instantiate(prefab, transform.position, transform.rotation).GetComponent<Catsule>();
         catsule = ct;
         catsule.SetPlotReference(this);
+        catsule.gameObject.GetComponent<SpriteRenderer>().sortingOrder = gameObject.GetComponent<SpriteRenderer>().sortingOrder + 1;
+        catsule.gameObject.transform.GetChild(0).GetComponent<SpriteRenderer>().sortingOrder = gameObject.GetComponent<SpriteRenderer>().sortingOrder + 1;
+        return catsule;
     }
     public void ReEnablePlot(){
         //GetComponent<SpriteRenderer>().color /= .9f;

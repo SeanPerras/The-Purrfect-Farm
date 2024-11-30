@@ -125,7 +125,6 @@ public class Farm : MonoBehaviour
         if (plotSelected)
         {
             plotSelected.GetComponent<Plot>().Plant(plantData);
-            plotSelected.GetComponent<Plot>().GetPlant().GetComponent<SpriteRenderer>().sortingOrder = plotSelected.GetComponent<SpriteRenderer>().sortingOrder + 1;
             plotSelected = null;
         }
         CloseSeedUI();
@@ -140,7 +139,6 @@ public class Farm : MonoBehaviour
             //GameObject catsule = Instantiate(prefab, plotSelected.transform.position, plotSelected.transform.rotation);
             //plotSelected.GetComponent<Plot>().Plant(catsule.GetComponent<Catsule>());
             plotSelected.GetComponent<Plot>().Plant(color);
-            plotSelected.GetComponent<Plot>().GetCatsule().GetComponent<SpriteRenderer>().sortingOrder = plotSelected.GetComponent<SpriteRenderer>().sortingOrder + 1;
             //plotSelected.GetComponent<Collider2D>().enabled = true;
             plotSelected = null;
         }

@@ -180,8 +180,7 @@ public class GameManager : MonoBehaviour, ISaveable
             if (plot.plantOrcatsuleInfo.instance && plot.plantOrcatsuleInfo.plantOrcatsule == "Plant")
             {
                 PlantData pd = Resources.Load<PlantData>("PlantData/" + plot.plantOrcatsuleInfo.nameData);
-                newPlot.Plant(pd);
-                Plant pt = newPlot.GetPlant();
+                Plant pt = newPlot.Plant(pd);
                 pt.GrowthStage = plot.plantOrcatsuleInfo.growthStage;
                 pt.SetPlantData(pd);
                 if (pt.GrowthStage >= 3)
@@ -199,8 +198,8 @@ public class GameManager : MonoBehaviour, ISaveable
                 string color = plot.plantOrcatsuleInfo.nameData.Split(" ")[0];
                 GameObject catsule = Instantiate(catsulePrefabs.Find(c => c.GetComponent<Catsule>().color == color),
                     newPlot.transform.position, newPlot.transform.rotation);
-                newPlot.GetComponent<Plot>().Plant(color);
-                newPlot.GetCatsule().GetComponent<Catsule>().Timer = plot.plantOrcatsuleInfo.timeLeft;
+                Catsule c = newPlot.GetComponent<Plot>().Plant(color);
+                c.Timer = plot.plantOrcatsuleInfo.timeLeft;
             }
         }
         for(int i = 0; i < jData.cats.Count; i++)
