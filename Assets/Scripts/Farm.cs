@@ -1,7 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 //using System.Drawing;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
@@ -11,15 +14,19 @@ using UnityEngine.XR;
 
 public class Farm : MonoBehaviour
 {
-    public readonly Dictionary<string, List<string>> Colors = new()
+    public static readonly Dictionary<string, List<string>> Colors = new()
     {
         {"Black",  new() {"Black", "Black"} },
         {"Blue", new () {"Blue", "Blue"} },
-        {"Red", new() { "Red", "Red" } },
-        {"Yellow", new() { "Yellow", "Yellow" } }
+        {"Light Blue", new () {"Blue"} },
+        //{"Red", new() { "Red", "Red" } },
+        //{"Purple", new() { "Red", "Blue" } },
+        {"Pink", new() { "Red" } },
+        {"Yellow", new() { "Yellow", "Yellow" } },
+        //{"Orange", new() { "Red", "Yellow" } }
     };
     public GameObject
-        plotPrefab, plotsParent, shovel,
+        plotPrefab, buttonPF, plotsParent, seedSelectParent, catsuleSelectParent, shovel,
         seedSelectUI, catSelectUI, catsuleselected, seedselected, wateringCanSelected,
         pauseMenu, optionsMenu, shopMenu, inventoryMenu;
     public Texture2D pPointer, pDrag;
@@ -34,6 +41,7 @@ public class Farm : MonoBehaviour
     void Start()
     {
         Cursor.SetCursor(pPointer, new Vector2(0, pPointer.Size().y*.07f), CursorMode.Auto);
+        PopulateButtons(GameManager.instance.Inventory.seeds, GameManager.instance.Inventory.catsules);
     }
     // Update is called once per frame
     void Update()
@@ -90,7 +98,7 @@ public class Farm : MonoBehaviour
             GameObject plant = collidedGameObjects.Find(c => c.CompareTag("Plant"));
             collidedGameObjects.Remove(plant);
             if (cat)
-            { }
+            { /*Do nothing */ }
             else if ((plant || (plot && plot.GetComponent<Plot>().HasPlant())) && isWateringMode)
                 plant.GetComponent<Plant>().Water();
             else if (land && plotMode && !isWateringMode)
@@ -118,6 +126,7 @@ public class Farm : MonoBehaviour
         GameObject newPlot = Instantiate(plotPrefab, pos, plotPrefab.transform.rotation, plotsParent.transform);
         newPlot.GetComponent<SpriteRenderer>().sortingOrder = landRef.GetComponent<SpriteRenderer>().sortingOrder;
         newPlot.transform.GetChild(0).GetComponent<SpriteRenderer>().sortingOrder = landRef.GetComponent<SpriteRenderer>().sortingOrder;
+        newPlot.transform.Find("Outline").GetComponent<SpriteRenderer>().sortingOrder = landRef.GetComponent<SpriteRenderer>().sortingOrder + 1;
         newPlot.GetComponent<Plot>().SetLandRef(landRef);
         Debug.Log("Plot placed!");
         return newPlot;
@@ -149,6 +158,92 @@ public class Farm : MonoBehaviour
         //plotSelected.GetComponent<Collider2D>().enabled = true;
     }
     public void SetSelectedPlot(GameObject plot) { plotSelected = plot; }
+    public void CreateMenuButton(string k, int v, Transform parent, Vector2 offset, int count, string category)
+    {
+        GameObject newBtn = Instantiate(buttonPF, parent);
+        newBtn.transform.localPosition = offset + new Vector2(0, -70 * count);
+        newBtn.name = k + " " + category;
+        if (category == "Seed")
+        {
+            PlantData pd = Resources.Load<PlantData>("PlantData/" + k.Replace(" ", "") + "Data");
+            newBtn.GetComponent<Button>().onClick.AddListener(() => PlantSeed(pd));
+        }
+        else if (category == "Catsule")
+            newBtn.GetComponent<Button>().onClick.AddListener(() => PlantCatsule(k));
+        List<TextMeshProUGUI> texts = newBtn.transform.GetComponentsInChildren<TextMeshProUGUI>().ToList();
+        texts[0].text = newBtn.name;
+        texts[1].text = v.ToString();
+        newBtn.GetComponent<Button>().onClick.AddListener(() =>
+        {
+            int count = v - 1;
+            texts[1].text = count.ToString();
+            if (count == 0)
+            {
+                newBtn.GetComponent<Button>().enabled = false;
+                newBtn.GetComponent<Image>().color *= .5f;
+            }
+        });
+    }
+    public void PopulateButtons(Dictionary<string, int> seeds, Dictionary<string, int> catsules)
+    {
+        int seedCount = seedSelectParent.transform.childCount, csCount = catsuleSelectParent.transform.childCount;
+        Vector2 offset = new(158, -35);
+        foreach (var s in seeds)
+        {
+            CreateMenuButton(s.Key, s.Value, seedSelectParent.transform, offset, seedCount, "Seed");
+            if (++seedCount > 4) seedSelectParent.GetComponent<RectTransform>().sizeDelta += new Vector2(0, 70);
+        }
+        foreach(var c in catsules)
+        {
+            CreateMenuButton(c.Key, c.Value, catsuleSelectParent.transform, offset, csCount, "Catsule");
+            if (++csCount > 4) seedSelectParent.GetComponent<RectTransform>().sizeDelta += new Vector2(0, 70);
+        }
+    }
+    public void UpdateButtons(bool newBtn, Transform parent)
+    {
+        if (parent.parent.parent.parent.parent.name.Contains("Seed"))
+        {
+            if (!newBtn)
+                foreach (Transform button in seedSelectParent.transform)
+                {
+                    int inventoryCount = GameManager.instance.Inventory.seeds[button.name[..button.name.IndexOf(" Seed")]];
+                    string btnCount = button.Find("Count").gameObject.GetComponent<TextMeshProUGUI>().text;
+                    if (int.Parse(btnCount) != inventoryCount)
+                    {
+                        button.Find("Count").gameObject.GetComponent<TextMeshProUGUI>().text = inventoryCount.ToString();
+                        if (!button.GetComponent<Button>().enabled)
+                        {
+                            button.GetComponent<Button>().enabled = true;
+                            button.GetComponent<Image>().color *= 2;
+                        }
+                    }
+                }
+            else CreateMenuButton(GameManager.instance.Inventory.seeds.Last().Key, GameManager.instance.Inventory.seeds.Last().Value,
+                                  parent, new(158, -35), parent.childCount, "Seed");
+        }
+        else if (parent.parent.parent.parent.parent.name.Contains("Catsule"))
+        {
+            if (!newBtn)
+                foreach (Transform button in catsuleSelectParent.transform)
+                {
+                    int inventoryCount = GameManager.instance.Inventory.catsules[button.name[..button.name.IndexOf(" Catsule")]];
+                    string btnCount = button.Find("Count").gameObject.GetComponent<TextMeshProUGUI>().text;
+                    if (int.Parse(btnCount) != inventoryCount)
+                    {
+                        button.Find("Count").gameObject.GetComponent<TextMeshProUGUI>().text = inventoryCount.ToString();
+                        if (!button.GetComponent<Button>().enabled)
+                        {
+                            button.GetComponent<Button>().enabled = true;
+                            button.GetComponent<Image>().color *= 2;
+                        }
+                    }
+                }
+            else CreateMenuButton(GameManager.instance.Inventory.catsules.Last().Key, GameManager.instance.Inventory.catsules.Last().Value,
+                                  parent, new(158, -35), parent.childCount, "Catsule");
+        }
+            
+
+    }
 
     public void OpenSeedUI()
     {

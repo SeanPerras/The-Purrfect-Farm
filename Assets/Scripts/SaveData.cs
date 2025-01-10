@@ -21,10 +21,15 @@ public class SaveData
         public float[] position;
         public ImportantPlantInfo plantOrcatsuleInfo;
     }
+    [Serializable]
+    public struct ImportantInventoryInfo
+    {
+        public List<string> seeds, catsules, decors;
+    }
+    public ImportantInventoryInfo inventory = new();
     public int currency;
     public List<string> cats = new();
     public List<ImportantPlotInfo> plots = new();
-    //public List<string> inventory = new();
 
     public string ToJson()
     {

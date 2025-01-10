@@ -51,22 +51,27 @@ public class Plot : MonoBehaviour//, ISaveable
     {
         Debug.Log("Plot clicked.");
     }
+    private void OnMouseEnter() { transform.Find("Outline").gameObject.SetActive(true); }
+    private void OnMouseExit() { transform.Find("Outline").gameObject.SetActive(false); }
 
     public void AddPlotRef(GameObject go, int ind) { adjPlots[ind] = go; }
     public Plant Plant(PlantData plantData)
     {
-        plant = Instantiate(plantData.plantPrefab, transform.position, Quaternion.identity).GetComponent<Plant>();
+        plant = Instantiate(plantData.plantPrefab, transform.position + new Vector3(0, 1, 0),
+                            transform.rotation, gameObject.transform).GetComponent<Plant>();
+        plant.transform.localScale /= 10;
         plant.SetPlantData(plantData);
         plant.SetPlotReference(this);
         plant.gameObject.name = plantData.plantPrefab.name;
-        //plant.GetComponent<SpriteRenderer>().sortingOrder = GetComponent<SpriteRenderer>().sortingOrder + 1;
-        plant.GetComponent<SpriteRenderer>().sortingOrder = 20;//temp fix
+        plant.sOrder = GetComponent<SpriteRenderer>().sortingOrder + 1;
+        //plant.GetComponent<SpriteRenderer>().sortingOrder = 20;//temp fix
         return plant;
     }
     public Catsule Plant(string color = "White")
     {
         GameObject prefab = GameManager.instance.catsulePrefabs.Find(c => c.GetComponent<Catsule>().color == color);
-        Catsule ct = Instantiate(prefab, transform.position, transform.rotation).GetComponent<Catsule>();
+        Catsule ct = Instantiate(prefab, transform.position, transform.rotation, gameObject.transform).GetComponent<Catsule>();
+        ct.transform.localScale /= 10;
         catsule = ct;
         catsule.SetPlotReference(this);
         //catsule.gameObject.GetComponent<SpriteRenderer>().sortingOrder = gameObject.GetComponent<SpriteRenderer>().sortingOrder + 1;

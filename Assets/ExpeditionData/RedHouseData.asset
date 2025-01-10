@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   expeditionName: Red House
   expeditionTime: 150
-  recommendedStrength: 200
-  recommendedSpeed: 200
-  recommendedDefense: 200
+  recommendedStrength: 40
+  recommendedSpeed: 40
+  recommendedDefense: 40

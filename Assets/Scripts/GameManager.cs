@@ -4,28 +4,39 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using TMPro;
+using Unity.Burst.Intrinsics;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+public struct InventoryStruct
+{
+    public Dictionary<string, int> seeds, catsules, decors;
+}
 public class GameManager : MonoBehaviour, ISaveable
 {
     public static GameManager instance;
     public Farm farm;
     public List<GameObject> catsulePrefabs;
-    public GameObject catPrefab;
+    public GameObject catPrefab, FARM, EXPO;
     public TextMeshProUGUI catCoinsDisplay;
-    private int catCoins;
-    public int ExpeditionCoins = 0;
-    private bool coinsAdded = false;
+    public InventoryStruct Inventory = new()
+    {
+        seeds = new(),
+        catsules = new(),
+        decors = new()
+    };
+private int catCoins;
+    //public int ExpeditionCoins = 0;
+    //private bool coinsAdded = false;
     // Start is called before the first frame update
     void Awake()
     {
         if (!instance)
         {
             instance = this;
-            SceneManager.sceneLoaded += OnSceneLoaded;
+            //SceneManager.sceneLoaded += OnSceneLoaded;
             DontDestroyOnLoad(gameObject);
         }
         else
@@ -38,24 +49,27 @@ public class GameManager : MonoBehaviour, ISaveable
     }
     private void Start()
     {
+        LoadJsonData(instance);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(catCoinsDisplay) catCoinsDisplay.text = catCoins.ToString();
+        if(catCoinsDisplay && catCoinsDisplay.text != catCoins.ToString())
+            catCoinsDisplay.text = catCoins.ToString();
     }
     private void OnApplicationQuit()
     {
-        if(SceneManager.GetActiveScene().name == "Home") SaveJsonData(instance);
+        if (FARM.activeSelf) SaveJsonData(instance);
+        if (EXPO.activeSelf) SaveExpoJsonData(instance);
     }
-    private void OnDestroy()
+    //private void OnDestroy()
+    //{
+    //    SceneManager.sceneLoaded -= OnSceneLoaded;
+    //}
+    /*private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
-    }
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        if (scene.path == "Assets/Scenes/Home.unity")
+        if (scene.name == "Home")
         {
             farm = GameObject.Find("Farm (9x9)").GetComponent<Farm>();
             catCoinsDisplay = GameObject.Find("Currency").GetComponent<TextMeshProUGUI>();
@@ -76,30 +90,73 @@ public class GameManager : MonoBehaviour, ISaveable
                     homeButton.onClick.AddListener(BackToFarm);
                 }
         }
-    }
+    }*/
     public void BackToFarm()
     {
-        Expedition[] allExpeditions = FindObjectsOfType<Expedition>();
-        if (ExpeditionSLManager.instance != null)
-            ExpeditionSLManager.SaveExpoJsonData(ExpeditionSLManager.instance, allExpeditions.ToList());
-        SceneManager.LoadScene("Home");
+        if (instance != null)
+        {
+            SaveExpoJsonData(instance);
+            foreach (Transform button in ExpeditionManager.instance.catButtons) Destroy(button.gameObject);
+            EXPO.SetActive(false);
+            FARM.SetActive(true);
+            //Eventually something like inventory.seeds;
+            farm.PopulateButtons(Inventory.seeds, Inventory.catsules);
+        }
 
     }
     public void ToExpeditions()
     {
-        if (GameManager.instance != null)
+        if (instance != null)
         {
-            GameManager.SaveJsonData(GameManager.instance);
-            //ExpeditionSLManager.LoadExpoJsonData(ExpeditionSLManager.instance);
-            SceneManager.LoadScene("Expedition Map");
+            SaveJsonData(instance);
+            foreach (Transform button in farm.seedSelectParent.transform) Destroy(button.gameObject);
+            List<Cat> cats = GameObject.Find("Cats").GetComponentsInChildren<Cat>().ToList();
+            FARM.SetActive(false);
+            EXPO.SetActive(true);
+            ExpeditionManager.instance.PopulateCats(cats);
         }
-
     }
 
 
     public void AddCoin(int coin)
     {
         catCoins += coin;
+    }
+    public void RemoveCoin(int coin)
+    {
+        catCoins -= coin;
+    }
+    public void UpdateInventory(string item, string type)
+    {
+        bool nb;
+        if (type == "Seed")
+        {
+            if (Inventory.seeds.ContainsKey(item))
+            {
+                Inventory.seeds[item]++;
+                nb = false;
+            }
+            else
+            {
+                Inventory.seeds[item] = 1;
+                nb = true;
+            }
+            farm.UpdateButtons(nb, farm.seedSelectParent.transform);
+        }
+        else if(type == "Catsule")
+        {
+            if (Inventory.catsules.ContainsKey(item))
+            {
+                Inventory.catsules[item]++;
+                nb = false;
+            }
+            else
+            {
+                Inventory.catsules[item] = 1;
+                nb = true;
+            }
+            farm.UpdateButtons(nb, farm.catsuleSelectParent.transform);
+        }
     }
     public int GetCurrency()
     {
@@ -110,9 +167,9 @@ public class GameManager : MonoBehaviour, ISaveable
         catCoins = coins;
     }
 
-    public void ExpeditionAddCoin(int coin){
-        ExpeditionCoins = coin;
-    }
+    //public void ExpeditionAddCoin(int coin){
+    //    ExpeditionCoins = coin;
+    //}
 
 
 
@@ -123,7 +180,7 @@ public class GameManager : MonoBehaviour, ISaveable
         foreach (Plot pt in GameObject.Find("Plots").GetComponentsInChildren<Plot>().ToList())
         {
             bool PLANT = pt.HasPlant(), CATSULE = pt.HasCatsule();
-            Plant plant = new(); Catsule catsule = new();
+            Plant plant = null; Catsule catsule = null;
             if (PLANT) plant = pt.GetPlant();
             else if (CATSULE) catsule = pt.GetCatsule();
 
@@ -147,30 +204,27 @@ public class GameManager : MonoBehaviour, ISaveable
         {
             jData.cats.Add(ct.stats.name);
         }
+        jData.inventory.seeds = new();
+        jData.inventory.catsules = new();
+        jData.inventory.decors = new();
+        foreach (var seed in Inventory.seeds)
+            jData.inventory.seeds.Add(seed.Key + ":" + seed.Value.ToString());
+        foreach (var catsule in Inventory.catsules)
+            jData.inventory.catsules.Add(catsule.Key + ":" + catsule.Value.ToString());
+        foreach (var decor in Inventory.decors)
+            jData.inventory.decors.Add(decor.Key + ":" + decor.Value.ToString());
     }
     public void LoadFromSaveData(SaveData jData)
     {
         //Debug.Log("Loading Save Data...");
         //Debug.Log($"ExpeditionCoins: {ExpeditionCoins}, CoinsAdded: {coinsAdded}");
-        if(ExpeditionCoins > 0){
-            if(!coinsAdded){
-                catCoins += ExpeditionCoins;
-                //ExpeditionCoins = 0;
-                catCoinsDisplay.text = catCoins.ToString();
-                jData.currency = catCoins;
-                SetCurrency(jData.currency);
-                coinsAdded = true;
-                ExpeditionCoins = 0;
-            }
-            coinsAdded = false;
-            }
-
-        else if (coinsAdded){
-            //Debug.Log("Setting currency from saved data: " + jData.currency);
-            SetCurrency(jData.currency);
-        }
+        //if (ExpeditionCoins > 0)
+        //{
+        //    jData.currency += ExpeditionCoins;
+        //    ExpeditionCoins = 0;
+        //}
         
-        //SetCurrency(jData.currency);
+        SetCurrency(jData.currency);
         foreach (SaveData.ImportantPlotInfo plot in jData.plots)
         {
             Vector2 pos = new(plot.position[0], plot.position[1]);
@@ -208,10 +262,17 @@ public class GameManager : MonoBehaviour, ISaveable
             CatStats cd = Resources.Load<CatStats>("CatData/" + cat);
             GameObject cg = Instantiate(catPrefab, transform.position, catPrefab.transform.rotation);
             Cat ct = cg.GetComponent<Cat>();
-            cg.transform.position = ct.WithinRange(ct.catioPos);
-            cg.GetComponent<SpriteRenderer>().sortingOrder = jData.cats.Count - (i + 1);
+            //cg.transform.position = ct.WithinRange(ct.catioPos);
+            //cg.GetComponent<SpriteRenderer>().sortingOrder = jData.cats.Count - (i + 1);
             ct.SetColor(cat[..cat.IndexOf("Cat")]);
         }
+        foreach (var seed in jData.inventory.seeds)
+            Inventory.seeds[seed[..seed.IndexOf(":")]] = int.Parse(seed[(seed.IndexOf(":") + 1)..]);
+        foreach (var catsule in jData.inventory.catsules)
+            Inventory.catsules[catsule[..catsule.IndexOf(":")]] = int.Parse(catsule[(catsule.IndexOf(":") + 1)..]);
+        foreach (var decor in jData.inventory.decors)
+            Inventory.decors[decor[..decor.IndexOf(":")]] = int.Parse(decor[(decor.IndexOf(":") + 1)..]);
+        //Inventory = jData.inventory;
     }
     public static void SaveJsonData(GameManager jManager)
     {
@@ -228,6 +289,13 @@ public class GameManager : MonoBehaviour, ISaveable
             saveData.LoadFromJson(sr);
             jManager.LoadFromSaveData(saveData);
             Debug.Log("Load successful!");
+        }
+        else
+        {
+            SaveData saveData = new();
+            saveData.LoadFromJson("{\"inventory\":{\"seeds\":[\"Blueberry:5\"],\"catsules\":[\"White:1\"],\"decors\":[]},\"currency\":45,\"cats\":[],\"plots\":[]}");
+            jManager.LoadFromSaveData(saveData);
+            Debug.Log("First Load successful");
         }
     }
     public static bool WriteToFile(string fileName, string saveData)
@@ -250,6 +318,8 @@ public class GameManager : MonoBehaviour, ISaveable
         try
         {
             data = File.ReadAllText(fPath);
+            if (!data.Contains("inventory"))
+                return false;
             return true;
         }
         catch (Exception e)
@@ -302,7 +372,13 @@ public class GameManager : MonoBehaviour, ISaveable
                         Debug.LogWarning($"Cat with name {name} not found!");
                     }
                 }
-                currentExpedition.SetSelectedTeam(restoredTeam);
+                List<GameObject> temp = new();
+                foreach(GameObject c in restoredTeam)
+                {
+                    currentExpedition.CatFaces(true, c.GetComponent<SpriteRenderer>().sprite);
+                    temp.Add(ExpeditionManager.instance.catButtons.Find(c.name).gameObject);
+                }
+                currentExpedition.SetSelectedTeam(restoredTeam, temp);
             }
         }
     }

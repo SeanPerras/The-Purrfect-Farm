@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   expeditionName: Blue House
   expeditionTime: 5
-  recommendedStrength: 50
-  recommendedSpeed: 50
-  recommendedDefense: 50
+  recommendedStrength: 10
+  recommendedSpeed: 10
+  recommendedDefense: 10

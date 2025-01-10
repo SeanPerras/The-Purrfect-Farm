@@ -28,12 +28,8 @@ public class Barn : MonoBehaviour
             
             if (TryGetComponent(out SpriteRenderer spriteRenderer))
             {
-            
                 //spriteRenderer.sprite = Resources.Load<Sprite>("BarnOpen");
                 spriteRenderer.sprite = openbarn;
-
-
-
             }
             else
             {
@@ -44,27 +40,20 @@ public class Barn : MonoBehaviour
         }
        
     }
-    public void exit()
+    public void Exit()
     {
-        if (!farm.IsAnyUIOpen())
+        Debug.Log("barn closed!");
+
+        if (TryGetComponent(out SpriteRenderer spriteRenderer))
         {
-            Debug.Log("barn closed!");
-            
-            if (TryGetComponent(out SpriteRenderer spriteRenderer))
-            {
-
-                //spriteRenderer.sprite = Resources.Load<Sprite>("BarnOpen");
-                spriteRenderer.sprite = closebarn;
-
-
-
-            }
-            else
-            {
-                Debug.LogError("No SpriteRenderer component found on this GameObject!");
-            }
-
-            inventory.SetActive(false);
+            //spriteRenderer.sprite = Resources.Load<Sprite>("BarnOpen");
+            //spriteRenderer.sprite = closebarn;
         }
+        else
+        {
+            Debug.LogError("No SpriteRenderer component found on this GameObject!");
+        }
+
+        inventory.SetActive(false);
     }
 }

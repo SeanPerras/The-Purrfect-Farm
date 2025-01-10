@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba2f011f962db384d83b937b6ac23397, type: 3}
   m_Name: YellowCatData
   m_EditorClassIdentifier: 
-  strength: 30
-  speed: 20
-  defense: 30
+  strength: 6
+  speed: 4
+  defense: 6

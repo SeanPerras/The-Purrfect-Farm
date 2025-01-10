@@ -12,8 +12,7 @@ public class OutlineEffect : MonoBehaviour
         SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
         outlineObj = new GameObject("Outline");
         outlineObj.transform.parent = transform;
-        outlineObj.transform.localPosition = Vector3.zero;
-        outlineObj.transform.localRotation = Quaternion.identity;
+        outlineObj.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
         outlineObj.transform.localScale = Vector3.one * 1.05f; 
         var outlineSpriteRenderer = outlineObj.AddComponent<SpriteRenderer>();
         outlineSpriteRenderer.sprite = spriteRenderer.sprite; 

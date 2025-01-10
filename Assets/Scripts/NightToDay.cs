@@ -6,6 +6,8 @@ using System.Linq;
 
 public class NightToDay : MonoBehaviour
 {
+    public GameObject FARM, EXPO;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,18 +26,18 @@ public class NightToDay : MonoBehaviour
         if (ExpeditionSLManager.instance != null)
             ExpeditionSLManager.SaveExpoJsonData(ExpeditionSLManager.instance, allExpeditions.ToList());
         SceneManager.LoadScene("Home");
-
     }
 
 
     public void ToExpeditions()
     {
-        if (GameManager.instance != null)
-        {
-            GameManager.SaveJsonData(GameManager.instance);
-            //ExpeditionSLManager.LoadExpoJsonData(ExpeditionSLManager.instance);
-            SceneManager.LoadScene("Expedition Map");
-        }
-
+        //if (GameManager.instance != null)
+        //{
+        //    GameManager.SaveJsonData(GameManager.instance);
+        //    //ExpeditionSLManager.LoadExpoJsonData(ExpeditionSLManager.instance);
+        //    SceneManager.LoadScene("Expedition Map");
+        //}
+        FARM.SetActive(false);
+        EXPO.SetActive(true);
     }
 }

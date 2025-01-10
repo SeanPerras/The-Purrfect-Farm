@@ -60,17 +60,17 @@ public class ExpeditionSLManager : MonoBehaviour, IExpoSaveable
     {
 
         foreach (Expedition expedition in expeditions)
-    {
-        ExpoSaveData.ImportantExpoData expo = new();
-           
-        expo.inProgress = expedition.inProgress;
-        expo.isCompleted = expedition.isCompleted;
-        expo.timeLeft = expedition.expeditionTimer;
-        expo.team = expedition.teamMemberNames;
-            
-        jData.expeditions.Add(expo);
-    }
-        
+        {
+            ExpoSaveData.ImportantExpoData expo = new();
+
+            expo.inProgress = expedition.inProgress;
+            expo.isCompleted = expedition.isCompleted;
+            expo.timeLeft = expedition.expeditionTimer;
+            expo.team = expedition.teamMemberNames;
+
+            jData.expeditions.Add(expo);
+        }
+
     }
     public void LoadFromExpoSaveData(ExpoSaveData jData)
     {
@@ -99,11 +99,16 @@ public class ExpeditionSLManager : MonoBehaviour, IExpoSaveable
         {
             Debug.LogWarning($"Cat with name {name} not found!");
         }
-    }
+                }
+                List<GameObject> temp = new();
+                foreach (GameObject c in restoredTeam)
+                {
+                    currentExpedition.CatFaces(true, c.GetComponent<SpriteRenderer>().sprite);
+                    temp.Add(ExpeditionManager.instance.catButtons.Find(c.name).gameObject);
+                }
+                currentExpedition.SetSelectedTeam(restoredTeam, temp);
 
-    currentExpedition.SetSelectedTeam(restoredTeam);
-
-    }
+            }
         }
     
     }

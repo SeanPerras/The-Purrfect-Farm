@@ -27,39 +27,39 @@ public class shopselect : MonoBehaviour
         shopmenu.SetActive(true);
         //Camera.main.cullingMask = shopLayer;
         //farm.layer = LayerMask.NameToLayer("Ignore Raycast");
-        int ignoreRaycastLayer = LayerMask.NameToLayer("Ignore Raycast");
-        SetLayerRecursively(farm, ignoreRaycastLayer);
-        SetLayerRecursively(plots, ignoreRaycastLayer);
+        //int ignoreRaycastLayer = LayerMask.NameToLayer("Ignore Raycast");
+        //SetLayerRecursively(farm, ignoreRaycastLayer);
+        //SetLayerRecursively(plots, ignoreRaycastLayer);
 
     }
     public void exit() {
         shopmenu.SetActive(false);
-        StartCoroutine(ExecuteWithDelay());
+        //StartCoroutine(ExecuteWithDelay());
 
-        int landLayer = LayerMask.NameToLayer("landLayer");
-        SetLayerRecursively(farm, landLayer);
-        farm.layer = LayerMask.NameToLayer("Default");
+        //int landLayer = LayerMask.NameToLayer("landLayer");
+        //SetLayerRecursively(farm, landLayer);
+        //farm.layer = LayerMask.NameToLayer("Default");
 
-        int plotLayer = LayerMask.NameToLayer("plotLayer");
-        SetLayerRecursively(plots, landLayer);
-        plots.layer = LayerMask.NameToLayer("Default");
+        //int plotLayer = LayerMask.NameToLayer("plotLayer");
+        //SetLayerRecursively(plots, landLayer);
+        //plots.layer = LayerMask.NameToLayer("Default");
 
     }
     private void SetLayerRecursively(GameObject obj, int layer)
     {
-        obj.layer = layer;
-        foreach (Transform child in obj.transform)
-        {
-            SetLayerRecursively(child.gameObject, layer);
-        }
+        //obj.layer = layer;
+        //foreach (Transform child in obj.transform)
+        //{
+        //    SetLayerRecursively(child.gameObject, layer);
+        //}
     }
-    IEnumerator ExecuteWithDelay()
-    {
-        Debug.Log("exit button pressed");
+    //IEnumerator ExecuteWithDelay()
+    //{
+    //    Debug.Log("exit button pressed");
 
 
-        yield return new WaitForSeconds(3f);
+    //    yield return new WaitForSeconds(3f);
 
-        Debug.Log("restoring og layers");
-    }
+    //    Debug.Log("restoring og layers");
+    //}
 }

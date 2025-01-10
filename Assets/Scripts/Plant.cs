@@ -7,7 +7,7 @@ public class Plant : MonoBehaviour
 
     public PlantData plantData;
     public string color;
-    public int value;
+    public int value, sOrder;
     private SpriteRenderer currentSprite;
     private int currentGrowthStage = 0;
     private float growthTimer = 0f;
@@ -22,6 +22,7 @@ public class Plant : MonoBehaviour
         // currentSprite = GetComponent<SpriteRenderer>();
         //currentSprite.sprite = plantData.growthStages[currentGrowthStage];
         //if (color == "") color = gameObject.name.Split(" ")[0];
+        GetComponent<SpriteRenderer>().sortingOrder = sOrder;
     }
 
     public void SetPlantData(PlantData data)

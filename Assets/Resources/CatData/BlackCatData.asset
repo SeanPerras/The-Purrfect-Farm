@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba2f011f962db384d83b937b6ac23397, type: 3}
   m_Name: BlackCatData
   m_EditorClassIdentifier: 
-  strength: 20
-  speed: 20
-  defense: 20
+  strength: 5
+  speed: 5
+  defense: 5

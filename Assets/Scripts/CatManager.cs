@@ -6,7 +6,7 @@ public class CatManager : MonoBehaviour
     public static CatManager instance;
 
     // List of all possible cats
-    public List<Cat> allAvailableCats = new List<Cat>();
+    public List<Cat> allAvailableCats = new();
 
     private void Awake()
     {

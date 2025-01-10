@@ -7,50 +7,63 @@ using UnityEngine.UI;
 public class Expedition : MonoBehaviour
 {
 
-    public List<GameObject> expeditionTeam = new List<GameObject>();
-    public List<string> teamMemberNames = new List<string>();
+    public List<GameObject> expeditionTeam = new(), selectedButtons;
+    public List<string> teamMemberNames = new();
     [SerializeField] private Text timerText;
     public ExpeditionData expeditionData;
     public bool inProgress = false;
     public bool isCompleted = false;
     public float expeditionTimer = 0f;
+    public int difficulty;
     public GameObject pauseMenu;
     public GameObject optionsMenu;
     public List<Image> catImages;
     public Sprite defaultSprite;
     private AudioManager audioManager;
-    private Expedition expedition;
+    //private Expedition expedition;
 
-    private void Start(){
+    private void Start()
+    {
         audioManager = FindObjectOfType<AudioManager>();
-        
     }
 
-    void OnMouseUp(){
-        if(pauseMenu.activeSelf){
+    void OnMouseUp()
+    {
+        if (pauseMenu.activeSelf)
+        {
             return;
         }
-        if(optionsMenu.activeSelf){
+        if (optionsMenu.activeSelf)
+        {
             return;
         }
-        if(isCompleted){
+        if (isCompleted)
+        {
             ClaimRewards();
         }
-        else if(!inProgress){
+        else if (!inProgress)
+        {
             timerText.text = "";
-        ExpeditionManager.instance.OpenTeamSelectUI(this);
+            ExpeditionManager.instance.OpenTeamSelectUI(this);
         }
     }
-
-
-    public void SetSelectedTeam(List<GameObject> team){
-        if(expeditionTeam.Count > 0) return;
-        expeditionTeam = new List<GameObject>(team);
-        teamMemberNames = team.Select(cat => cat.name).ToList();
-        foreach (GameObject cat in team)
+    private void OnEnable()
     {
-        CatFaces(true, cat.GetComponent<SpriteRenderer>().sprite);
+        if (expeditionTimer > 0) StartCoroutine(StartExpeditionTimer());
     }
+
+    public void SetSelectedTeam(List<GameObject> team, List<GameObject> buttons)
+    {
+        if (expeditionTeam.Count > 0) return;
+        expeditionTeam = new List<GameObject>(team);
+        selectedButtons = new(buttons);
+        teamMemberNames = team.Select(cat => cat.name).ToList();
+        foreach (GameObject btn in selectedButtons)
+        {
+            btn.GetComponent<Image>().color *= .5f;
+            btn.transform.Find("CheckBox").GetComponent<Toggle>().enabled = false;
+        }
+        //foreach (GameObject cat in team) CatFaces(true, cat.GetComponent<SpriteRenderer>().sprite);
     }
 
     public bool SendCatsonExpedition()
@@ -61,7 +74,8 @@ public class Expedition : MonoBehaviour
             return false;
         }
 
-        if(!EligibleCatStats()){
+        if (!EligibleCatStats())
+        {
             Debug.Log("The cats on your team have too low stats to go on the expedition!");
             return false;
         }
@@ -82,12 +96,14 @@ public class Expedition : MonoBehaviour
         return true;
     }
 
-    private bool EligibleCatStats(){
+    private bool EligibleCatStats()
+    {
         int totalStrength = 0;
         int totalSpeed = 0;
         int totalDefense = 0;
 
-        foreach(GameObject cat in expeditionTeam){
+        foreach (GameObject cat in expeditionTeam)
+        {
             Cat catComponent = cat.GetComponent<Cat>();
             totalStrength += catComponent.stats.strength;
             totalSpeed += catComponent.stats.speed;
@@ -97,46 +113,55 @@ public class Expedition : MonoBehaviour
         if (totalStrength < expeditionData.recommendedStrength * 0.5f ||
         totalSpeed < expeditionData.recommendedSpeed * 0.5f ||
         totalDefense < expeditionData.recommendedDefense * 0.5f)
-    {
-        return false; 
-    }
-    return true;
+        {
+            return false;
+        }
+        return true;
     }
 
-    public void CatFaces(bool isOn, Sprite catFace){
-        if(isOn){
-                foreach(Image image in catImages){
-                    if (image.sprite == defaultSprite){
-                        image.sprite = catFace;
-                        break;
-                    }
+    public void CatFaces(bool isOn, Sprite catFace)
+    {
+        if (isOn)
+        {
+            foreach (Image image in catImages)
+            {
+                if (image.sprite == defaultSprite)
+                {
+                    image.sprite = catFace;
+                    break;
                 }
-            
+            }
+
         }
 
-        else{
-                foreach(Image image in catImages){
-                    if (image.sprite == catFace){
-                        image.sprite = defaultSprite;
-                        break;
-                    }
+        else
+        {
+            foreach (Image image in catImages)
+            {
+                if (image.sprite == catFace)
+                {
+                    image.sprite = defaultSprite;
+                    break;
                 }
             }
         }
+    }
 
 
 
-    private IEnumerator StartExpeditionTimer(){
+    private IEnumerator StartExpeditionTimer()
+    {
 
         //expeditionTimer = expeditionData.expeditionTime;
         //expedition = this;
-        while(expeditionTimer > 0){
+        while (expeditionTimer > 0)
+        {
             yield return new WaitForSeconds(1f);
             expeditionTimer -= 1f;
             UpdateVisualTimer();
             Debug.Log("Time remaining: " + expeditionTimer + " seconds");
             //expedition = this;
-            
+
         }
 
         Debug.Log("Expedition complete! Ready to claim.");
@@ -146,22 +171,27 @@ public class Expedition : MonoBehaviour
         UpdateVisualTimer();
     }
 
-    public void UpdateVisualTimer(){
-        if(isCompleted){
+    public void UpdateVisualTimer()
+    {
+        if (isCompleted)
+        {
             timerText.text = "Expedition Complete!";
         }
-        else{
+        else
+        {
             timerText.text = "Time Left: " + Mathf.CeilToInt(expeditionTimer) + "s";
         }
     }
 
-    private void CatsVSExpeditionStats(){
+    private void CatsVSExpeditionStats()
+    {
 
         int totalStrength = 0;
         int totalSpeed = 0;
         int totalDefense = 0;
 
-        foreach(GameObject cat in expeditionTeam){
+        foreach (GameObject cat in expeditionTeam)
+        {
             Cat catComponent = cat.GetComponent<Cat>();
             totalStrength += catComponent.stats.strength;
             totalSpeed += catComponent.stats.speed;
@@ -171,50 +201,54 @@ public class Expedition : MonoBehaviour
         int checksPassed = 0;
         Debug.Log($"Total Stats - Strength: {totalStrength}, Speed: {totalSpeed}, Defense: {totalDefense}");
         Debug.Log($"Expedition Requirements - Strength: {expeditionData.recommendedStrength}, Speed: {expeditionData.recommendedSpeed}, Defense: {expeditionData.recommendedDefense}");
-        if(PassStatCheck(totalStrength, expeditionData.recommendedStrength)) checksPassed++;
-        if(PassStatCheck(totalSpeed, expeditionData.recommendedSpeed)) checksPassed++;
-        if(PassStatCheck(totalDefense, expeditionData.recommendedDefense)) checksPassed++;
+        if (PassStatCheck(totalStrength, expeditionData.recommendedStrength)) checksPassed++;
+        if (PassStatCheck(totalSpeed, expeditionData.recommendedSpeed)) checksPassed++;
+        if (PassStatCheck(totalDefense, expeditionData.recommendedDefense)) checksPassed++;
 
-        switch(checksPassed){
+        switch (checksPassed)
+        {
 
             case 0:
-            Debug.Log("Failure! No rewards!");
-            audioManager.playFailSound();
-            break;
+                Debug.Log("Failure! No rewards!");
+                audioManager.playFailSound();
+                break;
 
             case 1:
                 Debug.Log("Minimal Rewards");
                 audioManager.playVictorySound();
-                GameManager.instance.ExpeditionAddCoin(20);
+                GameManager.instance.AddCoin(20 * difficulty);
                 break;
 
             case 2:
                 Debug.Log("All rewards!");
                 audioManager.playVictorySound();
-                GameManager.instance.ExpeditionAddCoin(40);
+                GameManager.instance.AddCoin(40 * difficulty);
                 break;
 
             case 3:
                 Debug.Log("All rewards + bonus!");
                 audioManager.playVictorySound();
-                GameManager.instance.ExpeditionAddCoin(80);
+                GameManager.instance.AddCoin(80 * difficulty);
                 break;
         }
 
 
 
-        
+
     }
 
-    private bool PassStatCheck(int totalStats, int recommendedStat){
+    private bool PassStatCheck(int totalStats, int recommendedStat)
+    {
         float successChance = Mathf.Clamp01((float)totalStats / recommendedStat);
-        float roll = Random.Range(0f,1f);
+        float roll = Random.Range(0f, 1f);
         return roll <= successChance;
     }
 
 
-    private void ClaimRewards(){
-        if(!isCompleted){
+    private void ClaimRewards()
+    {
+        if (!isCompleted)
+        {
             Debug.Log("Expedition not done!");
             return;
         }
@@ -222,30 +256,39 @@ public class Expedition : MonoBehaviour
         CatsVSExpeditionStats();
         timerText.text = "";
         expeditionTeam.Clear();
+        foreach (GameObject btn in selectedButtons)
+        {
+            btn.GetComponent<Image>().color *= 2;
+            btn.transform.Find("CheckBox").GetComponent<Toggle>().enabled = true;
+        }
+        selectedButtons.Clear();
         foreach (Image image in catImages)
         {
             Debug.Log("Clearing cat images");
-        image.sprite = defaultSprite;
+            image.sprite = defaultSprite;
         }
         isCompleted = false;
         Debug.Log("Expedition finished, team returned!");
     }
 
 
-    public void LoadTimer(float savedTimer, bool completed){
+    public void LoadTimer(float savedTimer, bool completed)
+    {
         isCompleted = completed;
-        if (isCompleted) {
-        timerText.text = "Expedition Complete!";
-        return;
-    }
+        if (isCompleted)
+        {
+            timerText.text = "Expedition Complete!";
+            return;
+        }
         expeditionTimer = savedTimer;
 
-        if(expeditionTimer > 0) StartCoroutine(StartExpeditionTimer());
+        if (expeditionTimer > 0) StartCoroutine(StartExpeditionTimer());
         //if(isCompleted == true) UpdateVisualTimer();
-        else{
+        else
+        {
             UpdateVisualTimer();
         }
     }
-    
+
 
 }

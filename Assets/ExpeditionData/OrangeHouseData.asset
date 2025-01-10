@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   expeditionName: Orange House
   expeditionTime: 60
-  recommendedStrength: 100
-  recommendedSpeed: 100
-  recommendedDefense: 100
+  recommendedStrength: 20
+  recommendedSpeed: 20
+  recommendedDefense: 20

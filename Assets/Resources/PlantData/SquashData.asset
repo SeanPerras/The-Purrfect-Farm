@@ -16,7 +16,7 @@ MonoBehaviour:
   plantPrefab: {fileID: 2649599392934896263, guid: c2a9e180134604f44a25b2605db4994e, type: 3}
   growthStages:
   - {fileID: 21300000, guid: dabc045e1a48d30449669d66047df9b3, type: 3}
-  - {fileID: 21300000, guid: 03cdafccd7ed4354a8d74f4c3a2dfda5, type: 3}
+  - {fileID: 21300000, guid: 1d6291262f1d8fc4b863f730c964b2bd, type: 3}
   - {fileID: 21300000, guid: dc61dd278062929489eeda29217bf9e3, type: 3}
   - {fileID: 21300000, guid: 7077855c9f0b6f044aa878539395f64d, type: 3}
   growthTime: 5

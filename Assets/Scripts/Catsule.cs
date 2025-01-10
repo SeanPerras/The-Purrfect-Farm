@@ -26,7 +26,7 @@ public class Catsule : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (timer >= 0.0000f)  CheckTimer();
+        if (timer >= 0.0000f && gameObject.activeSelf)  CheckTimer();
     }
     private void OnMouseUp()
     {
@@ -63,15 +63,26 @@ public class Catsule : MonoBehaviour
         GameObject cat = Instantiate(GameManager.instance.catPrefab, transform.position, GameManager.instance.catPrefab.transform.rotation);
         Debug.Log("Time's Up!");
         Plot[] plots = currentPlot.GetAdjPlots().Where(g => g != null).Select(go => go.GetComponent<Plot>()).ToArray();
-        List<string> colors = plots.Select(p => p.GetColor()).ToList();
+        List<string> adjColors = plots.Select(p => p.GetColor()).ToList();
         string col;
         try{
-            List<string> debug = colors;
-            col = GameObject.Find("Farm (9x9)").GetComponent<Farm>().Colors.First(kvp => kvp.Value.SequenceEqual(colors) || ContainsAll(colors, kvp.Value)).Key;
+            List<string> debug2 = adjColors;
+            List<KeyValuePair<string, List<string>>> debug = Farm.Colors.Where(
+                kvp => kvp.Value.SequenceEqual(adjColors) ||
+                ContainsAll(adjColors, kvp.Value)).ToList();
+            //List<KeyValuePair<string, List<string>>> debug = new();
+            //foreach (KeyValuePair<string, List<string>> kvp in Farm.Colors)
+            //{
+            //    if (kvp.Value.SequenceEqual(adjColors))
+            //        debug.Add(kvp);
+            //    else if (ContainsAll(adjColors, kvp.Value))
+            //        debug.Add(kvp);
+            //}
+            col = debug.OrderByDescending(kvp => kvp.Value.Count).First().Key;
         }
         catch{ col = "White"; }
         cat.GetComponent<Cat>().SetColor(col);
-        Debug.Log(string.Join("|", colors));
+        Debug.Log(string.Join("|", adjColors));
         currentPlot.ReEnablePlot();
         Destroy(gameObject);
     }
@@ -84,7 +95,8 @@ public class Catsule : MonoBehaviour
     private bool ContainsAll(List<string> l1, List<string> l2)
     {
         bool ret = false;
-        List<string> temp = (from item in l1 select item[..]).ToList();
+        //List<string> temp = (from item in l1 select item[..]).ToList();
+        List<string> temp = new(l1);
         foreach (string s in l2)
             if (temp.Contains(s))
             {
