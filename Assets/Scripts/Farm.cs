@@ -40,7 +40,7 @@ public class Farm : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Cursor.SetCursor(pPointer, new Vector2(0, pPointer.Size().y*.07f), CursorMode.Auto);
+        Cursor.SetCursor(pPointer, new Vector2(0, pPointer.height*.07f), CursorMode.Auto);
         PopulateButtons(GameManager.instance.Inventory.seeds, GameManager.instance.Inventory.catsules);
     }
     // Update is called once per frame
@@ -57,12 +57,12 @@ public class Farm : MonoBehaviour
         {
             if (mousePos != Vector3.zero && Camera.main.ScreenToWorldPoint(Input.mousePosition) != mousePos)
             {
-                Cursor.SetCursor(pDrag, new Vector2(pDrag.Size().x * .5f, pDrag.Size().y * .5f), CursorMode.Auto);
+                Cursor.SetCursor(pDrag, new Vector2(pDrag.width * .5f, pDrag.height * .5f), CursorMode.Auto);
                 Camera.main.transform.position -= Camera.main.ScreenToWorldPoint(Input.mousePosition) - mousePos;
             }
         }
         else if (Input.GetMouseButtonUp(1))
-            Cursor.SetCursor(pPointer, new Vector2(0, pPointer.Size().y * .07f), CursorMode.Auto);
+            Cursor.SetCursor(pPointer, new Vector2(0, pPointer.height * .07f), CursorMode.Auto);
         else if (Input.GetAxis("Mouse ScrollWheel") != 0)
             Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize - Input.GetAxis("Mouse ScrollWheel") * 5, 10, 25);
         else if (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl))
