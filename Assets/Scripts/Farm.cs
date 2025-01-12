@@ -200,9 +200,9 @@ public class Farm : MonoBehaviour
         int seedCount = seedSelectParent.transform.childCount, csCount = catsuleSelectParent.transform.childCount;
         Vector2 offset = new(158, -35);
         foreach (var s in seeds)
-            CreateMenuButton(s.Key, s.Value, seedSelectParent.transform, offset, seedCount, "Seed");
+            CreateMenuButton(s.Key, s.Value, seedSelectParent.transform, offset, seedCount++, "Seed");
         foreach(var c in catsules)
-            CreateMenuButton(c.Key, c.Value, catsuleSelectParent.transform, offset, csCount, "Catsule");
+            CreateMenuButton(c.Key, c.Value, catsuleSelectParent.transform, offset, csCount++, "Catsule");
     }
     public void UpdateButtons(bool newBtn, Transform parent)
     {
