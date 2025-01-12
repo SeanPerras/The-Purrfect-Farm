@@ -69,7 +69,7 @@ public class Catsule : MonoBehaviour
             List<string> debug2 = adjColors;
             List<KeyValuePair<string, List<string>>> debug = Farm.Colors.Where(
                 kvp => kvp.Value.SequenceEqual(adjColors) ||
-                ContainsAll(adjColors, kvp.Value)).ToList();
+                ContainsAll(adjColors, kvp.Value)).ToList(), debug3;
             //List<KeyValuePair<string, List<string>>> debug = new();
             //foreach (KeyValuePair<string, List<string>> kvp in Farm.Colors)
             //{
@@ -78,13 +78,31 @@ public class Catsule : MonoBehaviour
             //    else if (ContainsAll(adjColors, kvp.Value))
             //        debug.Add(kvp);
             //}
-            col = debug.OrderByDescending(kvp => kvp.Value.Count).First().Key;
+            debug3 = debug.OrderByDescending(kvp => kvp.Value.Count).ToList();
+            //col = debug.OrderByDescending(kvp => kvp.Value.Count).First().Key;
+            col = BestPick(debug);
         }
         catch{ col = "White"; }
         cat.GetComponent<Cat>().SetColor(col);
         Debug.Log(string.Join("|", adjColors));
         currentPlot.ReEnablePlot();
         Destroy(gameObject);
+    }
+    private string BestPick(List<KeyValuePair<string, List<string>>> colors)
+    {
+        colors = colors.OrderByDescending(kvp => kvp.Value.Count).ToList();
+        int most = 0;
+        string ret = "";
+        foreach(var c in colors)
+        {
+            if (c.Value.Distinct().Count() > most)
+            {
+                most = c.Value.Distinct().Count();
+                ret = c.Key;
+            }
+            else continue;
+        }
+        return ret;
     }
     public void SetPlotReference(Plot assignedPlot)
     {

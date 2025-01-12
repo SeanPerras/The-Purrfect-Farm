@@ -19,11 +19,11 @@ public class Farm : MonoBehaviour
         {"Black",  new() {"Black", "Black"} },
         {"Blue", new () {"Blue", "Blue"} },
         {"Light Blue", new () {"Blue"} },
-        //{"Red", new() { "Red", "Red" } },
-        //{"Purple", new() { "Red", "Blue" } },
+        {"Red", new() { "Red", "Red" } },
+        {"Purple", new() { "Red", "Blue" } },
         {"Pink", new() { "Red" } },
         {"Yellow", new() { "Yellow", "Yellow" } },
-        //{"Orange", new() { "Red", "Yellow" } }
+        {"Orange", new() { "Red", "Yellow" } }
     };
     public GameObject
         plotPrefab, buttonPF, plotsParent, seedSelectParent, catsuleSelectParent, shovel,
@@ -63,7 +63,7 @@ public class Farm : MonoBehaviour
         }
         else if (Input.GetMouseButtonUp(1))
             Cursor.SetCursor(pPointer, new Vector2(0, pPointer.height * .07f), CursorMode.Auto);
-        else if (Input.GetAxis("Mouse ScrollWheel") != 0)
+        else if (Input.GetAxis("Mouse ScrollWheel") != 0 && !IsAnyUIOpen())
             Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize - Input.GetAxis("Mouse ScrollWheel") * 5, 10, 25);
         else if (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl))
         {
@@ -165,39 +165,44 @@ public class Farm : MonoBehaviour
         newBtn.name = k + " " + category;
         if (category == "Seed")
         {
+            if (++count > 4) seedSelectParent.GetComponent<RectTransform>().sizeDelta += new Vector2(0, 70);
             PlantData pd = Resources.Load<PlantData>("PlantData/" + k.Replace(" ", "") + "Data");
             newBtn.GetComponent<Button>().onClick.AddListener(() => PlantSeed(pd));
         }
         else if (category == "Catsule")
+        {
+            if (++count > 4) catsuleSelectParent.GetComponent<RectTransform>().sizeDelta += new Vector2(0, 70);
             newBtn.GetComponent<Button>().onClick.AddListener(() => PlantCatsule(k));
+        }
         List<TextMeshProUGUI> texts = newBtn.transform.GetComponentsInChildren<TextMeshProUGUI>().ToList();
         texts[0].text = newBtn.name;
         texts[1].text = v.ToString();
+        if (v == 0) AbleButton(newBtn, false);
         newBtn.GetComponent<Button>().onClick.AddListener(() =>
         {
-            int count = v - 1;
-            texts[1].text = count.ToString();
-            if (count == 0)
-            {
-                newBtn.GetComponent<Button>().enabled = false;
-                newBtn.GetComponent<Image>().color *= .5f;
-            }
+            if(GameManager.instance.Inventory.seeds.ContainsKey(k))
+                v = --GameManager.instance.Inventory.seeds[k];
+            else if (GameManager.instance.Inventory.catsules.ContainsKey(k))
+                v = --GameManager.instance.Inventory.catsules[k];
+            else if (GameManager.instance.Inventory.decors.ContainsKey(k))
+                v = --GameManager.instance.Inventory.decors[k];
+            newBtn.transform.Find("Count").gameObject.GetComponent<TextMeshProUGUI>().text = v.ToString();
+            if (v == 0) AbleButton(newBtn, false);
         });
+    }
+    private void AbleButton(GameObject btn, bool enable)
+    {
+        btn.GetComponent<Button>().enabled = enable;
+        btn.GetComponent<Image>().color *= enable ? 2 : .5f;
     }
     public void PopulateButtons(Dictionary<string, int> seeds, Dictionary<string, int> catsules)
     {
         int seedCount = seedSelectParent.transform.childCount, csCount = catsuleSelectParent.transform.childCount;
         Vector2 offset = new(158, -35);
         foreach (var s in seeds)
-        {
             CreateMenuButton(s.Key, s.Value, seedSelectParent.transform, offset, seedCount, "Seed");
-            if (++seedCount > 4) seedSelectParent.GetComponent<RectTransform>().sizeDelta += new Vector2(0, 70);
-        }
         foreach(var c in catsules)
-        {
             CreateMenuButton(c.Key, c.Value, catsuleSelectParent.transform, offset, csCount, "Catsule");
-            if (++csCount > 4) seedSelectParent.GetComponent<RectTransform>().sizeDelta += new Vector2(0, 70);
-        }
     }
     public void UpdateButtons(bool newBtn, Transform parent)
     {
@@ -211,11 +216,7 @@ public class Farm : MonoBehaviour
                     if (int.Parse(btnCount) != inventoryCount)
                     {
                         button.Find("Count").gameObject.GetComponent<TextMeshProUGUI>().text = inventoryCount.ToString();
-                        if (!button.GetComponent<Button>().enabled)
-                        {
-                            button.GetComponent<Button>().enabled = true;
-                            button.GetComponent<Image>().color *= 2;
-                        }
+                        if (!button.GetComponent<Button>().enabled) AbleButton(button.gameObject, true);
                     }
                 }
             else CreateMenuButton(GameManager.instance.Inventory.seeds.Last().Key, GameManager.instance.Inventory.seeds.Last().Value,
@@ -231,20 +232,13 @@ public class Farm : MonoBehaviour
                     if (int.Parse(btnCount) != inventoryCount)
                     {
                         button.Find("Count").gameObject.GetComponent<TextMeshProUGUI>().text = inventoryCount.ToString();
-                        if (!button.GetComponent<Button>().enabled)
-                        {
-                            button.GetComponent<Button>().enabled = true;
-                            button.GetComponent<Image>().color *= 2;
-                        }
+                        if (!button.GetComponent<Button>().enabled) AbleButton(button.gameObject, true);
                     }
                 }
             else CreateMenuButton(GameManager.instance.Inventory.catsules.Last().Key, GameManager.instance.Inventory.catsules.Last().Value,
                                   parent, new(158, -35), parent.childCount, "Catsule");
         }
-            
-
     }
-
     public void OpenSeedUI()
     {
         if (plotSelected == null) return;
@@ -277,17 +271,6 @@ public class Farm : MonoBehaviour
         catsuleselected.SetActive(false);
         StartCoroutine(DelayMenu(catSelectUI));
     }
-    private bool IsClickOverUI(GameObject uiElement)
-    {
-
-        RectTransform rectTransform = uiElement.GetComponent<RectTransform>();
-        return RectTransformUtility.RectangleContainsScreenPoint(
-            rectTransform,
-            Input.mousePosition,
-            Camera.main);
-
-    }
-
     public void SelectEnter(GameObject UI)
     {
         UI.SetActive(true);

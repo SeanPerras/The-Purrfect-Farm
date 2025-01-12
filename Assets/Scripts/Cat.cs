@@ -60,13 +60,14 @@ public class Cat : MonoBehaviour
     }
     public Vector3 WithinRange(Vector3 loc)
     {
-        //6.5 is the xoffset, 2.25 is yoffset, 1.5 is xunit, .75 is yunit
+        //Vector3(-7.75, 21.5, 0)
+        //-5.5,+1.5
         float count = transform.parent.childCount,
-        minx = loc.x - 8f, miny = loc.y - 1.5f,
+        minx = loc.x - 13.5f, miny = loc.y + 1.5f,
         xpos = minx + 1.5f * ((count % 6) + 2*(int)(count / 6)),
         ypos = miny + .75f * ((count % 6) - (int)(count / 6));
-        sOrder = 2 - (int)count % 5;
-        Debug.Log(xpos + "," + ypos + ",");
+        sOrder = 2 - (int)count % 6;
+        Debug.Log(xpos + "," + ypos + "," + sOrder);
         return new Vector3(xpos, ypos, 0);
     }
     public void SetColor(string c)

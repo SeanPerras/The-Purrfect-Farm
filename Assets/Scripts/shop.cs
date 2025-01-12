@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
 
-public class shop : MonoBehaviour
+public class Shop : MonoBehaviour
 {
    // public GameObject shopmenu;
     public LayerMask shopLayer;
