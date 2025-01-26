@@ -7,37 +7,26 @@ using TMPro;
 
 public class Shop : MonoBehaviour
 {
-   // public GameObject shopmenu;
-    public LayerMask shopLayer;
-    private int allLayerMask;
-    
-    //public Text catsulecount='';
-    public TMP_Text balanceText; 
-    private int playerBalance; // starting balance
-    public TMP_Text fencecount;
-    public TMP_Text windmillcount;
-    public TMP_Text wheelbarrowcount;
-    public TMP_Text raddishcount;
-    public TMP_Text catsulecount;
-    public TMP_Text blueberrycount;
-    public TMP_Text tomatocount;
-    public TMP_Text blackberrycount;
-    public TMP_Text squashcount;
-    public TMP_Text bellpeppercount;
+    public GameObject shopUI;
 
-
-    // Start is called before the first frame update
-    void Start()
+    private Cat selectedCat = null;
+    private void Update()
     {
-        playerBalance = GameManager.instance.GetCurrency();
-        //UpdateBalanceUI();
-        allLayerMask = Camera.main.cullingMask;
+        //if(!shopUI.activeSelf && Input.)
+
     }
-
-    // Update is called once per frame
-    void Update()
+    private void OnMouseDown()
     {
-
+        shopUI.SetActive(true);
+        selectedCat = null;
+    }
+    public void OnMouseOver()
+    {
+        Debug.Log("Mouse is Over Shop.");
+        if (Input.GetMouseButton(0) && Cat.hasCat)
+            selectedCat = Cat.selectedCat;
+        if (Input.GetMouseButtonUp(0) && selectedCat)
+            selectedCat.Sell();
     }
     public void PurchaseItem(GameObject itemToAdd)
     {
@@ -114,80 +103,6 @@ public class Shop : MonoBehaviour
 
         //    return;
         //}
-        //if (itemToAdd.name == "catsule")
-        //{   
-        //    int count = int.Parse(catsulecount.text);
-        //    count++;
-        //    catsulecount.text = count.ToString();
-
-        //    Debug.Log("A catsule is being bought!");
-
-        //    return;
-        //}
-        //if (itemToAdd.name == "tomato")
-        //{
-        //    int count = int.Parse(tomatocount.text);
-        //    count++;
-        //    tomatocount.text = count.ToString();
-
-        //    Debug.Log("A tomato is being bought!");
-
-        //    return;
-        //}
-        //if (itemToAdd.name == "squash")
-        //{
-        //    int count = int.Parse(squashcount.text);
-        //    count++;
-        //    squashcount.text = count.ToString();
-
-        //    Debug.Log("A squash is being bought!");
-
-        //    return;
-        //}
-        //if (itemToAdd.name == "blackberry")
-        //{
-        //    int count = int.Parse(blackberrycount.text);
-        //    count++;
-        //    blackberrycount.text = count.ToString();
-
-        //    Debug.Log("A blackberry is being bought!");
-
-        //    return;
-        //}
-        //if (itemToAdd.name == "bellpepper")
-        //{
-        //    int count = int.Parse(bellpeppercount.text);
-        //    count++;
-        //    bellpeppercount.text = count.ToString();
-
-        //    Debug.Log("A red bellpepper is being bought!");
-
-        //    return;
-        //}
-        //if (itemToAdd.name == "Blueberry")
-        //{
-        //    int count = int.Parse(blueberrycount.text);
-        //    count++;
-        //    blueberrycount.text = count.ToString();
-
-        //    Debug.Log("A blueberry is being bought!");
-
-
-        //    return;
-        //}
-        //if (itemToAdd.name == "raddish")
-        //{
-        //    int count = int.Parse(raddishcount.text);
-        //    count++;
-        //    raddishcount.text = count.ToString();
-
-        //    Debug.Log("A raddish is being bought!");
-
-        //    return;
-        //}
-
-
-
     }
    public void CloseShop(GameObject shopUI)
     {

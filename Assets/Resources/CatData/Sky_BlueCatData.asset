@@ -10,8 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ba2f011f962db384d83b937b6ac23397, type: 3}
-  m_Name: Light_BlueCatData
+  m_Name: Sky_BlueCatData
   m_EditorClassIdentifier: 
+  sprite: {fileID: 21300000, guid: 65a71909641a0554492a9ab8e602f713, type: 3}
+  value: 15
   strength: 3
   speed: 3
   defense: 2

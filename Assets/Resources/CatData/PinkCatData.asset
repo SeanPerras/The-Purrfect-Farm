@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba2f011f962db384d83b937b6ac23397, type: 3}
   m_Name: PinkCatData
   m_EditorClassIdentifier: 
+  sprite: {fileID: 21300000, guid: ac8a5a3b6dc78a642b4185f9d593d9ff, type: 3}
+  value: 15
   strength: 2
   speed: 2
   defense: 2

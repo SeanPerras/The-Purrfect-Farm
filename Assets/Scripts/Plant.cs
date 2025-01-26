@@ -8,14 +8,13 @@ public class Plant : MonoBehaviour
     public PlantData plantData;
     public string color;
     public int value, sOrder;
+
+    private Plot plot;
     private SpriteRenderer currentSprite;
+    private Collider2D plantCollider;
     private int currentGrowthStage = 0;
     private float growthTimer = 0f;
-    private Plot plot;
-    private bool hasBeenHarvested = false;
-    private bool isHarvestable = false;
-    private bool isWatered = false;
-    private Collider2D plantCollider;
+    private bool isHarvestable = false, isWatered = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -78,14 +77,14 @@ public class Plant : MonoBehaviour
         if (plantCollider && !plantCollider.enabled)
             plantCollider.enabled = true;  // Enable collider when plant is fully grown
     }
-    void OnMouseUp()
+    public void CheckHarvest()
     {
-        if (isHarvestable && !hasBeenHarvested)
+        if (isHarvestable)
         {
             Debug.Log("Plant Harvested!");
             StartCoroutine(Harvest(value));
         }
-        else if (!isHarvestable)
+        else
         {
             Debug.Log("Plant is not fully grown yet.");
         }
@@ -95,12 +94,8 @@ public class Plant : MonoBehaviour
         yield return new WaitForSeconds(.25f);
         Destroy(gameObject);
         if (plot != null)
-        {
             plot.ReEnablePlot();
-        }
-        //GameObject.Find("Farm (9x9)").GetComponent<Farm>().AddCoin(coin);
         GameManager.instance.AddCoin(coin);
-        //hasBeenHarvested = true;
         Debug.Log(color);
     }
 

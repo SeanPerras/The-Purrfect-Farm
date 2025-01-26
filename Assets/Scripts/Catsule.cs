@@ -19,7 +19,7 @@ public class Catsule : MonoBehaviour
         sprite = GetComponent<SpriteRenderer>();
         sprite.sprite = catsuleSprite;
         timerText = transform.GetChild(0).gameObject;
-        timerText.GetComponent<Renderer>().enabled = false;
+        //timerText.GetComponent<Renderer>().enabled = false;
         name = name[..name.IndexOf("(Clone)")];
     }
 
@@ -65,24 +65,10 @@ public class Catsule : MonoBehaviour
         Plot[] plots = currentPlot.GetAdjPlots().Where(g => g != null).Select(go => go.GetComponent<Plot>()).ToArray();
         List<string> adjColors = plots.Select(p => p.GetColor()).ToList();
         string col;
-        try{
-            List<string> debug2 = adjColors;
-            List<KeyValuePair<string, List<string>>> debug = Farm.Colors.Where(
-                kvp => kvp.Value.SequenceEqual(adjColors) ||
-                ContainsAll(adjColors, kvp.Value)).ToList(), debug3;
-            //List<KeyValuePair<string, List<string>>> debug = new();
-            //foreach (KeyValuePair<string, List<string>> kvp in Farm.Colors)
-            //{
-            //    if (kvp.Value.SequenceEqual(adjColors))
-            //        debug.Add(kvp);
-            //    else if (ContainsAll(adjColors, kvp.Value))
-            //        debug.Add(kvp);
-            //}
-            debug3 = debug.OrderByDescending(kvp => kvp.Value.Count).ToList();
-            //col = debug.OrderByDescending(kvp => kvp.Value.Count).First().Key;
-            col = BestPick(debug);
-        }
-        catch{ col = "White"; }
+        List<KeyValuePair<string, List<string>>> debug = Farm.Colors.Where(
+            kvp => kvp.Value.SequenceEqual(adjColors) ||
+            ContainsAll(adjColors, kvp.Value)).ToList();
+        col = BestPick(debug);
         cat.GetComponent<Cat>().SetColor(col);
         Debug.Log(string.Join("|", adjColors));
         currentPlot.ReEnablePlot();
@@ -92,7 +78,7 @@ public class Catsule : MonoBehaviour
     {
         colors = colors.OrderByDescending(kvp => kvp.Value.Count).ToList();
         int most = 0;
-        string ret = "";
+        string ret = "White";
         foreach(var c in colors)
         {
             if (c.Value.Distinct().Count() > most)

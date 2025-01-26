@@ -7,8 +7,7 @@ using UnityEngine;
 public class CatStats : ScriptableObject
 {
 
-    public int strength;
-    public int speed;
-    public int defense;
+    public Sprite sprite;
+    public int value, strength, speed, defense;
     
 }

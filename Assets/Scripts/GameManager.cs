@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour, ISaveable
     public static GameManager instance;
     public Farm farm;
     public List<GameObject> catsulePrefabs;
-    public GameObject catPrefab, FARM, EXPO;
+    public GameObject catPrefab, FARM, EXPO, musicVolume;
     public TextMeshProUGUI catCoinsDisplay;
     public InventoryStruct Inventory = new()
     {
@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour, ISaveable
         catsules = new(),
         decors = new()
     };
-private int catCoins;
+    private int catCoins;
     //public int ExpeditionCoins = 0;
     //private bool coinsAdded = false;
     // Start is called before the first frame update
@@ -55,7 +55,7 @@ private int catCoins;
     // Update is called once per frame
     void Update()
     {
-        if(catCoinsDisplay && catCoinsDisplay.text != catCoins.ToString())
+        if(catCoinsDisplay && int.Parse(catCoinsDisplay.text) != catCoins)
             catCoinsDisplay.text = catCoins.ToString();
     }
     private void OnApplicationQuit()
@@ -99,7 +99,6 @@ private int catCoins;
             foreach (Transform button in ExpeditionManager.instance.catButtons) Destroy(button.gameObject);
             EXPO.SetActive(false);
             FARM.SetActive(true);
-            //Eventually something like inventory.seeds;
             farm.PopulateButtons(Inventory.seeds, Inventory.catsules);
         }
 
@@ -176,6 +175,8 @@ private int catCoins;
 
     public void PopulateSaveData(SaveData jData)
     {
+        PlayerPrefs.SetFloat("Music", musicVolume.GetComponent<Slider>().value);
+        PlayerPrefs.Save();
         jData.currency = GetCurrency();
         foreach (Plot pt in GameObject.Find("Plots").GetComponentsInChildren<Plot>().ToList())
         {
@@ -186,7 +187,7 @@ private int catCoins;
 
             SaveData.ImportantPlantInfo pocl = new()
             {
-                instance = PLANT ? true : CATSULE,
+                instance = PLANT || CATSULE,
                 plantOrcatsule = PLANT ? "Plant" : CATSULE ? "Catsule" : "",
                 nameData = PLANT ? plant.plantData.name : CATSULE ? catsule.name : "",
                 growthStage = PLANT ? plant.GrowthStage : 0,
@@ -204,15 +205,12 @@ private int catCoins;
         {
             jData.cats.Add(ct.stats.name);
         }
-        jData.inventory.seeds = new();
-        jData.inventory.catsules = new();
-        jData.inventory.decors = new();
-        foreach (var seed in Inventory.seeds)
-            jData.inventory.seeds.Add(seed.Key + ":" + seed.Value.ToString());
-        foreach (var catsule in Inventory.catsules)
-            jData.inventory.catsules.Add(catsule.Key + ":" + catsule.Value.ToString());
-        foreach (var decor in Inventory.decors)
-            jData.inventory.decors.Add(decor.Key + ":" + decor.Value.ToString());
+        jData.inventory.seeds = Inventory.seeds.Select(kvp => kvp.Key + ":" + kvp.Value.ToString()).ToList();
+        jData.inventory.catsules = Inventory.catsules.Select(kvp => kvp.Key + ":" + kvp.Value.ToString()).ToList();
+        jData.inventory.decors = Inventory.decors.Select(kvp => kvp.Key + ":" + kvp.Value.ToString()).ToList();
+        //foreach (var seed in Inventory.seeds) jData.inventory.seeds.Add(seed.Key + ":" + seed.Value.ToString());
+        //foreach (var catsule in Inventory.catsules) jData.inventory.catsules.Add(catsule.Key + ":" + catsule.Value.ToString());
+        //foreach (var decor in Inventory.decors) jData.inventory.decors.Add(decor.Key + ":" + decor.Value.ToString());
     }
     public void LoadFromSaveData(SaveData jData)
     {
@@ -223,7 +221,7 @@ private int catCoins;
         //    jData.currency += ExpeditionCoins;
         //    ExpeditionCoins = 0;
         //}
-        
+        musicVolume.GetComponent<Slider>().value = PlayerPrefs.GetFloat("Music", 1);
         SetCurrency(jData.currency);
         foreach (SaveData.ImportantPlotInfo plot in jData.plots)
         {
@@ -259,23 +257,28 @@ private int catCoins;
         for(int i = 0; i < jData.cats.Count; i++)
         {
             string cat = jData.cats[i];
-            CatStats cd = Resources.Load<CatStats>("CatData/" + cat);
-            GameObject cg = Instantiate(catPrefab, transform.position, catPrefab.transform.rotation);
-            Cat ct = cg.GetComponent<Cat>();
-            //cg.transform.position = ct.WithinRange(ct.catioPos);
-            //cg.GetComponent<SpriteRenderer>().sortingOrder = jData.cats.Count - (i + 1);
+            //CatStats cd = Resources.Load<CatStats>("CatData/" + cat);
+            //GameObject cg = Instantiate(catPrefab, transform.position, catPrefab.transform.rotation);
+            Cat ct = Instantiate(catPrefab, transform.position, catPrefab.transform.rotation).GetComponent<Cat>();
             ct.SetColor(cat[..cat.IndexOf("Cat")]);
         }
-        foreach (var seed in jData.inventory.seeds)
-            Inventory.seeds[seed[..seed.IndexOf(":")]] = int.Parse(seed[(seed.IndexOf(":") + 1)..]);
-        foreach (var catsule in jData.inventory.catsules)
-            Inventory.catsules[catsule[..catsule.IndexOf(":")]] = int.Parse(catsule[(catsule.IndexOf(":") + 1)..]);
-        foreach (var decor in jData.inventory.decors)
-            Inventory.decors[decor[..decor.IndexOf(":")]] = int.Parse(decor[(decor.IndexOf(":") + 1)..]);
+        Inventory.seeds = jData.inventory.seeds.ToDictionary(s => s[..s.IndexOf(":")], s => int.Parse(s[(s.IndexOf(":") + 1)..]));
+        //foreach (var seed in jData.inventory.seeds)
+        //    Inventory.seeds[seed[..seed.IndexOf(":")]] = int.Parse(seed[(seed.IndexOf(":") + 1)..]);
+        //foreach (var catsule in jData.inventory.catsules)
+        //    Inventory.catsules[catsule[..catsule.IndexOf(":")]] = int.Parse(catsule[(catsule.IndexOf(":") + 1)..]);
+        //foreach (var decor in jData.inventory.decors)
+        //    Inventory.decors[decor[..decor.IndexOf(":")]] = int.Parse(decor[(decor.IndexOf(":") + 1)..]);
         //Inventory = jData.inventory;
     }
     public static void SaveJsonData(GameManager jManager)
     {
+        string content = "";
+        foreach (Cat cat in GameObject.Find("Cats").transform.GetComponentsInChildren<Cat>())
+            content += cat.GetColor() + "->" + ((Vector2)cat.gameObject.transform.position).ToString() + "\n";
+        try
+        { File.WriteAllText("Desktop", content); }//------------------------------------------------------------------------------------------------------------
+        catch(Exception e) { Debug.LogError(e); }
         SaveData saveData = new();
         jManager.PopulateSaveData(saveData);
         if (WriteToFile("SaveData.dat", saveData.ToJson()))

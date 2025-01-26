@@ -1,16 +1,11 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-//using System.Drawing;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using TMPro;
-using Unity.VisualScripting;
+using Unity.Collections.LowLevel.Unsafe;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.U2D;
 using UnityEngine.UI;
-using UnityEngine.XR;
 
 public class Farm : MonoBehaviour
 {
@@ -18,7 +13,7 @@ public class Farm : MonoBehaviour
     {
         {"Black",  new() {"Black", "Black"} },
         {"Blue", new () {"Blue", "Blue"} },
-        {"Light Blue", new () {"Blue"} },
+        {"Sky Blue", new () {"Blue"} },
         {"Red", new() { "Red", "Red" } },
         {"Purple", new() { "Red", "Blue" } },
         {"Pink", new() { "Red" } },
@@ -27,15 +22,13 @@ public class Farm : MonoBehaviour
     };
     public GameObject
         plotPrefab, buttonPF, plotsParent, seedSelectParent, catsuleSelectParent, shovel,
-        seedSelectUI, catSelectUI, catsuleselected, seedselected, wateringCanSelected,
-        pauseMenu, optionsMenu, shopMenu, inventoryMenu;
+        seedSelectUI, catSelectUI, catsuleselected, seedselected, wateringCanSelected, shovelSelected,
+        pauseMenu, optionsMenu, shopMenu, inventoryMenu, sellMenu;//, allMenus;
     public Texture2D pPointer, pDrag;
 
     private GameObject plotSelected;
-    private bool isWateringMode = false;
+    private bool isWateringMode = false, plowMode = false;
     private Vector3 mousePos;
-    private bool plotMode = true; //This is just until we implement a proper "I want to plow." mechanic.
-    //private int totalWateredPlants = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -48,11 +41,20 @@ public class Farm : MonoBehaviour
     {
         if (Input.GetMouseButtonUp(0))
         {
-            if (Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero))
+            if (Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero) && !IsAnyUIOpen())
                 HandleClick();
+            else if (sellMenu.activeSelf)
+            {
+                sellMenu.transform.GetChild(0).GetComponent<Button>().onClick.RemoveAllListeners();
+                sellMenu.transform.GetChild(0).gameObject.SetActive(false);
+                StartCoroutine(DelayMenu(sellMenu));//.SetActive(false);
+            }
         }
         else if (Input.GetMouseButtonDown(1))
             mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        //sellMenu.transform.GetChild(0).gameObject.SetActive(false);
+        //sellMenu.SetActive(false);
+        //sellMenu.transform.GetChild(0).GetComponent<Button>().onClick.RemoveAllListeners();
         else if (Input.GetMouseButton(1))
         {
             if (mousePos != Vector3.zero && Camera.main.ScreenToWorldPoint(Input.mousePosition) != mousePos)
@@ -72,53 +74,57 @@ public class Farm : MonoBehaviour
             else if (Input.GetKeyDown(KeyCode.KeypadMinus))
                 Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize + 5, 10, 25);
         }
-        if (isWateringMode && plotsParent.transform.GetComponentsInChildren<Plot>().All(x => !x.IsWaterable()))
+        if (isWateringMode && plotsParent.GetComponentsInChildren<Plot>().All(x => !x.IsWaterable()))
         {
             isWateringMode = false;
-            plotMode = true;
             wateringCanSelected.GetComponent<Image>().color = Color.white * .5f;
             wateringCanSelected.SetActive(false);
+        }
+        else if(plowMode && transform.GetComponentsInChildren<Transform>().All(go => !go.gameObject.activeSelf))
+        {
+            plowMode = false;
+            shovelSelected.GetComponent<Image>().color = Color.white * .5f;
+            shovelSelected.SetActive(false);
         }
     }
 
     private void HandleClick()
     {
         Debug.Log("Mouse Up!");
-        if (!IsAnyUIOpen())
+        Vector3 db = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        List<GameObject> collidedGameObjects = Physics2D.OverlapCircleAll(Camera.main.ScreenToWorldPoint(Input.mousePosition), 0)
+                .Select(c => c.gameObject).ToList();
+        GameObject cat = collidedGameObjects.Find(c => c.CompareTag("Cat"));
+        collidedGameObjects.Remove(cat);
+        GameObject land = collidedGameObjects.Find(c => c.CompareTag("Land"));
+        collidedGameObjects.Remove(land);
+        GameObject plot = collidedGameObjects.Find(c => c.CompareTag("Plot"));
+        collidedGameObjects.Remove(plot);
+        GameObject plant = collidedGameObjects.Find(c => c.CompareTag("Plant"));
+        collidedGameObjects.Remove(plant);
+        if (cat)
+        { /*Do nothing*/ }
+        else if ((plant || (plot && plot.GetComponent<Plot>().HasPlant())) && isWateringMode)
+            plant.GetComponent<Plant>().Water();
+        else if (plant && plant.TryGetComponent(out Plant pc))
+            pc.CheckHarvest();
+        else if (land && plowMode && !isWateringMode)
         {
-            Vector3 db = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            List<GameObject> collidedGameObjects = Physics2D.OverlapCircleAll(Camera.main.ScreenToWorldPoint(Input.mousePosition), 0)
-                    .Select(c => c.gameObject).ToList();
-            GameObject cat = collidedGameObjects.Find(c => c.CompareTag("Cat"));
-            collidedGameObjects.Remove(cat);
-            GameObject land = collidedGameObjects.Find(c => c.CompareTag("Land"));
-            collidedGameObjects.Remove(land);
-            GameObject plot = collidedGameObjects.Find(c => c.CompareTag("Plot"));
-            collidedGameObjects.Remove(plot);
-            GameObject plant = collidedGameObjects.Find(c => c.CompareTag("Plant"));
-            collidedGameObjects.Remove(plant);
-            if (cat)
-            { /*Do nothing */ }
-            else if ((plant || (plot && plot.GetComponent<Plot>().HasPlant())) && isWateringMode)
-                plant.GetComponent<Plant>().Water();
-            else if (land && plotMode && !isWateringMode)
-            {
-                //shovel.SetActive(true);
-                //shovel.transform.position = land.transform.position;
-                //Animator anim = shovel.GetComponent<Animator>();
-                //anim.Play("Dig Animation");
-                Plow(land);
-                //StartCoroutine(Wait(anim));
-            }
-            else if (collidedGameObjects.Count == 0 && plot && !isWateringMode)
-            {
-                plotSelected = plot;
-                seedselected.transform.GetComponentInParent<Transform>().GetChild(1).gameObject.SetActive(true);
-                catsuleselected.transform.GetComponentInParent<Transform>().GetChild(1).gameObject.SetActive(true);
-                OpenSeedUI();
-            }
-            collidedGameObjects.Clear();
+            //shovel.SetActive(true);
+            //shovel.transform.position = land.transform.position;
+            //Animator anim = shovel.GetComponent<Animator>();
+            //anim.Play("Dig Animation");
+            Plow(land);
+            //StartCoroutine(Wait(anim));
         }
+        else if (collidedGameObjects.Count == 0 && plot && !isWateringMode)
+        {
+            plotSelected = plot;
+            seedselected.GetComponentInParent<Transform>().GetChild(1).gameObject.SetActive(true);
+            catsuleselected.GetComponentInParent<Transform>().GetChild(1).gameObject.SetActive(true);
+            OpenSeedUI();
+        }
+        collidedGameObjects.Clear();
     }
     public GameObject Plow(GameObject landRef)
     {
@@ -128,6 +134,7 @@ public class Farm : MonoBehaviour
         newPlot.transform.GetChild(0).GetComponent<SpriteRenderer>().sortingOrder = landRef.GetComponent<SpriteRenderer>().sortingOrder;
         newPlot.transform.Find("Outline").GetComponent<SpriteRenderer>().sortingOrder = landRef.GetComponent<SpriteRenderer>().sortingOrder + 1;
         newPlot.GetComponent<Plot>().SetLandRef(landRef);
+        GameManager.instance.RemoveCoin(5);
         Debug.Log("Plot placed!");
         return newPlot;
     }
@@ -286,9 +293,15 @@ public class Farm : MonoBehaviour
     public void WateringCanClick()
     {
         isWateringMode = !isWateringMode;
-        plotMode = isWateringMode;
+        plowMode = isWateringMode;
         if (isWateringMode) wateringCanSelected.GetComponent<Image>().color = Color.white;
         else wateringCanSelected.GetComponent<Image>().color *= .5f;
+    }
+    public void ShovelClick()
+    {
+        plowMode = !plowMode;
+        if (plowMode) shovelSelected.GetComponent<Image>().color = Color.white;
+        else shovelSelected.GetComponent<Image>().color *= .5f;
     }
     public void HideIcons()
     {
@@ -297,14 +310,16 @@ public class Farm : MonoBehaviour
     }
     private bool IsUIOpen(GameObject UI)
     {
-        return UI.transform.parent.transform.parent.gameObject.name.Contains("atsule") && catSelectUI.activeSelf ||
-            UI.transform.parent.transform.parent.gameObject.name.Contains("lant") && seedSelectUI.activeSelf ||
-            UI.transform.parent.transform.parent.gameObject.name.Contains("ater") && isWateringMode;
+        return UI.transform.parent.gameObject.name.Contains("Catsule") && catSelectUI.activeSelf ||
+            UI.transform.parent.gameObject.name.Contains("Plant") && seedSelectUI.activeSelf ||
+            UI.transform.parent.gameObject.name.Contains("Water") && isWateringMode ||
+            UI.transform.parent.gameObject.name.Contains("Shovel") && plowMode;
     }
     public bool IsAnyUIOpen()
     {
         return seedSelectUI.activeSelf || catSelectUI.activeSelf || pauseMenu.activeSelf ||
-               optionsMenu.activeSelf || shopMenu.activeSelf || inventoryMenu.activeSelf;
+               optionsMenu.activeSelf || shopMenu.activeSelf || inventoryMenu.activeSelf ||
+               sellMenu.activeSelf;
     }
     public static IEnumerator DelayMenu(GameObject UI)
     {

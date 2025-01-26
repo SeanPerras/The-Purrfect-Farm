@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba2f011f962db384d83b937b6ac23397, type: 3}
   m_Name: PurpleCatData
   m_EditorClassIdentifier: 
+  sprite: {fileID: 21300000, guid: ede9c3088ade5484583026df693fef43, type: 3}
+  value: 25
   strength: 6
   speed: 5
   defense: 6
