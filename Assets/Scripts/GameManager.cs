@@ -60,8 +60,8 @@ public class GameManager : MonoBehaviour, ISaveable
     }
     private void OnApplicationQuit()
     {
-        if (FARM.activeSelf) SaveJsonData(instance);
-        if (EXPO.activeSelf) SaveExpoJsonData(instance);
+        //if (FARM.activeSelf) SaveJsonData(instance);
+        //if (EXPO.activeSelf) SaveExpoJsonData(instance);
     }
     //private void OnDestroy()
     //{
@@ -95,7 +95,7 @@ public class GameManager : MonoBehaviour, ISaveable
     {
         if (instance != null)
         {
-            SaveExpoJsonData(instance);
+            //SaveExpoJsonData(instance);
             foreach (Transform button in ExpeditionManager.instance.catButtons) Destroy(button.gameObject);
             EXPO.SetActive(false);
             FARM.SetActive(true);
@@ -107,7 +107,7 @@ public class GameManager : MonoBehaviour, ISaveable
     {
         if (instance != null)
         {
-            SaveJsonData(instance);
+            //SaveJsonData(instance);
             foreach (Transform button in farm.seedSelectParent.transform) Destroy(button.gameObject);
             List<Cat> cats = GameObject.Find("Cats").GetComponentsInChildren<Cat>().ToList();
             FARM.SetActive(false);
@@ -115,7 +115,11 @@ public class GameManager : MonoBehaviour, ISaveable
             ExpeditionManager.instance.PopulateCats(cats);
         }
     }
-
+    public void SaveGame()
+    {
+        SaveJsonData(instance);
+        SaveExpoJsonData(instance);
+    }
 
     public void AddCoin(int coin)
     {

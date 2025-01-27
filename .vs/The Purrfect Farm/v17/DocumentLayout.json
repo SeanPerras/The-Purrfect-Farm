@@ -3,6 +3,14 @@
   "WorkspaceRootPath": "D:\\Users\\Sean Perras\\The Purrfect Farm\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{440A010A-BD39-275F-9BEC-DD910D1A6A38}|Assembly-CSharp.csproj|d:\\users\\sean perras\\the purrfect farm\\assets\\scripts\\pausemenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{440A010A-BD39-275F-9BEC-DD910D1A6A38}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\pausemenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{440A010A-BD39-275F-9BEC-DD910D1A6A38}|Assembly-CSharp.csproj|D:\\Users\\Sean Perras\\The Purrfect Farm\\assets\\scripts\\gamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{440A010A-BD39-275F-9BEC-DD910D1A6A38}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\gamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{440A010A-BD39-275F-9BEC-DD910D1A6A38}|Assembly-CSharp.csproj|D:\\Users\\Sean Perras\\The Purrfect Farm\\assets\\scripts\\farm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{440A010A-BD39-275F-9BEC-DD910D1A6A38}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\farm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -13,10 +21,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{440A010A-BD39-275F-9BEC-DD910D1A6A38}|Assembly-CSharp.csproj|D:\\Users\\Sean Perras\\The Purrfect Farm\\assets\\scripts\\shop.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{440A010A-BD39-275F-9BEC-DD910D1A6A38}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\shop.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{440A010A-BD39-275F-9BEC-DD910D1A6A38}|Assembly-CSharp.csproj|D:\\Users\\Sean Perras\\The Purrfect Farm\\assets\\scripts\\gamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{440A010A-BD39-275F-9BEC-DD910D1A6A38}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\gamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{440A010A-BD39-275F-9BEC-DD910D1A6A38}|Assembly-CSharp.csproj|D:\\Users\\Sean Perras\\The Purrfect Farm\\assets\\scripts\\cat.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -82,11 +86,24 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 16,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 0,
+              "Title": "PauseMenu.cs",
+              "DocumentMoniker": "D:\\Users\\Sean Perras\\The Purrfect Farm\\Assets\\Scripts\\PauseMenu.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\PauseMenu.cs",
+              "ToolTip": "D:\\Users\\Sean Perras\\The Purrfect Farm\\Assets\\Scripts\\PauseMenu.cs",
+              "RelativeToolTip": "Assets\\Scripts\\PauseMenu.cs",
+              "ViewState": "AQIAAB8AAAAAAAAAAAAywC4AAAAoAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-27T00:16:02.758Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
               "Title": "Barn.cs",
               "DocumentMoniker": "D:\\Users\\Sean Perras\\The Purrfect Farm\\Assets\\Scripts\\Barn.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Barn.cs",
@@ -99,7 +116,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "CatStats.cs",
               "DocumentMoniker": "D:\\Users\\Sean Perras\\The Purrfect Farm\\Assets\\Scripts\\CatStats.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\CatStats.cs",
@@ -112,7 +129,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 14,
               "Title": "OutlineEffect.cs",
               "DocumentMoniker": "D:\\Users\\Sean Perras\\The Purrfect Farm\\Assets\\OutlineEffect.cs",
               "RelativeDocumentMoniker": "Assets\\OutlineEffect.cs",
@@ -124,7 +141,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
               "Title": "Shop.cs",
               "DocumentMoniker": "D:\\Users\\Sean Perras\\The Purrfect Farm\\Assets\\Scripts\\Shop.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Shop.cs",
@@ -137,7 +154,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 18,
               "Title": "CatManager.cs",
               "DocumentMoniker": "D:\\Users\\Sean Perras\\The Purrfect Farm\\Assets\\Scripts\\CatManager.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\CatManager.cs",
@@ -149,7 +166,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 15,
               "Title": "CatCheckbox.cs",
               "DocumentMoniker": "D:\\Users\\Sean Perras\\The Purrfect Farm\\Assets\\Scripts\\CatCheckbox.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\CatCheckbox.cs",
@@ -161,7 +178,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 17,
               "Title": "ExpoSaveData.cs",
               "DocumentMoniker": "D:\\Users\\Sean Perras\\The Purrfect Farm\\Assets\\Scripts\\ExpoSaveData.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\ExpoSaveData.cs",
@@ -173,7 +190,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 16,
               "Title": "ExpeditionSLManager.cs",
               "DocumentMoniker": "D:\\Users\\Sean Perras\\The Purrfect Farm\\Assets\\Scripts\\ExpeditionSLManager.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\ExpeditionSLManager.cs",
@@ -186,7 +203,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 12,
               "Title": "ExpeditionManager.cs",
               "DocumentMoniker": "D:\\Users\\Sean Perras\\The Purrfect Farm\\Assets\\Scripts\\ExpeditionManager.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\ExpeditionManager.cs",
@@ -199,7 +216,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 13,
               "Title": "Volume Settings.cs",
               "DocumentMoniker": "D:\\Users\\Sean Perras\\The Purrfect Farm\\Assets\\Scripts\\Volume Settings.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Volume Settings.cs",
@@ -211,20 +228,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 1,
               "Title": "GameManager.cs",
               "DocumentMoniker": "D:\\Users\\Sean Perras\\The Purrfect Farm\\Assets\\Scripts\\GameManager.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\GameManager.cs",
               "ToolTip": "D:\\Users\\Sean Perras\\The Purrfect Farm\\Assets\\Scripts\\GameManager.cs",
               "RelativeToolTip": "Assets\\Scripts\\GameManager.cs",
-              "ViewState": "AQIAAB4BAAAAAAAAAAAEwCYBAAAAAAAA",
+              "ViewState": "AQIAAGkAAAAAAAAAAAA2wHgAAAAjAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-18T22:26:22.516Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "SaveData.cs",
               "DocumentMoniker": "D:\\Users\\Sean Perras\\The Purrfect Farm\\Assets\\Scripts\\SaveData.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\SaveData.cs",
@@ -236,7 +253,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "Plant.cs",
               "DocumentMoniker": "D:\\Users\\Sean Perras\\The Purrfect Farm\\Assets\\Scripts\\Plant.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Plant.cs",
@@ -249,7 +266,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "Cat.cs",
               "DocumentMoniker": "D:\\Users\\Sean Perras\\The Purrfect Farm\\Assets\\Scripts\\Cat.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Cat.cs",
@@ -262,7 +279,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 10,
               "Title": "Catsule.cs",
               "DocumentMoniker": "D:\\Users\\Sean Perras\\The Purrfect Farm\\Assets\\Scripts\\Catsule.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Catsule.cs",
@@ -274,7 +291,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "Plot.cs",
               "DocumentMoniker": "D:\\Users\\Sean Perras\\The Purrfect Farm\\Assets\\Scripts\\Plot.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Plot.cs",
@@ -286,7 +303,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "Farm.cs",
               "DocumentMoniker": "D:\\Users\\Sean Perras\\The Purrfect Farm\\Assets\\Scripts\\Farm.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Farm.cs",
@@ -299,7 +316,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 11,
               "Title": "Expedition.cs",
               "DocumentMoniker": "D:\\Users\\Sean Perras\\The Purrfect Farm\\Assets\\Scripts\\Expedition.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Expedition.cs",

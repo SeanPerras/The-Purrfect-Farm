@@ -120,8 +120,8 @@ public class Farm : MonoBehaviour
         else if (collidedGameObjects.Count == 0 && plot && !isWateringMode)
         {
             plotSelected = plot;
-            seedselected.GetComponentInParent<Transform>().GetChild(1).gameObject.SetActive(true);
-            catsuleselected.GetComponentInParent<Transform>().GetChild(1).gameObject.SetActive(true);
+            seedselected.transform.parent.Find("Image").gameObject.SetActive(true);
+            catsuleselected.transform.parent.Find("Image").gameObject.SetActive(true);
             OpenSeedUI();
         }
         collidedGameObjects.Clear();
