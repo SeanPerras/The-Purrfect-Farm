@@ -52,8 +52,18 @@ public class Plot : MonoBehaviour
             rightClickMenu.transform.Find("SellButton").GetComponentInChildren<TextMeshProUGUI>().text = "Sell: 5";
             rightClickMenu.SetActive(true);
             rightClickMenu.transform.GetChild(0).gameObject.SetActive(true);
-            rightClickMenu.transform.GetChild(0).GetComponent<UnityEngine.UI.Button>().onClick.AddListener(Sell);
+            rightClickMenu.transform.GetChild(0).GetComponent<UnityEngine.UI.Button>().onClick.AddListener(
+                () => GameManager.instance.ObjectToConfirm(gameObject));
+            rightClickMenu.transform.GetChild(0).GetComponent<UnityEngine.UI.Button>().onClick.AddListener(
+                () => GameManager.instance.WaitForConfirmation("Plot.Sell"));
         }
+    }
+    private void OnMouseUp()
+    {
+        rightClickMenu.transform.GetChild(0).GetComponent<UnityEngine.UI.Button>().onClick.RemoveListener(
+            () => GameManager.instance.ObjectToConfirm(gameObject));
+        rightClickMenu.transform.GetChild(0).GetComponent<UnityEngine.UI.Button>().onClick.RemoveListener(
+            () => GameManager.instance.WaitForConfirmation("Plot.Sell"));
     }
 
     public void AddPlotRef(GameObject go, int ind) { adjPlots[ind] = go; }
@@ -113,10 +123,14 @@ public class Plot : MonoBehaviour
     }
     public void Sell()
     {
+        //yield return new WaitUntil(() => GameManager.instance.IsConfirmed());
         if (plant == null)
         {
             oldLand.SetActive(true);
-            rightClickMenu.transform.GetChild(0).GetComponent<UnityEngine.UI.Button>().onClick.RemoveListener(Sell);
+            rightClickMenu.transform.GetChild(0).GetComponent<UnityEngine.UI.Button>().onClick.RemoveListener(
+                () => GameManager.instance.ObjectToConfirm(gameObject));
+            rightClickMenu.transform.GetChild(0).GetComponent<UnityEngine.UI.Button>().onClick.RemoveListener(
+                () => GameManager.instance.WaitForConfirmation("Plot.Sell"));
             rightClickMenu.transform.GetChild(0).gameObject.SetActive(false);
             StartCoroutine(Farm.DelayMenu(rightClickMenu));//.SetActive(false);
             GameManager.instance.AddCoin(5);

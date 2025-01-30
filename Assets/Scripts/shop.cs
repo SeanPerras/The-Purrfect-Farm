@@ -22,7 +22,7 @@ public class Shop : MonoBehaviour
     }
     public void OnMouseOver()
     {
-        Debug.Log("Mouse is Over Shop.");
+        //Debug.Log("Mouse is Over Shop.");
         if (Input.GetMouseButton(0) && Cat.hasCat)
             selectedCat = Cat.selectedCat;
         if (Input.GetMouseButtonUp(0) && selectedCat)

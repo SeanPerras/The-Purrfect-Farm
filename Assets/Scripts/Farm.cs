@@ -12,6 +12,7 @@ public class Farm : MonoBehaviour
     public static readonly Dictionary<string, List<string>> Colors = new()
     {
         {"Black",  new() {"Black", "Black"} },
+        //{"Gray", new() {"Black"} },
         {"Blue", new () {"Blue", "Blue"} },
         {"Sky Blue", new () {"Blue"} },
         {"Red", new() { "Red", "Red" } },
@@ -21,9 +22,9 @@ public class Farm : MonoBehaviour
         {"Orange", new() { "Red", "Yellow" } }
     };
     public GameObject
-        plotPrefab, buttonPF, plotsParent, seedSelectParent, catsuleSelectParent, shovel,
-        seedSelectUI, catSelectUI, catsuleselected, seedselected, wateringCanSelected, shovelSelected,
-        pauseMenu, optionsMenu, shopMenu, inventoryMenu, sellMenu;//, allMenus;
+        plotPrefab, buttonPF, plotsParent, seedSelectParent, catsuleSelectParent, catsParent, shovel,
+        seedSelectUI, catSelectUI, catsuleSelectBox, seedSelectBox, wateringCanSelectBox, shovelSelectBox,
+        pauseMenu, optionsMenu, shopMenu, inventoryMenu, sellMenu, confirmMenu;//, allMenus;
     public Texture2D pPointer, pDrag;
 
     private GameObject plotSelected;
@@ -77,14 +78,14 @@ public class Farm : MonoBehaviour
         if (isWateringMode && plotsParent.GetComponentsInChildren<Plot>().All(x => !x.IsWaterable()))
         {
             isWateringMode = false;
-            wateringCanSelected.GetComponent<Image>().color = Color.white * .5f;
-            wateringCanSelected.SetActive(false);
+            wateringCanSelectBox.GetComponent<Image>().color = Color.white * .5f;
+            wateringCanSelectBox.SetActive(false);
         }
         else if(plowMode && transform.GetComponentsInChildren<Transform>().All(go => !go.gameObject.activeSelf))
         {
             plowMode = false;
-            shovelSelected.GetComponent<Image>().color = Color.white * .5f;
-            shovelSelected.SetActive(false);
+            shovelSelectBox.GetComponent<Image>().color = Color.white * .5f;
+            shovelSelectBox.SetActive(false);
         }
     }
 
@@ -120,8 +121,8 @@ public class Farm : MonoBehaviour
         else if (collidedGameObjects.Count == 0 && plot && !isWateringMode)
         {
             plotSelected = plot;
-            seedselected.transform.parent.Find("Image").gameObject.SetActive(true);
-            catsuleselected.transform.parent.Find("Image").gameObject.SetActive(true);
+            seedSelectBox.transform.parent.gameObject.SetActive(true);
+            catsuleSelectBox.transform.parent.gameObject.SetActive(true);
             OpenSeedUI();
         }
         collidedGameObjects.Clear();
@@ -250,8 +251,8 @@ public class Farm : MonoBehaviour
     {
         if (plotSelected == null) return;
         if (catSelectUI.activeSelf) CloseCatUI();
-        seedselected.SetActive(true);
-        seedselected.GetComponent<Image>().color = Color.white;
+        seedSelectBox.SetActive(true);
+        seedSelectBox.GetComponent<Image>().color = Color.white;
 
         seedSelectUI.SetActive(true);
 
@@ -259,15 +260,16 @@ public class Farm : MonoBehaviour
     }
     public void CloseSeedUI()
     {
-        seedselected.SetActive(false);
+        seedSelectBox.SetActive(false);
+        //seedSelectBox.transform.parent.gameObject.SetActive(false);
         StartCoroutine(DelayMenu(seedSelectUI));
     }
     public void OpenCatUI()
     {
         if (!plotSelected) return;
         if(seedSelectUI.activeSelf) CloseSeedUI();
-        catsuleselected.SetActive(true);
-        catsuleselected.GetComponent<Image>().color = Color.white;
+        catsuleSelectBox.SetActive(true);
+        catsuleSelectBox.GetComponent<Image>().color = Color.white;
 
         catSelectUI.SetActive(true);
 
@@ -275,7 +277,8 @@ public class Farm : MonoBehaviour
     }
     public void CloseCatUI()
     {
-        catsuleselected.SetActive(false);
+        catsuleSelectBox.SetActive(false);
+        //catsuleSelectBox.transform.parent.gameObject.SetActive(false);
         StartCoroutine(DelayMenu(catSelectUI));
     }
     public void SelectEnter(GameObject UI)
@@ -294,19 +297,19 @@ public class Farm : MonoBehaviour
     {
         isWateringMode = !isWateringMode;
         plowMode = isWateringMode;
-        if (isWateringMode) wateringCanSelected.GetComponent<Image>().color = Color.white;
-        else wateringCanSelected.GetComponent<Image>().color *= .5f;
+        if (isWateringMode) wateringCanSelectBox.GetComponent<Image>().color = Color.white;
+        else wateringCanSelectBox.GetComponent<Image>().color *= .5f;
     }
     public void ShovelClick()
     {
         plowMode = !plowMode;
-        if (plowMode) shovelSelected.GetComponent<Image>().color = Color.white;
-        else shovelSelected.GetComponent<Image>().color *= .5f;
+        if (plowMode) shovelSelectBox.GetComponent<Image>().color = Color.white;
+        else shovelSelectBox.GetComponent<Image>().color *= .5f;
     }
     public void HideIcons()
     {
-        seedselected.transform.parent.GetChild(1).gameObject.SetActive(false);
-        catsuleselected.transform.parent.GetChild(1).gameObject.SetActive(false);
+        seedSelectBox.transform.parent.gameObject.SetActive(false);
+        catsuleSelectBox.transform.parent.gameObject.SetActive(false);
     }
     private bool IsUIOpen(GameObject UI)
     {
@@ -319,7 +322,7 @@ public class Farm : MonoBehaviour
     {
         return seedSelectUI.activeSelf || catSelectUI.activeSelf || pauseMenu.activeSelf ||
                optionsMenu.activeSelf || shopMenu.activeSelf || inventoryMenu.activeSelf ||
-               sellMenu.activeSelf;
+               sellMenu.activeSelf || confirmMenu.activeSelf;
     }
     public static IEnumerator DelayMenu(GameObject UI)
     {

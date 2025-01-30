@@ -79,12 +79,16 @@ public class Cat : MonoBehaviour
     }
     private void OnMouseOver()
     {
-        Debug.Log("Mouse is over.");
+        //Debug.Log("Mouse is over.");
         if (Input.GetMouseButtonUp(1))
         {
-            rightClickMenu.transform.GetChild(0).GetComponentInChildren<TextMeshProUGUI>().text = "Sell: " + value.ToString();
-            rightClickMenu.transform.GetChild(0).gameObject.SetActive(true);
-            rightClickMenu.transform.GetChild(0).GetComponent<UnityEngine.UI.Button>().onClick.AddListener(Sell);
+            Transform temp = rightClickMenu.transform.GetChild(0);
+            temp.GetComponentInChildren<TextMeshProUGUI>().text = "Sell: " + value.ToString();
+            temp.gameObject.SetActive(true);
+            temp.GetComponent<UnityEngine.UI.Button>().onClick.AddListener(
+                () => GameManager.instance.ObjectToConfirm(gameObject));
+            temp.GetComponent<UnityEngine.UI.Button>().onClick.AddListener(
+                () => GameManager.instance.WaitForConfirmation("Cat.Sell"));
         }
     }
     private void OnMouseExit()
@@ -111,6 +115,10 @@ public class Cat : MonoBehaviour
         selectedCat = null;
         isSelectedCat = false;
         GetComponent<Collider2D>().enabled = true;
+        rightClickMenu.transform.GetChild(0).GetComponent<UnityEngine.UI.Button>().onClick.RemoveListener(
+            () => GameManager.instance.ObjectToConfirm(gameObject));
+        rightClickMenu.transform.GetChild(0).GetComponent<UnityEngine.UI.Button>().onClick.RemoveListener(
+            () => GameManager.instance.WaitForConfirmation("Cat.Sell"));
     }
     public Vector3 WithinRange(Vector3 loc)
     {
@@ -137,10 +145,14 @@ public class Cat : MonoBehaviour
         value = stats.value;
     }
     public string GetColor() { return color; }
-    public void Sell()
+    public IEnumerator Sell()
     {
+        yield return new WaitUntil(() => GameManager.instance.IsConfirmed());
         GameManager.instance.AddCoin(value);
-        rightClickMenu.transform.GetChild(0).GetComponent<UnityEngine.UI.Button>().onClick.RemoveListener(Sell);
+        rightClickMenu.transform.GetChild(0).GetComponent<UnityEngine.UI.Button>().onClick.RemoveListener(
+            () => GameManager.instance.ObjectToConfirm(gameObject));
+        rightClickMenu.transform.GetChild(0).GetComponent<UnityEngine.UI.Button>().onClick.RemoveListener(
+            () => GameManager.instance.WaitForConfirmation("Cat.Sell"));
         rightClickMenu.transform.GetChild(0).gameObject.SetActive(false);
         StartCoroutine(Farm.DelayMenu(rightClickMenu));//.SetActive(false);
         Destroy(gameObject);

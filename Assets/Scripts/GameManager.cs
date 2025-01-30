@@ -4,22 +4,27 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using TMPro;
-using Unity.Burst.Intrinsics;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public struct InventoryStruct
 {
+    //public InventoryStruct()
+    //{
+    //    seeds = new();
+    //    catsules = new();
+    //    decors = new();
+    //}
     public Dictionary<string, int> seeds, catsules, decors;
 }
 public class GameManager : MonoBehaviour, ISaveable
 {
     public static GameManager instance;
-    public Farm farm;
+    public Farm farm;//Farm (9x9)
     public List<GameObject> catsulePrefabs;
-    public GameObject catPrefab, FARM, EXPO, musicVolume;
+    public GameObject catPrefab, FARM, EXPO;
+    public Slider musicVolume, sfxVolume;
     public TextMeshProUGUI catCoinsDisplay;
     public InventoryStruct Inventory = new()
     {
@@ -27,10 +32,12 @@ public class GameManager : MonoBehaviour, ISaveable
         catsules = new(),
         decors = new()
     };
+    private readonly static string defaultSave =
+        "{\"inventory\":{\"seeds\":[\"Blueberry:5\"],\"catsules\":[\"White:1\"],\"decors\":[]},\"currency\":45,\"cats\":[],\"plots\":[]}";
     private int catCoins;
-    //public int ExpeditionCoins = 0;
-    //private bool coinsAdded = false;
-    // Start is called before the first frame update
+    private bool confirmed = false;
+    private GameObject confirmedObj;
+    private Coroutine currentCoroutine = null;
     void Awake()
     {
         if (!instance)
@@ -120,15 +127,59 @@ public class GameManager : MonoBehaviour, ISaveable
         SaveJsonData(instance);
         SaveExpoJsonData(instance);
     }
+    public IEnumerator ResetSave()
+    {
+        yield return new WaitUntil(() => confirmed);
+        confirmed = false;
+        foreach (Transform tf in farm.catsParent.transform) Destroy(tf.gameObject);
+        foreach (Transform tf in farm.plotsParent.transform) tf.GetComponent<Plot>().Sell();
+        foreach (Transform tf in farm.seedSelectParent.transform) Destroy(tf.gameObject);
+        foreach (Transform tf in farm.catsuleSelectParent.transform) Destroy(tf.gameObject);
+        SaveData saveData = new(defaultSave);
+        if (WriteToFile("SaveData.dat", saveData.ToJson()))
+            instance.LoadFromSaveData(saveData);
+        farm.PopulateButtons(instance.Inventory.seeds, instance.Inventory.catsules);
+    }
+    public void ObjectToConfirm(GameObject obj) { confirmedObj = obj; }
+    public void WaitForConfirmation(string method)
+    {
+        if (confirmedObj.TryGetComponent(out Plot pl))
+        {
+            //confirmed = true;
+            //farm.confirmMenu.SetActive(false);
+            pl.Sell();
+            //StartCoroutine(confirmedObj.GetComponent<Plot>().Sell());
+            //confirmed = false;
+        }
+        else if (method.Contains('.'))
+        {
+            farm.confirmMenu.SetActive(true);
+            string script = method[..method.IndexOf(".")];
+            Type type = Type.GetType(script);
+            currentCoroutine = (confirmedObj.GetComponent(type) as MonoBehaviour).StartCoroutine(method[(method.IndexOf(".") + 1)..]);
+        }
+        else
+        {
+            farm.confirmMenu.SetActive(true);
+            currentCoroutine = StartCoroutine(method);
+        }
+    }
+    public void Confirm()
+    {
+        confirmed = true;
+        StartCoroutine(Farm.DelayMenu(farm.confirmMenu));
+    }
+    public void Cancel()
+    {
+        StopCoroutine(currentCoroutine);
+        StartCoroutine(Farm.DelayMenu(farm.confirmMenu));
+    }
+    public bool IsConfirmed() { return confirmed; }
 
-    public void AddCoin(int coin)
-    {
-        catCoins += coin;
-    }
-    public void RemoveCoin(int coin)
-    {
-        catCoins -= coin;
-    }
+    public void AddCoin(int coin) { catCoins += coin; }
+    public void RemoveCoin(int coin) { catCoins -= coin; }
+    public int GetCurrency() { return catCoins; }
+    public void SetCurrency(int coins) { catCoins = coins; }
     public void UpdateInventory(string item, string type)
     {
         bool nb;
@@ -146,7 +197,7 @@ public class GameManager : MonoBehaviour, ISaveable
             }
             farm.UpdateButtons(nb, farm.seedSelectParent.transform);
         }
-        else if(type == "Catsule")
+        else if (type == "Catsule")
         {
             if (Inventory.catsules.ContainsKey(item))
             {
@@ -161,25 +212,14 @@ public class GameManager : MonoBehaviour, ISaveable
             farm.UpdateButtons(nb, farm.catsuleSelectParent.transform);
         }
     }
-    public int GetCurrency()
-    {
-        return catCoins;
-    }
-    public void SetCurrency(int coins)
-    {
-        catCoins = coins;
-    }
-
-    //public void ExpeditionAddCoin(int coin){
-    //    ExpeditionCoins = coin;
-    //}
 
 
 
 
     public void PopulateSaveData(SaveData jData)
     {
-        PlayerPrefs.SetFloat("Music", musicVolume.GetComponent<Slider>().value);
+        PlayerPrefs.SetFloat("Music", musicVolume.value);
+        PlayerPrefs.SetFloat("SFX", sfxVolume.value);
         PlayerPrefs.Save();
         jData.currency = GetCurrency();
         foreach (Plot pt in GameObject.Find("Plots").GetComponentsInChildren<Plot>().ToList())
@@ -206,15 +246,14 @@ public class GameManager : MonoBehaviour, ISaveable
             jData.plots.Add(plot);
         }
         foreach (Cat ct in GameObject.Find("Cats").GetComponentsInChildren<Cat>().ToList())
-        {
             jData.cats.Add(ct.stats.name);
-        }
-        jData.inventory.seeds = Inventory.seeds.Select(kvp => kvp.Key + ":" + kvp.Value.ToString()).ToList();
-        jData.inventory.catsules = Inventory.catsules.Select(kvp => kvp.Key + ":" + kvp.Value.ToString()).ToList();
-        jData.inventory.decors = Inventory.decors.Select(kvp => kvp.Key + ":" + kvp.Value.ToString()).ToList();
-        //foreach (var seed in Inventory.seeds) jData.inventory.seeds.Add(seed.Key + ":" + seed.Value.ToString());
-        //foreach (var catsule in Inventory.catsules) jData.inventory.catsules.Add(catsule.Key + ":" + catsule.Value.ToString());
-        //foreach (var decor in Inventory.decors) jData.inventory.decors.Add(decor.Key + ":" + decor.Value.ToString());
+        
+        jData.inventory.seeds = Inventory.seeds
+            .Where(kvp => kvp.Value != 0).Select(kvp => kvp.Key + ":" + kvp.Value.ToString()).ToList();
+        jData.inventory.catsules = Inventory.catsules
+            .Where(kvp => kvp.Value != 0).Select(kvp => kvp.Key + ":" + kvp.Value.ToString()).ToList();
+        jData.inventory.decors = Inventory.decors
+            .Where(kvp => kvp.Value != 0).Select(kvp => kvp.Key + ":" + kvp.Value.ToString()).ToList();
     }
     public void LoadFromSaveData(SaveData jData)
     {
@@ -225,7 +264,8 @@ public class GameManager : MonoBehaviour, ISaveable
         //    jData.currency += ExpeditionCoins;
         //    ExpeditionCoins = 0;
         //}
-        musicVolume.GetComponent<Slider>().value = PlayerPrefs.GetFloat("Music", 1);
+        musicVolume.value = PlayerPrefs.GetFloat("Music", 1);
+        sfxVolume.value = PlayerPrefs.GetFloat("SFX", 1);
         SetCurrency(jData.currency);
         foreach (SaveData.ImportantPlotInfo plot in jData.plots)
         {
@@ -267,22 +307,17 @@ public class GameManager : MonoBehaviour, ISaveable
             ct.SetColor(cat[..cat.IndexOf("Cat")]);
         }
         Inventory.seeds = jData.inventory.seeds.ToDictionary(s => s[..s.IndexOf(":")], s => int.Parse(s[(s.IndexOf(":") + 1)..]));
-        //foreach (var seed in jData.inventory.seeds)
-        //    Inventory.seeds[seed[..seed.IndexOf(":")]] = int.Parse(seed[(seed.IndexOf(":") + 1)..]);
-        //foreach (var catsule in jData.inventory.catsules)
-        //    Inventory.catsules[catsule[..catsule.IndexOf(":")]] = int.Parse(catsule[(catsule.IndexOf(":") + 1)..]);
-        //foreach (var decor in jData.inventory.decors)
-        //    Inventory.decors[decor[..decor.IndexOf(":")]] = int.Parse(decor[(decor.IndexOf(":") + 1)..]);
-        //Inventory = jData.inventory;
+        Inventory.catsules = jData.inventory.catsules.ToDictionary(c => c[..c.IndexOf(":")], c => int.Parse(c[(c.IndexOf(":") + 1)..]));
+        Inventory.decors = jData.inventory.decors.ToDictionary(d => d[..d.IndexOf(":")], d => int.Parse(d[(d.IndexOf(":") + 1)..]));
     }
     public static void SaveJsonData(GameManager jManager)
     {
-        string content = "";
-        foreach (Cat cat in GameObject.Find("Cats").transform.GetComponentsInChildren<Cat>())
-            content += cat.GetColor() + "->" + ((Vector2)cat.gameObject.transform.position).ToString() + "\n";
-        try
-        { File.WriteAllText("Desktop", content); }//------------------------------------------------------------------------------------------------------------
-        catch(Exception e) { Debug.LogError(e); }
+        //string content = "";
+        //foreach (Cat cat in GameObject.Find("Cats").transform.GetComponentsInChildren<Cat>())
+        //    content += cat.GetColor() + "->" + ((Vector2)cat.gameObject.transform.position).ToString() + "\n";
+        //try
+        //{ File.WriteAllText("Desktop", content); }//------------------------------------------------------------------------------------------------------------
+        //catch(Exception e) { Debug.LogError(e); }
         SaveData saveData = new();
         jManager.PopulateSaveData(saveData);
         if (WriteToFile("SaveData.dat", saveData.ToJson()))
@@ -292,16 +327,14 @@ public class GameManager : MonoBehaviour, ISaveable
     {
         if(LoadFromFile("SaveData.dat", out var sr))
         {
-            SaveData saveData = new();
-            saveData.LoadFromJson(sr);
-            jManager.LoadFromSaveData(saveData);
+            //SaveData saveData = new();
+            //saveData.LoadFromJson(sr);
+            jManager.LoadFromSaveData(new(sr));
             Debug.Log("Load successful!");
         }
         else
         {
-            SaveData saveData = new();
-            saveData.LoadFromJson("{\"inventory\":{\"seeds\":[\"Blueberry:5\"],\"catsules\":[\"White:1\"],\"decors\":[]},\"currency\":45,\"cats\":[],\"plots\":[]}");
-            jManager.LoadFromSaveData(saveData);
+            jManager.ResetSave();
             Debug.Log("First Load successful");
         }
     }

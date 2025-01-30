@@ -6,6 +6,7 @@ using UnityEngine;
 [Serializable]
 public class SaveData
 {
+    public SaveData(string saveInfo = "") { LoadFromJson(saveInfo); }
     [Serializable]
     public struct ImportantPlantInfo
     {

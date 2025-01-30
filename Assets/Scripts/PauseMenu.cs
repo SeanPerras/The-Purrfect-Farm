@@ -47,12 +47,13 @@ public class PauseMenu : MonoBehaviour
         GameManager.instance.SaveGame();
     }
 
-    public void ExitGame()
+    public IEnumerator ExitGame()
     {
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#else
+        yield return new WaitUntil(() => GameManager.instance.IsConfirmed());
+//#if UNITY_EDITOR
+//        UnityEditor.EditorApplication.isPlaying = false;
+//#else
         Application.Quit();  
-#endif
+//#endif
     }
 }
