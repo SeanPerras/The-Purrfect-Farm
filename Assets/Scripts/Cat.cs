@@ -109,9 +109,9 @@ public class Cat : MonoBehaviour
         selectedCat = null;
         isSelectedCat = false;
         GetComponent<Collider2D>().enabled = true;
-        rightClickMenu.transform.GetChild(0).GetComponent<UnityEngine.UI.Button>().onClick.RemoveListener(
+        rightClickMenu.transform.GetChild(0).GetComponent<Button>().onClick.RemoveListener(
             () => GameManager.instance.ObjectToConfirm(gameObject));
-        rightClickMenu.transform.GetChild(0).GetComponent<UnityEngine.UI.Button>().onClick.RemoveListener(
+        rightClickMenu.transform.GetChild(0).GetComponent<Button>().onClick.RemoveListener(
             () => GameManager.instance.WaitForConfirmation("Cat.Sell"));
     }
     public Vector3 WithinRange(Vector3 loc)

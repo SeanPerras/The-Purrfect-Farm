@@ -160,6 +160,7 @@ public class GameManager : MonoBehaviour, ISaveable
     public void ObjectToConfirm(GameObject obj) { confirmedObj = obj; }
     public void WaitForConfirmation(string method)
     {
+        confirmed = false;
         if (confirmedObj.TryGetComponent(out Plot pl))
             pl.Sell();
         else if (method.Contains('.'))
@@ -182,6 +183,7 @@ public class GameManager : MonoBehaviour, ISaveable
     }
     public void Cancel()
     {
+        confirmed = false;
         StopCoroutine(currentCoroutine);
         StartCoroutine(Farm.DelayMenu(farm.confirmMenu));
     }
