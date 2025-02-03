@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using TMPro;
-using Unity.VisualScripting;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,6 +17,23 @@ public struct InventoryStruct
     //    decors = new();
     //}
     public Dictionary<string, int> seeds, catsules, decors;
+    public readonly bool Find(string item, out int ret)
+    {
+        if (seeds.TryGetValue(item, out ret)) return true;
+        else if (catsules.TryGetValue(item, out ret)) return true;
+        else if (decors.TryGetValue(item, out ret)) return true;
+        else return false;
+    }
+    public readonly int this[string key]
+    {
+        set
+        {
+            if (seeds.ContainsKey(key)) seeds[key] = value;
+            else if (catsules.ContainsKey(key)) catsules[key] = value;
+            else if (decors.ContainsKey(key)) decors[key] = value;
+            else throw new KeyNotFoundException("Item not found in Inventory");
+        }
+    }
 }
 public class GameManager : MonoBehaviour, ISaveable
 {
@@ -35,7 +52,7 @@ public class GameManager : MonoBehaviour, ISaveable
     private readonly static string defaultSave =
         "{\"inventory\":{\"seeds\":[\"Blueberry:5\"],\"catsules\":[\"White:1\"],\"decors\":[]},\"currency\":45,\"cats\":[],\"plots\":[]}";
     private int catCoins;
-    private bool confirmed = false;
+    private bool confirmed = false, quickSell = false;
     private GameObject confirmedObj;
     private Coroutine currentCoroutine = null;
     void Awake()
@@ -106,7 +123,7 @@ public class GameManager : MonoBehaviour, ISaveable
             foreach (Transform button in ExpeditionManager.instance.catButtons) Destroy(button.gameObject);
             EXPO.SetActive(false);
             FARM.SetActive(true);
-            farm.PopulateButtons(Inventory.seeds, Inventory.catsules);
+            farm.PopulateButtons(Inventory);
         }
 
     }
@@ -115,7 +132,7 @@ public class GameManager : MonoBehaviour, ISaveable
         if (instance != null)
         {
             //SaveJsonData(instance);
-            foreach (Transform button in farm.seedSelectParent.transform) Destroy(button.gameObject);
+            foreach (Transform button in farm.seedSelectParent) Destroy(button.gameObject);
             List<Cat> cats = GameObject.Find("Cats").GetComponentsInChildren<Cat>().ToList();
             FARM.SetActive(false);
             EXPO.SetActive(true);
@@ -133,24 +150,18 @@ public class GameManager : MonoBehaviour, ISaveable
         confirmed = false;
         foreach (Transform tf in farm.catsParent.transform) Destroy(tf.gameObject);
         foreach (Transform tf in farm.plotsParent.transform) tf.GetComponent<Plot>().Sell();
-        foreach (Transform tf in farm.seedSelectParent.transform) Destroy(tf.gameObject);
-        foreach (Transform tf in farm.catsuleSelectParent.transform) Destroy(tf.gameObject);
+        foreach (Transform tf in farm.seedSelectParent) Destroy(tf.gameObject);
+        foreach (Transform tf in farm.catsuleSelectParent) Destroy(tf.gameObject);
         SaveData saveData = new(defaultSave);
         if (WriteToFile("SaveData.dat", saveData.ToJson()))
             instance.LoadFromSaveData(saveData);
-        farm.PopulateButtons(instance.Inventory.seeds, instance.Inventory.catsules);
+        farm.PopulateButtons(instance.Inventory);
     }
     public void ObjectToConfirm(GameObject obj) { confirmedObj = obj; }
     public void WaitForConfirmation(string method)
     {
         if (confirmedObj.TryGetComponent(out Plot pl))
-        {
-            //confirmed = true;
-            //farm.confirmMenu.SetActive(false);
             pl.Sell();
-            //StartCoroutine(confirmedObj.GetComponent<Plot>().Sell());
-            //confirmed = false;
-        }
         else if (method.Contains('.'))
         {
             farm.confirmMenu.SetActive(true);
@@ -175,6 +186,8 @@ public class GameManager : MonoBehaviour, ISaveable
         StartCoroutine(Farm.DelayMenu(farm.confirmMenu));
     }
     public bool IsConfirmed() { return confirmed; }
+    public void ToggleQuickSell(Toggle toggle) { quickSell = toggle.isOn; }
+    public bool IsQuickSell() { return quickSell; }
 
     public void AddCoin(int coin) { catCoins += coin; }
     public void RemoveCoin(int coin) { catCoins -= coin; }
@@ -182,34 +195,31 @@ public class GameManager : MonoBehaviour, ISaveable
     public void SetCurrency(int coins) { catCoins = coins; }
     public void UpdateInventory(string item, string type)
     {
-        bool nb;
+        //if(Inventory.Find(item, out _))
+        //{
+        //    Inventory[item]++
+        //    nb = false;
+        //}
+        //else
+        //{
+        //    Inventory[item] = 1;
+        //    nb = true;
+        //}
         if (type == "Seed")
         {
             if (Inventory.seeds.ContainsKey(item))
-            {
                 Inventory.seeds[item]++;
-                nb = false;
-            }
             else
-            {
                 Inventory.seeds[item] = 1;
-                nb = true;
-            }
-            farm.UpdateButtons(nb, farm.seedSelectParent.transform);
+            farm.UpdateButtons(farm.seedSelectParent, item);
         }
         else if (type == "Catsule")
         {
             if (Inventory.catsules.ContainsKey(item))
-            {
                 Inventory.catsules[item]++;
-                nb = false;
-            }
             else
-            {
                 Inventory.catsules[item] = 1;
-                nb = true;
-            }
-            farm.UpdateButtons(nb, farm.catsuleSelectParent.transform);
+            farm.UpdateButtons(farm.catsuleSelectParent, item);
         }
     }
 
@@ -312,12 +322,6 @@ public class GameManager : MonoBehaviour, ISaveable
     }
     public static void SaveJsonData(GameManager jManager)
     {
-        //string content = "";
-        //foreach (Cat cat in GameObject.Find("Cats").transform.GetComponentsInChildren<Cat>())
-        //    content += cat.GetColor() + "->" + ((Vector2)cat.gameObject.transform.position).ToString() + "\n";
-        //try
-        //{ File.WriteAllText("Desktop", content); }//------------------------------------------------------------------------------------------------------------
-        //catch(Exception e) { Debug.LogError(e); }
         SaveData saveData = new();
         jManager.PopulateSaveData(saveData);
         if (WriteToFile("SaveData.dat", saveData.ToJson()))

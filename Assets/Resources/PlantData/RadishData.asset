@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   plantName: Radish
   plantPrefab: {fileID: 2649599392934896263, guid: ecaf16df2a6e7fe47a4e4ad4e62e9310, type: 3}
+  value: 10
   growthStages:
   - {fileID: 21300000, guid: dabc045e1a48d30449669d66047df9b3, type: 3}
   - {fileID: 21300000, guid: 1d6291262f1d8fc4b863f730c964b2bd, type: 3}

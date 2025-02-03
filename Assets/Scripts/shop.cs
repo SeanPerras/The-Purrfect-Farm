@@ -26,7 +26,10 @@ public class Shop : MonoBehaviour
         if (Input.GetMouseButton(0) && Cat.hasCat)
             selectedCat = Cat.selectedCat;
         if (Input.GetMouseButtonUp(0) && selectedCat)
-            selectedCat.Sell();
+        {
+            GameManager.instance.ObjectToConfirm(selectedCat.gameObject);
+            GameManager.instance.WaitForConfirmation("Cat.Sell");
+        }
     }
     public void PurchaseItem(GameObject itemToAdd)
     {

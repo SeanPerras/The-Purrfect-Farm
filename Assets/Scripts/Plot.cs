@@ -75,6 +75,7 @@ public class Plot : MonoBehaviour
         plant.SetPlantData(plantData);
         plant.SetPlotReference(this);
         plant.gameObject.name = plantData.plantPrefab.name;
+        plant.value = plantData.value;
         plant.sOrder = GetComponent<SpriteRenderer>().sortingOrder + 1;
         //plant.GetComponent<SpriteRenderer>().sortingOrder = 20;//temp fix
         return plant;

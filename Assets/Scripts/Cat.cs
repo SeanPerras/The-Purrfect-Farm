@@ -1,12 +1,7 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using TMPro;
-using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.VFX;
+using UnityEngine.UI;
 
 public class Cat : MonoBehaviour
 {
@@ -17,7 +12,6 @@ public class Cat : MonoBehaviour
     //public Sprite sprite;
     public Vector3 catioPos;
     public CatStats stats;
-    public int value = 10;
 
     private string color = "White";//, spritePath;
     private int sOrder;
@@ -83,11 +77,11 @@ public class Cat : MonoBehaviour
         if (Input.GetMouseButtonUp(1))
         {
             Transform temp = rightClickMenu.transform.GetChild(0);
-            temp.GetComponentInChildren<TextMeshProUGUI>().text = "Sell: " + value.ToString();
+            temp.GetComponentInChildren<TextMeshProUGUI>().text = "Sell: " + stats.value.ToString();
             temp.gameObject.SetActive(true);
-            temp.GetComponent<UnityEngine.UI.Button>().onClick.AddListener(
+            temp.GetComponent<Button>().onClick.AddListener(
                 () => GameManager.instance.ObjectToConfirm(gameObject));
-            temp.GetComponent<UnityEngine.UI.Button>().onClick.AddListener(
+            temp.GetComponent<Button>().onClick.AddListener(
                 () => GameManager.instance.WaitForConfirmation("Cat.Sell"));
         }
     }
@@ -142,13 +136,12 @@ public class Cat : MonoBehaviour
         //float r = Mathf.Clamp(co.r + 40f/255f, 0, 1), g = Mathf.Clamp(co.g + 40f / 255f, 0, 1), b = Mathf.Clamp(co.b + 40f / 255f, 0, 1);
         //curr_Sprite.color = new Color(r, g, b);
         name = color + " Cat";
-        value = stats.value;
     }
     public string GetColor() { return color; }
     public IEnumerator Sell()
     {
         yield return new WaitUntil(() => GameManager.instance.IsConfirmed());
-        GameManager.instance.AddCoin(value);
+        GameManager.instance.AddCoin(stats.value);
         rightClickMenu.transform.GetChild(0).GetComponent<UnityEngine.UI.Button>().onClick.RemoveListener(
             () => GameManager.instance.ObjectToConfirm(gameObject));
         rightClickMenu.transform.GetChild(0).GetComponent<UnityEngine.UI.Button>().onClick.RemoveListener(

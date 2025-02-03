@@ -50,10 +50,10 @@ public class PauseMenu : MonoBehaviour
     public IEnumerator ExitGame()
     {
         yield return new WaitUntil(() => GameManager.instance.IsConfirmed());
-//#if UNITY_EDITOR
-//        UnityEditor.EditorApplication.isPlaying = false;
-//#else
-        Application.Quit();  
-//#endif
+        #if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+        #else
+            Application.Quit();  
+        #endif
     }
 }
