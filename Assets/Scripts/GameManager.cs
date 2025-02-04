@@ -4,10 +4,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using TMPro;
-using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEditor.Progress;
 
 public struct InventoryStruct
 {
