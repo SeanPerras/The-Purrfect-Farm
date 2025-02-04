@@ -17,6 +17,7 @@ public class Cat : MonoBehaviour
     private int sOrder;
     private Vector3 mousePos;
     private GameObject rightClickMenu;
+    private Farm farm;
     // Start is called before the first frame update
     void Awake()
     {
@@ -29,6 +30,7 @@ public class Cat : MonoBehaviour
         rightClickMenu = GameObject.Find("Farm (9x9)").GetComponent<Farm>().sellMenu;
         //rightClickMenu.GetComponent<Canvas>().worldCamera =
         //    GameObject.Find("Main Camera").GetComponent<Camera>();
+        farm = GameObject.Find("Farm (9x9)").GetComponent<Farm>();
     }
 
     // Update is called once per frame
@@ -149,5 +151,6 @@ public class Cat : MonoBehaviour
         rightClickMenu.transform.GetChild(0).gameObject.SetActive(false);
         StartCoroutine(Farm.DelayMenu(rightClickMenu));//.SetActive(false);
         Destroy(gameObject);
+        farm.UpdateIcons(name);
     }
 }

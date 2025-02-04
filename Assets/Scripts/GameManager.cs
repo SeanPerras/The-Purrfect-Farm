@@ -7,6 +7,7 @@ using TMPro;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
 public struct InventoryStruct
 {
@@ -17,15 +18,29 @@ public struct InventoryStruct
     //    decors = new();
     //}
     public Dictionary<string, int> seeds, catsules, decors;
-    public readonly bool Find(string item, out int ret)
+    public readonly bool TryGet(string item, out int ret)
     {
         if (seeds.TryGetValue(item, out ret)) return true;
         else if (catsules.TryGetValue(item, out ret)) return true;
         else if (decors.TryGetValue(item, out ret)) return true;
         else return false;
     }
+    public readonly bool Contains(string item)
+    {
+        if (seeds.ContainsKey(item)) return true;
+        else if (catsules.ContainsKey(item)) return true;
+        else if (decors.ContainsKey(item)) return true;
+        else return false;
+    }
     public readonly int this[string key]
     {
+        get
+        {
+            if (seeds.TryGetValue(key, out int v)) return v;
+            else if (catsules.TryGetValue(key, out v)) return v;
+            else if (decors.TryGetValue(key, out v)) return v;
+            else throw new KeyNotFoundException("Item not found in Inventory");
+        }
         set
         {
             if (seeds.ContainsKey(key)) seeds[key] = value;
@@ -33,6 +48,12 @@ public struct InventoryStruct
             else if (decors.ContainsKey(key)) decors[key] = value;
             else throw new KeyNotFoundException("Item not found in Inventory");
         }
+    }
+    public readonly void RemoveZeroes()
+    {
+        foreach (var seed in seeds.Where(s => s.Value == 0).ToList()) seeds.Remove(seed.Key);
+        foreach (var catsule in catsules.Where(c => c.Value == 0).ToList()) catsules.Remove(catsule.Key);
+        foreach (var decor in decors.Where(d => d.Value == 0).ToList()) decors.Remove(decor.Key);
     }
 }
 public class GameManager : MonoBehaviour, ISaveable
@@ -43,18 +64,14 @@ public class GameManager : MonoBehaviour, ISaveable
     public GameObject catPrefab, FARM, EXPO;
     public Slider musicVolume, sfxVolume;
     public TextMeshProUGUI catCoinsDisplay;
-    public InventoryStruct Inventory = new()
-    {
-        seeds = new(),
-        catsules = new(),
-        decors = new()
-    };
+    public InventoryStruct Inventory = new() { seeds = new(), catsules = new(), decors = new() };
+    public List<Coroutine> currentCoroutines = new();
+
     private readonly static string defaultSave =
         "{\"inventory\":{\"seeds\":[\"Blueberry:5\"],\"catsules\":[\"White:1\"],\"decors\":[]},\"currency\":45,\"cats\":[],\"plots\":[]}";
     private int catCoins;
     private bool confirmed = false, quickSell = false;
     private GameObject confirmedObj;
-    private Coroutine currentCoroutine = null;
     void Awake()
     {
         if (!instance)
@@ -133,6 +150,11 @@ public class GameManager : MonoBehaviour, ISaveable
         {
             //SaveJsonData(instance);
             foreach (Transform button in farm.seedSelectParent) Destroy(button.gameObject);
+            foreach (Transform button in farm.catsuleSelectParent) Destroy(button.gameObject);
+            foreach (Transform button in farm.inventoryParent) Destroy(button.gameObject);
+            Inventory.RemoveZeroes();
+            if (farm.inventoryParent.childCount < 5)
+                farm.inventoryParent.GetComponent<RectTransform>().sizeDelta = new(1550, 300);
             List<Cat> cats = GameObject.Find("Cats").GetComponentsInChildren<Cat>().ToList();
             FARM.SetActive(false);
             EXPO.SetActive(true);
@@ -168,12 +190,12 @@ public class GameManager : MonoBehaviour, ISaveable
             farm.confirmMenu.SetActive(true);
             string script = method[..method.IndexOf(".")];
             Type type = Type.GetType(script);
-            currentCoroutine = (confirmedObj.GetComponent(type) as MonoBehaviour).StartCoroutine(method[(method.IndexOf(".") + 1)..]);
+            currentCoroutines.Add((confirmedObj.GetComponent(type) as MonoBehaviour).StartCoroutine(method[(method.IndexOf(".") + 1)..]));
         }
         else
         {
             farm.confirmMenu.SetActive(true);
-            currentCoroutine = StartCoroutine(method);
+            currentCoroutines.Add(StartCoroutine(method));
         }
     }
     public void Confirm()
@@ -184,7 +206,13 @@ public class GameManager : MonoBehaviour, ISaveable
     public void Cancel()
     {
         confirmed = false;
-        StopCoroutine(currentCoroutine);
+        //StopCoroutine(currentCoroutine);
+        //StopAllCoroutines();
+        foreach(Coroutine cr in new List<Coroutine>(currentCoroutines))
+        {
+            StopCoroutine(cr);
+            currentCoroutines.Remove(cr);
+        }
         StartCoroutine(Farm.DelayMenu(farm.confirmMenu));
     }
     public bool IsConfirmed() { return confirmed; }
@@ -207,6 +235,10 @@ public class GameManager : MonoBehaviour, ISaveable
         //    Inventory[item] = 1;
         //    nb = true;
         //}
+        //if (Inventory.Contains(item))
+        //    Inventory[item] += 1;
+        //else Inventory[item] = 1;
+        //farm.UpdateButtons();//--------------------------------------------------
         if (type == "Seed")
         {
             if (Inventory.seeds.ContainsKey(item))
@@ -223,6 +255,14 @@ public class GameManager : MonoBehaviour, ISaveable
                 Inventory.catsules[item] = 1;
             farm.UpdateButtons(farm.catsuleSelectParent, item);
         }
+        else
+        {
+            farm.UpdateIcons(item);
+        }
+    }
+    public bool IsAUIOpen()
+    {
+        return farm.IsAnyUIOpen();
     }
 
 

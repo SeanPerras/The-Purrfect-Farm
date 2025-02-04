@@ -13,6 +13,7 @@ public class Catsule : MonoBehaviour
     private Plot currentPlot;
     private float timer = 15f;
     private GameObject timerText;
+    private Farm farm;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,6 +22,7 @@ public class Catsule : MonoBehaviour
         timerText = transform.GetChild(0).gameObject;
         //timerText.GetComponent<Renderer>().enabled = false;
         name = name[..name.IndexOf("(Clone)")];
+        farm = GameObject.Find("Farm (9x9)").GetComponent<Farm>();
     }
 
     // Update is called once per frame
@@ -73,6 +75,7 @@ public class Catsule : MonoBehaviour
         Debug.Log(string.Join("|", adjColors));
         currentPlot.ReEnablePlot();
         Destroy(gameObject);
+        farm.UpdateIcons(col + " Cat");
     }
     private string BestPick(List<KeyValuePair<string, List<string>>> colors)
     {

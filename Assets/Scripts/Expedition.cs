@@ -15,8 +15,6 @@ public class Expedition : MonoBehaviour
     public bool isCompleted = false;
     public float expeditionTimer = 0f;
     public int difficulty;
-    public GameObject pauseMenu;
-    public GameObject optionsMenu;
     public List<Image> catImages;
     public Sprite defaultSprite;
     private AudioManager audioManager;
@@ -29,14 +27,8 @@ public class Expedition : MonoBehaviour
 
     void OnMouseUp()
     {
-        if (pauseMenu.activeSelf)
-        {
+        if (GameManager.instance.IsAUIOpen())
             return;
-        }
-        if (optionsMenu.activeSelf)
-        {
-            return;
-        }
         if (isCompleted)
         {
             ClaimRewards();

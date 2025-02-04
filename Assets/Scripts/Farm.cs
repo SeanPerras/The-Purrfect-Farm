@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
@@ -147,6 +148,8 @@ public class Farm : MonoBehaviour
         {
             plotSelected.GetComponent<Plot>().Plant(plantData);
             plotSelected = null;
+            GameManager.instance.Inventory[plantData.plantName]--;
+            UpdateIcons(plantData.plantName + " Seed");
         }
         CloseSeedUI();
         if (!catSelectUI.activeSelf) HideIcons();
@@ -162,6 +165,7 @@ public class Farm : MonoBehaviour
             plotSelected.GetComponent<Plot>().Plant(color);
             //plotSelected.GetComponent<Collider2D>().enabled = true;
             plotSelected = null;
+            GameManager.instance.Inventory[color]--;
         }
         CloseCatUI();
         if (!seedSelectUI.activeSelf) HideIcons();
@@ -183,8 +187,8 @@ public class Farm : MonoBehaviour
         //if (v == 0) AbleButton(newBtn, false);
         newBtn.GetComponent<Button>().onClick.AddListener(() =>
         {
-            if (GameManager.instance.Inventory.Find(k, out int ret))// v = --ret;
-                newBtn.transform.Find("Count").gameObject.GetComponent<TextMeshProUGUI>().text = (--ret).ToString();
+            if (GameManager.instance.Inventory.TryGet(k, out int ret))// v = --ret;
+                newBtn.transform.Find("Count").gameObject.GetComponent<TextMeshProUGUI>().text = ret.ToString();
             if (ret == 0) AbleButton(newBtn, false);
         });
     }
@@ -211,11 +215,13 @@ public class Farm : MonoBehaviour
             {
                 GameManager.instance.ObjectToConfirm(catToSell.gameObject);
                 GameManager.instance.WaitForConfirmation("Cat.Sell");
-                StartCoroutine(DelayForConfirm(() =>
-                    icon.transform.Find("Count").GetComponent<TextMeshProUGUI>().text = "x" + count.ToString()));
+                GameManager.instance.currentCoroutines.Add(StartCoroutine(DelayForConfirm(() =>
+                    icon.transform.Find("Count").GetComponent<TextMeshProUGUI>().text = "x" + count.ToString())));
+                //GameManager.instance.currentCoroutines.Add(StartCoroutine(DelayForConfirm(() =>
+                //    GameManager.instance.Inventory[icon.name.Split(" ")[0]] = count)));
                 if(count == 0)
-                    StartCoroutine(DelayForConfirm(() =>
-                        AbleButton(icon.transform.Find("SellButton").gameObject, false)));
+                    GameManager.instance.currentCoroutines.Add(StartCoroutine(DelayForConfirm(() =>
+                        AbleButton(icon.transform.Find("SellButton").gameObject, false))));
             }
             else
             {
@@ -292,13 +298,27 @@ public class Farm : MonoBehaviour
     public void UpdateButtons(Transform parent, string name)
     {
         Transform btn = parent.Find(name + " " + parent.name.Split(" ")[0]);
-        if (btn && GameManager.instance.Inventory.Find(name, out int iCount))
+        if (btn && GameManager.instance.Inventory.TryGet(name, out int iCount))
         {
             btn.Find("Count").gameObject.GetComponent<TextMeshProUGUI>().text = iCount.ToString();
             if (iCount == 0) AbleButton(btn.gameObject, false);
             else if (!btn.GetComponent<Button>().enabled) AbleButton(btn.gameObject, true);
         }
         else CreateMenuButton(name, 1, parent, parent.childCount);
+    }
+    public void UpdateIcons(string name)
+    {
+        GameObject icon = inventoryParent.Find(name).gameObject;
+        Transform btn = icon.transform.Find("SellButton");
+        int count = name.Contains("Cat") ?
+            catsParent.GetComponentsInChildren<Transform>().Skip(1).Where(c => c.name == name).Count() :
+            GameManager.instance.Inventory[name.Split(" ")[0]];
+        if (icon)
+        {
+            icon.transform.Find("Count").GetComponent<TextMeshProUGUI>().text = "x" + count.ToString();
+            if (count == 0) AbleButton(btn.gameObject, false);
+            else if (!btn.GetComponent<Button>().enabled) AbleButton(btn.gameObject, true);
+        }
     }
     public void OpenSeedUI()
     {
