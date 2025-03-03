@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -30,6 +31,12 @@ public struct InventoryStruct
         else if (decors.ContainsKey(item)) return true;
         else return false;
     }
+    public readonly void Add(string item, string category)
+    {
+        if (category == "Seed") seeds[item] = 1;
+        else if (category == "Catsule") catsules[item] = 1;
+        else if (category == "Decor") decors[item] = 1;
+    }
     public readonly int this[string key]
     {
         get
@@ -49,20 +56,20 @@ public struct InventoryStruct
     }
     public readonly void RemoveZeroes()
     {
-        foreach (var seed in seeds.Where(s => s.Value == 0).ToList()) seeds.Remove(seed.Key);
-        foreach (var catsule in catsules.Where(c => c.Value == 0).ToList()) catsules.Remove(catsule.Key);
-        foreach (var decor in decors.Where(d => d.Value == 0).ToList()) decors.Remove(decor.Key);
+        foreach (var seed in seeds.Where(s => s.Value <= 0).ToList()) seeds.Remove(seed.Key);
+        foreach (var catsule in catsules.Where(c => c.Value <= 0).ToList()) catsules.Remove(catsule.Key);
+        foreach (var decor in decors.Where(d => d.Value <= 0).ToList()) decors.Remove(decor.Key);
     }
 }
 public class GameManager : MonoBehaviour, ISaveable
 {
     public static GameManager instance;
+    public static InventoryStruct Inventory = new() { seeds = new(), catsules = new(), decors = new() };
     public Farm farm;//Farm (9x9)
     public List<GameObject> catsulePrefabs;
     public GameObject catPrefab, FARM, EXPO;
     public Slider musicVolume, sfxVolume;
     public TextMeshProUGUI catCoinsDisplay;
-    public InventoryStruct Inventory = new() { seeds = new(), catsules = new(), decors = new() };
     public List<Coroutine> currentCoroutines = new();
 
     private readonly static string defaultSave =
@@ -99,8 +106,10 @@ public class GameManager : MonoBehaviour, ISaveable
     }
     private void OnApplicationQuit()
     {
-        //if (FARM.activeSelf) SaveJsonData(instance);
-        //if (EXPO.activeSelf) SaveExpoJsonData(instance);
+        bool autosave = false;
+        if(autosave)
+            if (FARM.activeSelf) SaveJsonData(instance);
+            else if (EXPO.activeSelf) SaveExpoJsonData(instance);
     }
     //private void OnDestroy()
     //{
@@ -153,14 +162,15 @@ public class GameManager : MonoBehaviour, ISaveable
             Inventory.RemoveZeroes();
             if (farm.inventoryParent.childCount < 5)
                 farm.inventoryParent.GetComponent<RectTransform>().sizeDelta = new(1550, 300);
-            List<Cat> cats = GameObject.Find("Cats").GetComponentsInChildren<Cat>().ToList();
-            FARM.SetActive(false);
             EXPO.SetActive(true);
-            ExpeditionManager.instance.PopulateCats(cats);
+            CatManager.instance.SetCats(GameObject.Find("Cats").GetComponentsInChildren<Cat>().ToList());
+            ExpeditionManager.instance.PopulateCats();
+            FARM.SetActive(false);
         }
     }
     public void SaveGame()
     {
+        Inventory.RemoveZeroes();
         SaveJsonData(instance);
         SaveExpoJsonData(instance);
     }
@@ -175,13 +185,16 @@ public class GameManager : MonoBehaviour, ISaveable
         SaveData saveData = new(defaultSave);
         if (WriteToFile("SaveData.dat", saveData.ToJson()))
             instance.LoadFromSaveData(saveData);
-        farm.PopulateButtons(instance.Inventory);
+        farm.PopulateButtons(Inventory);
+        farm.ResetModes();
+        Time.timeScale = 1;
     }
-    public void ObjectToConfirm(GameObject obj) { confirmedObj = obj; }
+    public void ObjectToConfirm(GameObject obj) { confirmedObj = obj; 
+    Debug.Log("Confirmed object is " + obj.name);}
     public void WaitForConfirmation(string method)
     {
         confirmed = false;
-        if (confirmedObj.TryGetComponent(out Plot pl))
+        if (confirmedObj && confirmedObj.TryGetComponent(out Plot pl))
             pl.Sell();
         else if (method.Contains('.'))
         {
@@ -219,44 +232,19 @@ public class GameManager : MonoBehaviour, ISaveable
 
     public void AddCoin(int coin) { catCoins += coin; }
     public void RemoveCoin(int coin) { catCoins -= coin; }
+    public static bool CheckCost(int cost) { return instance.catCoins >= cost; }
     public int GetCurrency() { return catCoins; }
     public void SetCurrency(int coins) { catCoins = coins; }
-    public void UpdateInventory(string item, string type)
+    public void UpdateInventory(string name, int value)
     {
-        //if(Inventory.Find(item, out _))
-        //{
-        //    Inventory[item]++
-        //    nb = false;
-        //}
-        //else
-        //{
-        //    Inventory[item] = 1;
-        //    nb = true;
-        //}
-        //if (Inventory.Contains(item))
-        //    Inventory[item] += 1;
-        //else Inventory[item] = 1;
-        //farm.UpdateButtons();//--------------------------------------------------
-        if (type == "Seed")
-        {
-            if (Inventory.seeds.ContainsKey(item))
-                Inventory.seeds[item]++;
-            else
-                Inventory.seeds[item] = 1;
-            farm.UpdateButtons(farm.seedSelectParent, item);
-        }
-        else if (type == "Catsule")
-        {
-            if (Inventory.catsules.ContainsKey(item))
-                Inventory.catsules[item]++;
-            else
-                Inventory.catsules[item] = 1;
-            farm.UpdateButtons(farm.catsuleSelectParent, item);
-        }
-        else
-        {
-            farm.UpdateIcons(item);
-        }
+        int index = name.LastIndexOf(" ");
+        string item = name[..index], type = name[(index + 1)..];
+        if (Inventory.Contains(item))
+            Inventory[item]++;
+        else Inventory.Add(item, type);
+
+        farm.UpdateButtons(item);
+        farm.UpdateIcons(item + " " + type, value);
     }
     public bool IsAUIOpen()
     {
@@ -314,8 +302,6 @@ public class GameManager : MonoBehaviour, ISaveable
         //    jData.currency += ExpeditionCoins;
         //    ExpeditionCoins = 0;
         //}
-        musicVolume.value = PlayerPrefs.GetFloat("Music", 1);
-        sfxVolume.value = PlayerPrefs.GetFloat("SFX", 1);
         SetCurrency(jData.currency);
         foreach (SaveData.ImportantPlotInfo plot in jData.plots)
         {

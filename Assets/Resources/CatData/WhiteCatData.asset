@@ -13,6 +13,9 @@ MonoBehaviour:
   m_Name: WhiteCatData
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: b5cf7476f58c2d748a31dd2b4ea42e90, type: 3}
+  walkSprites:
+  - {fileID: 21300000, guid: 221d0c3e58268e34cb8335e73dfcbeca, type: 3}
+  - {fileID: 21300000, guid: 9bb63b16201914141a54b739a68f1b69, type: 3}
   value: 10
   strength: 1
   speed: 1

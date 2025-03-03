@@ -1,13 +1,19 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using TMPro;
+using Unity.Burst.Intrinsics;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class Plot : MonoBehaviour
 {
     private Plant plant;
     private Catsule catsule;
+    private Farm farm;
     private List<Vector2> positions;
     private readonly GameObject[] adjPlots = new GameObject[4];
     private Collider2D plotCollider;
@@ -17,6 +23,8 @@ public class Plot : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        name = name.Remove(3, 7);
+        //name = name[..name.IndexOf("(Clone)")];
         positions = new() {
             transform.position + new Vector3(5f, 2.5f),//topright
             transform.position + new Vector3(-5f, 2.5f),//topleft
@@ -39,30 +47,31 @@ public class Plot : MonoBehaviour
             index++;
         }
         plotCollider = GetComponent<Collider2D>();
-        rightClickMenu = GameObject.Find("Farm (9x9)").GetComponent<Farm>().sellMenu;
+        farm = GameObject.Find("Farm (9x9)").GetComponent<Farm>();
+        rightClickMenu = farm.sellMenu;
     }
     //private void OnMouseEnter() { transform.Find("Outline").gameObject.SetActive(true); }
     //private void OnMouseExit() { transform.Find("Outline").gameObject.SetActive(false); }
     private void OnMouseOver()
     {
-        if (Input.GetMouseButtonUp(1) && plant == null)
+        if (Input.GetMouseButtonUp(1) && plant == null && !farm.IsAnyUIOpen())
         {
             rightClickMenu.transform.position = transform.position + new Vector3(0, 1, 0);
             rightClickMenu.GetComponent<TextMeshPro>().text = name;
-            rightClickMenu.transform.Find("SellButton").GetComponentInChildren<TextMeshProUGUI>().text = "Sell: 5";
+            rightClickMenu.transform.Find("SellButton").GetComponentInChildren<TMP_Text>().text = "Sell: 5";
             rightClickMenu.SetActive(true);
             rightClickMenu.transform.GetChild(0).gameObject.SetActive(true);
-            rightClickMenu.transform.GetChild(0).GetComponent<UnityEngine.UI.Button>().onClick.AddListener(
-                () => GameManager.instance.ObjectToConfirm(gameObject));
-            rightClickMenu.transform.GetChild(0).GetComponent<UnityEngine.UI.Button>().onClick.AddListener(
-                () => GameManager.instance.WaitForConfirmation("Plot.Sell"));
+            UnityEvent click = rightClickMenu.transform.GetChild(0).GetComponent<Button>().onClick;
+            click.RemoveAllListeners();
+            click.AddListener(() => GameManager.instance.ObjectToConfirm(gameObject));
+            click.AddListener(() => GameManager.instance.WaitForConfirmation("Plot.Sell"));
         }
     }
     private void OnMouseUp()
     {
-        rightClickMenu.transform.GetChild(0).GetComponent<UnityEngine.UI.Button>().onClick.RemoveListener(
+        rightClickMenu.transform.GetChild(0).GetComponent<Button>().onClick.RemoveListener(
             () => GameManager.instance.ObjectToConfirm(gameObject));
-        rightClickMenu.transform.GetChild(0).GetComponent<UnityEngine.UI.Button>().onClick.RemoveListener(
+        rightClickMenu.transform.GetChild(0).GetComponent<Button>().onClick.RemoveListener(
             () => GameManager.instance.WaitForConfirmation("Plot.Sell"));
     }
 
@@ -125,20 +134,17 @@ public class Plot : MonoBehaviour
     public void Sell()
     {
         //yield return new WaitUntil(() => GameManager.instance.IsConfirmed());
-        if (plant == null)
-        {
-            oldLand.SetActive(true);
-            rightClickMenu.transform.GetChild(0).GetComponent<UnityEngine.UI.Button>().onClick.RemoveListener(
-                () => GameManager.instance.ObjectToConfirm(gameObject));
-            rightClickMenu.transform.GetChild(0).GetComponent<UnityEngine.UI.Button>().onClick.RemoveListener(
-                () => GameManager.instance.WaitForConfirmation("Plot.Sell"));
-            rightClickMenu.transform.GetChild(0).gameObject.SetActive(false);
-            StartCoroutine(Farm.DelayMenu(rightClickMenu));//.SetActive(false);
-            GameManager.instance.AddCoin(5);
-            gameObject.SetActive(false);
-            Destroy(gameObject, .25f);
-        }
-        else Debug.Log("Harvest or delete the plant before deleting the plot!");
+        if(plant) Destroy(plant);
+        oldLand.SetActive(true);
+        rightClickMenu.transform.GetChild(0).GetComponent<Button>().onClick.RemoveListener(
+            () => GameManager.instance.ObjectToConfirm(gameObject));
+        rightClickMenu.transform.GetChild(0).GetComponent<Button>().onClick.RemoveListener(
+            () => GameManager.instance.WaitForConfirmation("Plot.Sell"));
+        rightClickMenu.transform.GetChild(0).gameObject.SetActive(false);
+        StartCoroutine(Farm.DelayMenu(rightClickMenu));//.SetActive(false);
+        GameManager.instance.AddCoin(5);
+        gameObject.SetActive(false);
+        Destroy(gameObject, .25f);
     }
 
 

@@ -55,16 +55,16 @@ public class ExpeditionManager : MonoBehaviour
                 image.sprite = defaultSprite;
         Debug.Log("Team selection UI opened by: " + expedition.name);
     }
-    public void PopulateCats(List<Cat> cats)
+    public void PopulateCats()//List<Cat> cats)
     {
-        int count = catButtons.childCount;
+        int count = 0;
         Vector2 offset = new(162, -35);
-        foreach (Cat cat in cats)
+        foreach (Cat cat in CatManager.instance.GetCats())
         {
             GameObject newBtn = Instantiate(catButtonPF, catButtons);
             newBtn.transform.localPosition = offset + new Vector2(0, -70*count);
             newBtn.name = cat.name;
-            newBtn.transform.GetComponentInChildren<TextMeshProUGUI>().text = cat.name;
+            newBtn.transform.GetComponentInChildren<TMP_Text>().text = cat.name;
             newBtn.GetComponentInChildren<CatCheckbox>().cat = cat.gameObject;
             if (++count > 4) catButtons.GetComponent<RectTransform>().sizeDelta += new Vector2(0, 70);
         }

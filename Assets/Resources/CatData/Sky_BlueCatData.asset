@@ -13,6 +13,9 @@ MonoBehaviour:
   m_Name: Sky_BlueCatData
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: 65a71909641a0554492a9ab8e602f713, type: 3}
+  walkSprites:
+  - {fileID: 21300000, guid: a123882bb45d95944bd6145a4c0cd96d, type: 3}
+  - {fileID: 21300000, guid: cab0fd11cdc9d5c4baca2d8d67767521, type: 3}
   value: 15
   strength: 3
   speed: 3

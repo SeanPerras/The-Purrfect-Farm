@@ -13,6 +13,9 @@ MonoBehaviour:
   m_Name: PinkCatData
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: ac8a5a3b6dc78a642b4185f9d593d9ff, type: 3}
+  walkSprites:
+  - {fileID: 21300000, guid: 30492bc9843f79740a66ab7b65a36df1, type: 3}
+  - {fileID: 21300000, guid: f77ff4b0733d7f648a680b43938f97ea, type: 3}
   value: 15
   strength: 2
   speed: 2

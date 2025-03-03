@@ -3,16 +3,16 @@
   "WorkspaceRootPath": "D:\\Users\\Sean Perras\\The Purrfect Farm\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{440A010A-BD39-275F-9BEC-DD910D1A6A38}|Assembly-CSharp.csproj|D:\\Users\\Sean Perras\\The Purrfect Farm\\assets\\scripts\\catsule.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{440A010A-BD39-275F-9BEC-DD910D1A6A38}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\catsule.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{440A010A-BD39-275F-9BEC-DD910D1A6A38}|Assembly-CSharp.csproj|d:\\users\\sean perras\\the purrfect farm\\assets\\scripts\\farm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{440A010A-BD39-275F-9BEC-DD910D1A6A38}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\farm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{440A010A-BD39-275F-9BEC-DD910D1A6A38}|Assembly-CSharp.csproj|D:\\Users\\Sean Perras\\The Purrfect Farm\\assets\\scripts\\gamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{440A010A-BD39-275F-9BEC-DD910D1A6A38}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\gamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{440A010A-BD39-275F-9BEC-DD910D1A6A38}|Assembly-CSharp.csproj|D:\\Users\\Sean Perras\\The Purrfect Farm\\assets\\scripts\\plot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{440A010A-BD39-275F-9BEC-DD910D1A6A38}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\plot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{440A010A-BD39-275F-9BEC-DD910D1A6A38}|Assembly-CSharp.csproj|D:\\Users\\Sean Perras\\The Purrfect Farm\\assets\\scripts\\cat.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -23,24 +23,44 @@
       "RelativeMoniker": "D:0:0:{440A010A-BD39-275F-9BEC-DD910D1A6A38}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\pausemenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{440A010A-BD39-275F-9BEC-DD910D1A6A38}|Assembly-CSharp.csproj|d:\\users\\sean perras\\the purrfect farm\\assets\\scripts\\mainmenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{440A010A-BD39-275F-9BEC-DD910D1A6A38}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\mainmenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{440A010A-BD39-275F-9BEC-DD910D1A6A38}|Assembly-CSharp.csproj|D:\\Users\\Sean Perras\\The Purrfect Farm\\assets\\scripts\\volume settings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{440A010A-BD39-275F-9BEC-DD910D1A6A38}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\volume settings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{440A010A-BD39-275F-9BEC-DD910D1A6A38}|Assembly-CSharp.csproj|D:\\Users\\Sean Perras\\The Purrfect Farm\\assets\\scripts\\catsule.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{440A010A-BD39-275F-9BEC-DD910D1A6A38}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\catsule.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{440A010A-BD39-275F-9BEC-DD910D1A6A38}|Assembly-CSharp.csproj|D:\\Users\\Sean Perras\\The Purrfect Farm\\assets\\scripts\\catstats.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{440A010A-BD39-275F-9BEC-DD910D1A6A38}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\catstats.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{440A010A-BD39-275F-9BEC-DD910D1A6A38}|Assembly-CSharp.csproj|D:\\Users\\Sean Perras\\The Purrfect Farm\\assets\\scripts\\shop.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{440A010A-BD39-275F-9BEC-DD910D1A6A38}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\shop.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{440A010A-BD39-275F-9BEC-DD910D1A6A38}|Assembly-CSharp.csproj|D:\\Users\\Sean Perras\\The Purrfect Farm\\assets\\scripts\\expedition.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{440A010A-BD39-275F-9BEC-DD910D1A6A38}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\expedition.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{440A010A-BD39-275F-9BEC-DD910D1A6A38}|Assembly-CSharp.csproj|D:\\Users\\Sean Perras\\The Purrfect Farm\\assets\\scripts\\expeditionslmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{440A010A-BD39-275F-9BEC-DD910D1A6A38}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\expeditionslmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{440A010A-BD39-275F-9BEC-DD910D1A6A38}|Assembly-CSharp.csproj|D:\\Users\\Sean Perras\\The Purrfect Farm\\assets\\scripts\\expeditionmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{440A010A-BD39-275F-9BEC-DD910D1A6A38}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\expeditionmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{440A010A-BD39-275F-9BEC-DD910D1A6A38}|Assembly-CSharp.csproj|D:\\Users\\Sean Perras\\The Purrfect Farm\\assets\\scripts\\plot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{440A010A-BD39-275F-9BEC-DD910D1A6A38}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\plot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{440A010A-BD39-275F-9BEC-DD910D1A6A38}|Assembly-CSharp.csproj|D:\\Users\\Sean Perras\\The Purrfect Farm\\assets\\scripts\\catmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{440A010A-BD39-275F-9BEC-DD910D1A6A38}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\catmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{440A010A-BD39-275F-9BEC-DD910D1A6A38}|Assembly-CSharp.csproj|D:\\Users\\Sean Perras\\The Purrfect Farm\\assets\\scripts\\shop.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{440A010A-BD39-275F-9BEC-DD910D1A6A38}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\shop.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{440A010A-BD39-275F-9BEC-DD910D1A6A38}|Assembly-CSharp.csproj|D:\\Users\\Sean Perras\\The Purrfect Farm\\assets\\scripts\\barn.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{440A010A-BD39-275F-9BEC-DD910D1A6A38}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\barn.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{440A010A-BD39-275F-9BEC-DD910D1A6A38}|Assembly-CSharp.csproj|D:\\Users\\Sean Perras\\The Purrfect Farm\\assets\\scripts\\catcheckbox.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -59,28 +79,12 @@
       "RelativeMoniker": "D:0:0:{440A010A-BD39-275F-9BEC-DD910D1A6A38}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\savedata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{440A010A-BD39-275F-9BEC-DD910D1A6A38}|Assembly-CSharp.csproj|D:\\Users\\Sean Perras\\The Purrfect Farm\\assets\\scripts\\barn.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{440A010A-BD39-275F-9BEC-DD910D1A6A38}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\barn.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{440A010A-BD39-275F-9BEC-DD910D1A6A38}|Assembly-CSharp.csproj|D:\\Users\\Sean Perras\\The Purrfect Farm\\assets\\scripts\\catstats.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{440A010A-BD39-275F-9BEC-DD910D1A6A38}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\catstats.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{440A010A-BD39-275F-9BEC-DD910D1A6A38}|Assembly-CSharp.csproj|D:\\Users\\Sean Perras\\The Purrfect Farm\\assets\\outlineeffect.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{440A010A-BD39-275F-9BEC-DD910D1A6A38}|Assembly-CSharp.csproj|solutionrelative:assets\\outlineeffect.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{440A010A-BD39-275F-9BEC-DD910D1A6A38}|Assembly-CSharp.csproj|D:\\Users\\Sean Perras\\The Purrfect Farm\\assets\\scripts\\expeditionslmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{440A010A-BD39-275F-9BEC-DD910D1A6A38}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\expeditionslmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{440A010A-BD39-275F-9BEC-DD910D1A6A38}|Assembly-CSharp.csproj|D:\\Users\\Sean Perras\\The Purrfect Farm\\assets\\scripts\\exposavedata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{440A010A-BD39-275F-9BEC-DD910D1A6A38}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\exposavedata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{440A010A-BD39-275F-9BEC-DD910D1A6A38}|Assembly-CSharp.csproj|D:\\Users\\Sean Perras\\The Purrfect Farm\\assets\\scripts\\catmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{440A010A-BD39-275F-9BEC-DD910D1A6A38}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\catmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -90,11 +94,24 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 16,
+          "SelectedChildIndex": 19,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 5,
+              "Title": "MainMenu.cs",
+              "DocumentMoniker": "D:\\Users\\Sean Perras\\The Purrfect Farm\\Assets\\Scripts\\MainMenu.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\MainMenu.cs",
+              "ToolTip": "D:\\Users\\Sean Perras\\The Purrfect Farm\\Assets\\Scripts\\MainMenu.cs",
+              "RelativeToolTip": "Assets\\Scripts\\MainMenu.cs",
+              "ViewState": "AQIAAAMAAAAAAAAAAAAAAAkAAAAWAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-24T17:52:23.321Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
               "Title": "PlantData.cs",
               "DocumentMoniker": "D:\\Users\\Sean Perras\\The Purrfect Farm\\Assets\\Scripts\\PlantData.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\PlantData.cs",
@@ -113,7 +130,7 @@
               "RelativeDocumentMoniker": "Assets\\Scripts\\PauseMenu.cs",
               "ToolTip": "D:\\Users\\Sean Perras\\The Purrfect Farm\\Assets\\Scripts\\PauseMenu.cs",
               "RelativeToolTip": "Assets\\Scripts\\PauseMenu.cs",
-              "ViewState": "AQIAAAMAAAAAAAAAAAAvwAsAAAAAAAAA",
+              "ViewState": "AQIAAC0AAAAAAAAAAAAmwAwAAAAWAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-01-27T00:16:02.758Z",
               "EditorCaption": ""
@@ -126,33 +143,36 @@
               "RelativeDocumentMoniker": "Assets\\Scripts\\Barn.cs",
               "ToolTip": "D:\\Users\\Sean Perras\\The Purrfect Farm\\Assets\\Scripts\\Barn.cs",
               "RelativeToolTip": "Assets\\Scripts\\Barn.cs",
-              "ViewState": "AQIAAAMAAAAAAAAAAAAAAAwAAAAAAAAA",
+              "ViewState": "AQIAAA8AAAAAAAAAAAA6wAYAAAAhAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-26T18:45:49.235Z"
+              "WhenOpened": "2025-01-26T18:45:49.235Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 8,
               "Title": "CatStats.cs",
               "DocumentMoniker": "D:\\Users\\Sean Perras\\The Purrfect Farm\\Assets\\Scripts\\CatStats.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\CatStats.cs",
               "ToolTip": "D:\\Users\\Sean Perras\\The Purrfect Farm\\Assets\\Scripts\\CatStats.cs",
               "RelativeToolTip": "Assets\\Scripts\\CatStats.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAEAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAgAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-22T23:32:48.608Z"
+              "WhenOpened": "2025-01-22T23:32:48.608Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 19,
               "Title": "OutlineEffect.cs",
               "DocumentMoniker": "D:\\Users\\Sean Perras\\The Purrfect Farm\\Assets\\OutlineEffect.cs",
               "RelativeDocumentMoniker": "Assets\\OutlineEffect.cs",
               "ToolTip": "D:\\Users\\Sean Perras\\The Purrfect Farm\\Assets\\OutlineEffect.cs",
               "RelativeToolTip": "Assets\\OutlineEffect.cs",
-              "ViewState": "AQIAACgAAAAAAAAAAAAAAA0AAAAwAAAA",
+              "ViewState": "AQIAACUAAAAAAAAAAIBJwA0AAAAwAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-10T16:09:21.823Z"
+              "WhenOpened": "2025-01-10T16:09:21.823Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -162,103 +182,105 @@
               "RelativeDocumentMoniker": "Assets\\Scripts\\Shop.cs",
               "ToolTip": "D:\\Users\\Sean Perras\\The Purrfect Farm\\Assets\\Scripts\\Shop.cs",
               "RelativeToolTip": "Assets\\Scripts\\Shop.cs",
-              "ViewState": "AQIAADsAAAAAAAAAAIA6wBAAAAAAAAAA",
+              "ViewState": "AQIAAB0AAAAAAAAAAAAEwCUAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-01-09T21:46:03.601Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 13,
               "Title": "CatManager.cs",
               "DocumentMoniker": "D:\\Users\\Sean Perras\\The Purrfect Farm\\Assets\\Scripts\\CatManager.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\CatManager.cs",
               "ToolTip": "D:\\Users\\Sean Perras\\The Purrfect Farm\\Assets\\Scripts\\CatManager.cs",
               "RelativeToolTip": "Assets\\Scripts\\CatManager.cs",
-              "ViewState": "AQIAAAMAAAAAAAAAAAAAAAgAAAAuAAAA",
+              "ViewState": "AQIAAAUAAAAAAAAAAAAswAUAAAAmAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-07T16:09:51.924Z"
+              "WhenOpened": "2025-01-07T16:09:51.924Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 15,
               "Title": "CatCheckbox.cs",
               "DocumentMoniker": "D:\\Users\\Sean Perras\\The Purrfect Farm\\Assets\\Scripts\\CatCheckbox.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\CatCheckbox.cs",
               "ToolTip": "D:\\Users\\Sean Perras\\The Purrfect Farm\\Assets\\Scripts\\CatCheckbox.cs",
               "RelativeToolTip": "Assets\\Scripts\\CatCheckbox.cs",
-              "ViewState": "AQIAABAAAAAAAAAAAAAvwBoAAABqAAAA",
+              "ViewState": "AQIAAAQAAAAAAAAAAAAEwAwAAAAaAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-01-04T17:59:32.569Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 20,
               "Title": "ExpoSaveData.cs",
               "DocumentMoniker": "D:\\Users\\Sean Perras\\The Purrfect Farm\\Assets\\Scripts\\ExpoSaveData.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\ExpoSaveData.cs",
               "ToolTip": "D:\\Users\\Sean Perras\\The Purrfect Farm\\Assets\\Scripts\\ExpoSaveData.cs",
               "RelativeToolTip": "Assets\\Scripts\\ExpoSaveData.cs",
-              "ViewState": "AQIAAAYAAAAAAAAAAADgvxkAAAAAAAAA",
+              "ViewState": "AQIAAAYAAAAAAAAAAAArwBkAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-22T22:26:24.529Z"
+              "WhenOpened": "2024-11-22T22:26:24.529Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 11,
               "Title": "ExpeditionSLManager.cs",
               "DocumentMoniker": "D:\\Users\\Sean Perras\\The Purrfect Farm\\Assets\\Scripts\\ExpeditionSLManager.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\ExpeditionSLManager.cs",
               "ToolTip": "D:\\Users\\Sean Perras\\The Purrfect Farm\\Assets\\Scripts\\ExpeditionSLManager.cs",
               "RelativeToolTip": "Assets\\Scripts\\ExpeditionSLManager.cs",
-              "ViewState": "AQIAAFwAAAAAAAAAAADwv2gAAAARAAAA",
+              "ViewState": "AQIAAE8AAAAAAAAAAAAawFgAAAAnAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-22T22:26:23.806Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 12,
               "Title": "ExpeditionManager.cs",
               "DocumentMoniker": "D:\\Users\\Sean Perras\\The Purrfect Farm\\Assets\\Scripts\\ExpeditionManager.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\ExpeditionManager.cs",
               "ToolTip": "D:\\Users\\Sean Perras\\The Purrfect Farm\\Assets\\Scripts\\ExpeditionManager.cs",
               "RelativeToolTip": "Assets\\Scripts\\ExpeditionManager.cs",
-              "ViewState": "AQIAAJsAAAAAAAAAAAAawKQAAAAAAAAA",
+              "ViewState": "AQIAAC4AAAAAAAAAAAAEwDkAAAAdAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-22T22:26:23.128Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "Volume Settings.cs",
               "DocumentMoniker": "D:\\Users\\Sean Perras\\The Purrfect Farm\\Assets\\Scripts\\Volume Settings.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Volume Settings.cs",
               "ToolTip": "D:\\Users\\Sean Perras\\The Purrfect Farm\\Assets\\Scripts\\Volume Settings.cs",
               "RelativeToolTip": "Assets\\Scripts\\Volume Settings.cs",
-              "ViewState": "AQIAABEAAAAAAAAAAAAawBwAAAAAAAAA",
+              "ViewState": "AQIAAAgAAAAAAAAAAAAQwBAAAAAgAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-20T04:59:56.33Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
               "Title": "GameManager.cs",
               "DocumentMoniker": "D:\\Users\\Sean Perras\\The Purrfect Farm\\Assets\\Scripts\\GameManager.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\GameManager.cs",
               "ToolTip": "D:\\Users\\Sean Perras\\The Purrfect Farm\\Assets\\Scripts\\GameManager.cs",
               "RelativeToolTip": "Assets\\Scripts\\GameManager.cs",
-              "ViewState": "AQIAAPQAAAAAAAAAAAAawAMBAAAcAAAA",
+              "ViewState": "AQIAAKsAAAAAAAAAAAAUwLwAAAAXAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-18T22:26:22.516Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 18,
               "Title": "SaveData.cs",
               "DocumentMoniker": "D:\\Users\\Sean Perras\\The Purrfect Farm\\Assets\\Scripts\\SaveData.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\SaveData.cs",
@@ -266,11 +288,12 @@
               "RelativeToolTip": "Assets\\Scripts\\SaveData.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAEwAgAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-18T22:10:30.307Z"
+              "WhenOpened": "2024-11-18T22:10:30.307Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 16,
               "Title": "Plant.cs",
               "DocumentMoniker": "D:\\Users\\Sean Perras\\The Purrfect Farm\\Assets\\Scripts\\Plant.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Plant.cs",
@@ -289,59 +312,59 @@
               "RelativeDocumentMoniker": "Assets\\Scripts\\Cat.cs",
               "ToolTip": "D:\\Users\\Sean Perras\\The Purrfect Farm\\Assets\\Scripts\\Cat.cs",
               "RelativeToolTip": "Assets\\Scripts\\Cat.cs",
-              "ViewState": "AQIAAI4AAAAAAAAAAAAEwJoAAAAAAAAA",
+              "ViewState": "AQIAACoAAAAAAAAAAAAUwDYAAABoAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-14T13:08:13.74Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 7,
               "Title": "Catsule.cs",
               "DocumentMoniker": "D:\\Users\\Sean Perras\\The Purrfect Farm\\Assets\\Scripts\\Catsule.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Catsule.cs",
               "ToolTip": "D:\\Users\\Sean Perras\\The Purrfect Farm\\Assets\\Scripts\\Catsule.cs",
               "RelativeToolTip": "Assets\\Scripts\\Catsule.cs",
-              "ViewState": "AQIAAD4AAAAAAAAAAAAuwE0AAAAnAAAA",
+              "ViewState": "AQIAABsAAAAAAAAAAIAwwEAAAAAPAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-14T13:07:44.351Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 2,
               "Title": "Plot.cs",
               "DocumentMoniker": "D:\\Users\\Sean Perras\\The Purrfect Farm\\Assets\\Scripts\\Plot.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Plot.cs",
               "ToolTip": "D:\\Users\\Sean Perras\\The Purrfect Farm\\Assets\\Scripts\\Plot.cs",
               "RelativeToolTip": "Assets\\Scripts\\Plot.cs",
-              "ViewState": "AQIAADAAAAAAAAAAAAAawDkAAAA+AAAA",
+              "ViewState": "AQIAAIEAAAAAAAAAAADwv4gAAAAhAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-13T01:42:46.85Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "Farm.cs",
               "DocumentMoniker": "D:\\Users\\Sean Perras\\The Purrfect Farm\\Assets\\Scripts\\Farm.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Farm.cs",
               "ToolTip": "D:\\Users\\Sean Perras\\The Purrfect Farm\\Assets\\Scripts\\Farm.cs",
               "RelativeToolTip": "Assets\\Scripts\\Farm.cs",
-              "ViewState": "AQIAAJkAAAAAAAAAAAASwKYAAAAgAAAA",
+              "ViewState": "AQIAAIIBAAAAAAAAAADwv4EBAAApAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-12T23:21:26.411Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 10,
               "Title": "Expedition.cs",
               "DocumentMoniker": "D:\\Users\\Sean Perras\\The Purrfect Farm\\Assets\\Scripts\\Expedition.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Expedition.cs",
               "ToolTip": "D:\\Users\\Sean Perras\\The Purrfect Farm\\Assets\\Scripts\\Expedition.cs",
               "RelativeToolTip": "Assets\\Scripts\\Expedition.cs",
-              "ViewState": "AQIAALcAAAAAAAAAAAAawMAAAAAAAAAA",
+              "ViewState": "AQIAAHkAAAAAAAAAAAAawIAAAABHAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-12-19T02:01:16.203Z",
               "EditorCaption": ""

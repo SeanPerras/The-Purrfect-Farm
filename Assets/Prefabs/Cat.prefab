@@ -83,7 +83,7 @@ SpriteRenderer:
   m_Size: {x: 6.82, y: 8.27}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!114 &-54483113409573658
@@ -100,7 +100,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   catioPos: {x: -7.75, y: 21.5, z: 0}
   stats: {fileID: 11400000, guid: be07755d8fad29c44ace5e1c338acaf6, type: 2}
-  value: 10
+  isWalking: 0
 --- !u!60 &3724834242221333487
 PolygonCollider2D:
   m_ObjectHideFlags: 0

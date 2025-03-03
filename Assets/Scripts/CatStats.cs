@@ -8,6 +8,7 @@ public class CatStats : ScriptableObject
 {
 
     public Sprite sprite;
+    public Sprite[] walkSprites;
     public int value, strength, speed, defense;
     
 }

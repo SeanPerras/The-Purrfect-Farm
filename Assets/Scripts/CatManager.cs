@@ -6,7 +6,7 @@ public class CatManager : MonoBehaviour
     public static CatManager instance;
 
     // List of all possible cats
-    public List<Cat> allAvailableCats = new();
+    private List<Cat> allAvailableCats;
 
     private void Awake()
     {
@@ -14,10 +14,8 @@ public class CatManager : MonoBehaviour
         if (instance == null) instance = this;
         else Destroy(gameObject);
     }
-
+    public List<Cat> GetCats() { return allAvailableCats; }
+    public void SetCats(List<Cat> cats) { allAvailableCats = new(cats); }
     // Method to find a cat by name
-    public Cat GetCatByName(string name)
-    {
-        return allAvailableCats.Find(cat => cat.name == name);
-    }
+    public Cat GetCatByName(string name) { return allAvailableCats.Find(cat => cat.name == name); }
 }

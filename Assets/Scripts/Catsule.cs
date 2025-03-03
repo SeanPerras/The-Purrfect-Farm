@@ -62,7 +62,7 @@ public class Catsule : MonoBehaviour
     IEnumerator TimesUp()
     {
         yield return new WaitForSeconds(.25f);
-        GameObject cat = Instantiate(GameManager.instance.catPrefab, transform.position, GameManager.instance.catPrefab.transform.rotation);
+        Cat cat = Instantiate(GameManager.instance.catPrefab, transform.position, GameManager.instance.catPrefab.transform.rotation).GetComponent<Cat>();
         Debug.Log("Time's Up!");
         Plot[] plots = currentPlot.GetAdjPlots().Where(g => g != null).Select(go => go.GetComponent<Plot>()).ToArray();
         List<string> adjColors = plots.Select(p => p.GetColor()).ToList();
@@ -71,11 +71,11 @@ public class Catsule : MonoBehaviour
             kvp => kvp.Value.SequenceEqual(adjColors) ||
             ContainsAll(adjColors, kvp.Value)).ToList();
         col = BestPick(debug);
-        cat.GetComponent<Cat>().SetColor(col);
+        cat.SetColor(col);
         Debug.Log(string.Join("|", adjColors));
         currentPlot.ReEnablePlot();
         Destroy(gameObject);
-        farm.UpdateIcons(col + " Cat");
+        farm.UpdateIcons(col + " Cat", cat.stats.value);
     }
     private string BestPick(List<KeyValuePair<string, List<string>>> colors)
     {
@@ -102,7 +102,6 @@ public class Catsule : MonoBehaviour
     private bool ContainsAll(List<string> l1, List<string> l2)
     {
         bool ret = false;
-        //List<string> temp = (from item in l1 select item[..]).ToList();
         List<string> temp = new(l1);
         foreach (string s in l2)
             if (temp.Contains(s))

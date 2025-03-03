@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Barn : MonoBehaviour
 {
-    public GameObject inventory;
+    public GameObject inventoryUI;
     public Sprite openbarn;
     public Sprite closebarn;
 
@@ -17,7 +17,7 @@ public class Barn : MonoBehaviour
     {
         if(!farm.IsAnyUIOpen())
         {
-            Debug.Log("barn clicked!");
+            Debug.Log("Barn clicked!");
             
             //if (TryGetComponent(out SpriteRenderer spriteRenderer))
             //{
@@ -29,7 +29,8 @@ public class Barn : MonoBehaviour
             //    Debug.LogError("No SpriteRenderer component found on this GameObject!");
             //}
 
-            inventory.SetActive(true);
+            farm.CloseOpenUIs(inventoryUI);
+            inventoryUI.SetActive(true);
         }
        
     }
@@ -47,6 +48,6 @@ public class Barn : MonoBehaviour
         //    Debug.LogError("No SpriteRenderer component found on this GameObject!");
         //}
 
-        inventory.SetActive(false);
+        inventoryUI.SetActive(false);
     }
 }

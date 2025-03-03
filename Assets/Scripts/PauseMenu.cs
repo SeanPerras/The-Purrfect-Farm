@@ -2,12 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PauseMenu : MonoBehaviour
 {
     public GameObject pauseMenu;
+    public Slider musicVolume, sfxVolume;
     //public GameObject pauseButton;
     public static bool GameIsPaused = false;
+    private void Start()
+    {
+        musicVolume.value = PlayerPrefs.GetFloat("Music", 1);
+        sfxVolume.value = PlayerPrefs.GetFloat("SFX", 1);
+    }
     void Update()
     {
         PauseEscape();
